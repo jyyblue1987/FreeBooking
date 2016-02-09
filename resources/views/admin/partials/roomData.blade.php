@@ -122,6 +122,28 @@
 
                                 </tab>
 
+                                <tab heading="Exclusive Break-Fast">
+                                    <div ng-controller="roomsEditController" class="clearfix" >
+                                        @include('admin.partials.setExclusiveBreakfast')
+                                    </div>
+
+                                </tab>
+
+                                <tab heading="Single Use">
+                                    <div ng-controller="roomsEditController" class="clearfix" >
+                                        @include('admin.partials.setSingleUse')
+                                    </div>
+
+                                </tab>
+
+
+                                <tab heading="Non-Refundable">
+                                    <div ng-controller="roomsEditController" class="clearfix" >
+                                        @include('admin.partials.setNonRefundable')
+                                    </div>
+
+                                </tab>
+
 
                             </tabset>
                         </div>

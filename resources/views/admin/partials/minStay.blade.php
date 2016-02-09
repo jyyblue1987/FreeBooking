@@ -1,5 +1,5 @@
 <div class="row">
-<form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="setMinStay()" ng-init="getMinimumStay({{ Auth::User()->id }})" ng-show="!minimumStay">
+<form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="setMinStay()" ng-init="getMinimumStay({{ Auth::User()->id }})" >
 {{ csrf_field() }}
 
     @include('admin.partials.__changeAvailabilityPriceForm');
@@ -22,7 +22,7 @@
 </div>
 <hr class="dashed mb30">
 <div class="row">
-    <div class="col-lg-12" ng-if = "show">
+    <div class="col-lg-12" ng-show= "show">
 
 
 

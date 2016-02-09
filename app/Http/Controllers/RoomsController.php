@@ -890,6 +890,715 @@ class RoomsController extends Controller
         return $data;
     }
 
+
+    /**
+     * Excluding Break-Fast Setup
+     * @param Application $app
+     * @param Request $request
+     * @param $room_id
+     * @return array
+     */
+
+
+    public  function setexBreakFast(Application $app, Request $request, $room_id)
+    {
+
+        $req_data = $request->all();
+
+        $date_from = $req_data["from"];
+
+        $date_to = $req_data["to"];
+
+        $date = $date_from;
+
+        $id = Auth::User()->id;
+
+        if( $date_to >= $date_from)
+        {
+
+
+            $currRoom = Room::where('id', '=', $room_id)->first();
+            $hotel = Hotel::where('user_id', '=', $id)->first();
+
+
+
+            $available = $currRoom->number;
+
+
+            if($req_data["edit"] == "change" or $req_data["edit"] == "delete"):
+
+                $matchThese = ['room_id' =>$room_id, 'ex_ref_id' => $req_data["ref_id"]];
+                $model_status = RoomPriceInfo::where($matchThese)->update(['ex_breakfast' => 'n']);
+
+
+
+            endif;
+
+
+            if($req_data["edit"] == "new" or $req_data["edit"] == "change"):
+
+                $data = array();
+
+                $ref_id = "";
+
+                while ($date <= $date_to)
+                {
+                    $available = 0;
+
+
+                        $data[$date] = "j";
+
+                        $matchThese = ['room_id' =>$room_id, 'date' => $date];
+                        $model = RoomPriceInfo::where($matchThese)->first();
+
+                        if(!$model){
+
+                            $roomPriceInfo = new RoomPriceInfo();
+
+                            $roomPriceInfo->date = $date;
+                            $roomPriceInfo->ex_breakfast  = 'j';
+                            $roomPriceInfo->ex_breakfast_price = $req_data['cost'];
+                            $roomPriceInfo->ex_ref_id = $ref_id;
+                            $roomPriceInfo->room_id = $room_id;
+                            $roomPriceInfo->user_id = $id;
+                            $roomPriceInfo->hotel_id = $hotel->id;
+
+                            $exB = Room::locatedAt($room_id)->addRoom_priceInfo($roomPriceInfo);
+
+                            if(empty($ref_id)):
+                                $ref_id = $exB->id;
+                                $update_model = RoomPriceInfo::where('id',$ref_id)->first();
+                                $refData = [];
+                                $refData["ex_ref_id"] = $ref_id;
+                                $update_model->fill($refData)->save();
+                            endif;
+
+                        }else{
+
+
+                            if ( ($model->id == $model->ex_ref_id) and ($model->ex_breakfast == "j") )
+                            {
+
+
+                                $model->delete();
+
+                                $roomPriceInfo = new RoomPriceInfo();
+                                $columns = Schema::getColumnListing("room_price_info");
+
+                                foreach($columns as $col_id => $colName):
+
+                                    if($colName == "id" or $colName == "created_at" or $colName == "updated_at")
+                                        continue;
+
+                                    if($colName == "ex_breakfast"):
+                                        $roomPriceInfo->$colName = "j";
+                                        continue;
+                                    elseif($colName == "ex_breakfast_price"):
+                                        $roomPriceInfo->$colName = $req_data["cost"];
+                                        continue;
+                                    elseif($colName == "ex_ref_id"):
+                                        $roomPriceInfo->$colName = $ref_id;
+                                        continue;
+
+                                    endif;
+
+                                    $roomPriceInfo->$colName = $model->$colName;
+
+                                endforeach;
+
+                                $exB = Room::locatedAt($room_id)->addRoom_priceInfo($roomPriceInfo);
+
+                                if(empty($ref_id)):
+                                    $ref_id = $exB->id;
+                                    $update_model = RoomPriceInfo::where('id',$ref_id)->first();
+                                    $refData = [];
+                                    $refData["ex_ref_id"] = $ref_id;
+                                    $update_model->fill($refData)->save();
+                                endif;
+
+
+                            }else{
+
+                                if ($ref_id == "")
+                                {
+                                    $ref_id = $model->id;
+                                }
+
+                                $refData = [];
+                                $refData["ex_ref_id"] = $ref_id;
+                                $refData["ex_breakfast"]  = 'j';
+                                $refData["ex_breakfast_price"] = $req_data['cost'];
+                                $model->fill($refData)->save();
+
+
+
+                            }
+
+                        }
+
+
+
+                    $date = get_next_date($date);
+                }
+            endif;
+
+        }
+
+        $flash = flash($currRoom->name,"Excluding Break-Fast price is added!", "success");
+        return compact('flash');
+
+    }
+
+    /**
+     * @param Application $app
+     * @param $id
+     * @param $room_id
+     * @return array|null
+     */
+
+
+
+    public function getexBreakFast(Application $app, $id, $room_id)
+    {
+        $utility = new Utility($app);
+
+
+        $matchThese = ['room_id' =>$room_id, 'ex_breakfast' => 'j'];
+        $model = RoomPriceInfo::select( 'ex_ref_id','ex_breakfast_price')->distinct()->where($matchThese)->orderBy('date')->get();
+
+        $hotel = Hotel::where('user_id', '=', $id)->first();
+        if(!$model):
+
+            return null;
+
+        else:
+
+            $result = $model->all();
+
+            $data = array();
+            foreach($result as $row => $col):
+
+                $start = "";
+                $end  = "";
+                $matchThese = ['ex_ref_id' =>$col->ex_ref_id, 'ex_breakfast' => 'j'];
+
+                $singleMsSetup = RoomPriceInfo::select('id','date')->where($matchThese)->orderBy('date')->get();
+                $singleMsSetupD = $singleMsSetup->all();
+
+                $totalRows = count($singleMsSetupD);
+
+                $i = 0;
+
+
+                foreach($singleMsSetupD as $singleRow => $singleCol):
+
+                    $i++;
+
+                    if ($i == 1)
+                    {
+                        $start = $singleCol->date;
+                    }
+                    if ($i == $totalRows)
+                    {
+                        $end = $singleCol->date;
+                    }
+
+                endforeach;
+
+                if (date("Y-m-d") > $end)
+                {
+                    $disabled = true;
+                }
+                else
+                {
+                    $disabled = false;
+                }
+
+
+                $data[] = [
+                    "id"                => $col->ex_ref_id,
+                    "room_id"           => $room_id,
+                    "hotel"             => $hotel->id,
+                    "ref_id"            => $col->ex_ref_id,
+                    "start"             => $start,
+                    "end"               => $end,
+                    "price"             => $col->ex_breakfast_price,
+                    "uid"               => $id,
+                ];
+
+
+            endforeach;
+
+
+
+        endif;
+
+
+        return $data;
+    }
+
+
+    public  function setSingleUse(Application $app, Request $request, $room_id)
+    {
+
+        $req_data = $request->all();
+
+        $date_from = $req_data["from"];
+
+        $date_to = $req_data["to"];
+
+        $date = $date_from;
+
+        $id = Auth::User()->id;
+
+        if( $date_to >= $date_from)
+        {
+
+
+            $currRoom = Room::where('id', '=', $room_id)->first();
+            $hotel = Hotel::where('user_id', '=', $id)->first();
+
+
+
+            $available = $currRoom->number;
+
+
+            if($req_data["edit"] == "change" or $req_data["edit"] == "delete"):
+
+                $matchThese = ['room_id' =>$room_id, 'single_use_ref_id' => $req_data["ref_id"]];
+                $model_status = RoomPriceInfo::where($matchThese)->update(['single_use' => 'n']);
+
+
+
+            endif;
+
+
+            if($req_data["edit"] == "new" or $req_data["edit"] == "change"):
+
+                $data = array();
+
+                $ref_id = "";
+
+                while ($date <= $date_to)
+                {
+                    $available = 0;
+
+
+                    $data[$date] = "j";
+
+                    $matchThese = ['room_id' =>$room_id, 'date' => $date];
+                    $model = RoomPriceInfo::where($matchThese)->first();
+
+                    if(!$model){
+
+                        $roomPriceInfo = new RoomPriceInfo();
+
+                        $roomPriceInfo->date = $date;
+                        $roomPriceInfo->single_use  = 'j';
+                        $roomPriceInfo->single_use_price = $req_data['cost'];
+                        $roomPriceInfo->single_use_ref_id = $ref_id;
+                        $roomPriceInfo->room_id = $room_id;
+                        $roomPriceInfo->user_id = $id;
+                        $roomPriceInfo->hotel_id = $hotel->id;
+
+                        $sU = Room::locatedAt($room_id)->addRoom_priceInfo($roomPriceInfo);
+
+                        if(empty($ref_id)):
+                            $ref_id = $sU->id;
+                            $update_model = RoomPriceInfo::where('id',$ref_id)->first();
+                            $refData = [];
+                            $refData["single_use_ref_id"] = $ref_id;
+                            $update_model->fill($refData)->save();
+                        endif;
+
+                    }else{
+
+
+                        if ( ($model->id == $model->single_use_ref_id) and ($model->single_use == "j") )
+                        {
+
+
+                            $model->delete();
+
+                            $roomPriceInfo = new RoomPriceInfo();
+                            $columns = Schema::getColumnListing("room_price_info");
+
+                            foreach($columns as $col_id => $colName):
+
+                                if($colName == "id" or $colName == "created_at" or $colName == "updated_at")
+                                    continue;
+
+                                if($colName == "single_use"):
+                                    $roomPriceInfo->$colName = "j";
+                                    continue;
+                                elseif($colName == "single_use_price"):
+                                    $roomPriceInfo->$colName = $req_data["cost"];
+                                    continue;
+                                elseif($colName == "single_use_ref_id"):
+                                    $roomPriceInfo->$colName = $ref_id;
+                                    continue;
+
+                                endif;
+
+                                $roomPriceInfo->$colName = $model->$colName;
+
+                            endforeach;
+
+                            $sU = Room::locatedAt($room_id)->addRoom_priceInfo($roomPriceInfo);
+
+                            if(empty($ref_id)):
+                                $ref_id = $sU->id;
+                                $update_model = RoomPriceInfo::where('id',$ref_id)->first();
+                                $refData = [];
+                                $refData["single_use_ref_id"] = $ref_id;
+                                $update_model->fill($refData)->save();
+                            endif;
+
+
+                        }else{
+
+                            if ($ref_id == "")
+                            {
+                                $ref_id = $model->id;
+                            }
+
+                            $refData = [];
+                            $refData["single_use_ref_id"] = $ref_id;
+                            $refData["single_use"]  = 'j';
+                            $refData["single_use_price"] = $req_data['cost'];
+                            $model->fill($refData)->save();
+
+
+
+                        }
+
+                    }
+
+
+
+                    $date = get_next_date($date);
+                }
+            endif;
+
+        }
+
+        $flash = flash($currRoom->name,"Single Use price is added!", "success");
+        return compact('flash');
+
+    }
+
+
+    public function getSingleUse(Application $app, $id, $room_id)
+    {
+        $utility = new Utility($app);
+
+
+        $matchThese = ['room_id' =>$room_id, 'single_use' => 'j'];
+        $model = RoomPriceInfo::select( 'single_use_ref_id','single_use_price')->distinct()->where($matchThese)->orderBy('date')->get();
+
+        $hotel = Hotel::where('user_id', '=', $id)->first();
+        if(!$model):
+
+            return null;
+
+        else:
+
+            $result = $model->all();
+
+            $data = array();
+            foreach($result as $row => $col):
+
+                $start = "";
+                $end  = "";
+                $matchThese = ['single_use_ref_id' =>$col->single_use_ref_id, 'single_use' => 'j'];
+
+                $singleMsSetup = RoomPriceInfo::select('id','date')->where($matchThese)->orderBy('date')->get();
+                $singleMsSetupD = $singleMsSetup->all();
+
+                $totalRows = count($singleMsSetupD);
+
+                $i = 0;
+
+
+                foreach($singleMsSetupD as $singleRow => $singleCol):
+
+                    $i++;
+
+                    if ($i == 1)
+                    {
+                        $start = $singleCol->date;
+                    }
+                    if ($i == $totalRows)
+                    {
+                        $end = $singleCol->date;
+                    }
+
+                endforeach;
+
+                if (date("Y-m-d") > $end)
+                {
+                    $disabled = true;
+                }
+                else
+                {
+                    $disabled = false;
+                }
+
+
+                $data[] = [
+                    "id"                => $col->single_use_ref_id,
+                    "room_id"           => $room_id,
+                    "hotel"             => $hotel->id,
+                    "ref_id"            => $col->single_use_ref_id,
+                    "start"             => $start,
+                    "end"               => $end,
+                    "price"             => $col->single_use_price,
+                    "uid"               => $id,
+                ];
+
+
+            endforeach;
+
+
+
+        endif;
+
+
+        return $data;
+    }
+
+
+    public function setNonRefundable(Application $app, Request $request, $room_id)
+    {
+
+        $req_data = $request->all();
+
+        $date_from = $req_data["from"];
+
+        $date_to = $req_data["to"];
+
+        $date = $date_from;
+
+        $id = Auth::User()->id;
+
+        if( $date_to >= $date_from)
+        {
+
+
+            $currRoom = Room::where('id', '=', $room_id)->first();
+            $hotel = Hotel::where('user_id', '=', $id)->first();
+
+
+
+            $available = $currRoom->number;
+
+
+            if($req_data["edit"] == "change" or $req_data["edit"] == "delete"):
+
+                $matchThese = ['room_id' =>$room_id, 'non_refundable_ref_id' => $req_data["ref_id"]];
+                $model_status = RoomPriceInfo::where($matchThese)->update(['nonrefundable' => 'n']);
+
+
+
+            endif;
+
+
+            if($req_data["edit"] == "new" or $req_data["edit"] == "change"):
+
+                $data = array();
+
+                $ref_id = "";
+
+                while ($date <= $date_to)
+                {
+                    $available = 0;
+
+
+                    $data[$date] = "j";
+
+                    $matchThese = ['room_id' =>$room_id, 'date' => $date];
+                    $model = RoomPriceInfo::where($matchThese)->first();
+
+                    if(!$model){
+
+                        $roomPriceInfo = new RoomPriceInfo();
+
+                        $roomPriceInfo->date = $date;
+                        $roomPriceInfo->nonrefundable  = 'j';
+                        $roomPriceInfo->nonrefundable_price = $req_data['cost'];
+                        $roomPriceInfo->non_refundable_ref_id = $ref_id;
+                        $roomPriceInfo->room_id = $room_id;
+                        $roomPriceInfo->user_id = $id;
+                        $roomPriceInfo->hotel_id = $hotel->id;
+
+                        $nF = Room::locatedAt($room_id)->addRoom_priceInfo($roomPriceInfo);
+
+                        if(empty($ref_id)):
+                            $ref_id = $nF->id;
+                            $update_model = RoomPriceInfo::where('id',$ref_id)->first();
+                            $refData = [];
+                            $refData["non_refundable_ref_id"] = $ref_id;
+                            $update_model->fill($refData)->save();
+                        endif;
+
+                    }else{
+
+
+                        if ( ($model->id == $model->non_refundable_ref_id) and ($model->nonrefundable == "j") )
+                        {
+
+
+                            $model->delete();
+
+                            $roomPriceInfo = new RoomPriceInfo();
+                            $columns = Schema::getColumnListing("room_price_info");
+
+                            foreach($columns as $col_id => $colName):
+
+                                if($colName == "id" or $colName == "created_at" or $colName == "updated_at")
+                                    continue;
+
+                                if($colName == "nonrefundable"):
+                                    $roomPriceInfo->$colName = "j";
+                                    continue;
+                                elseif($colName == "nonrefundable_price"):
+                                    $roomPriceInfo->$colName = $req_data["cost"];
+                                    continue;
+                                elseif($colName == "non_refundable_ref_id"):
+                                    $roomPriceInfo->$colName = $ref_id;
+                                    continue;
+
+                                endif;
+
+                                $roomPriceInfo->$colName = $model->$colName;
+
+                            endforeach;
+
+                            $nF = Room::locatedAt($room_id)->addRoom_priceInfo($roomPriceInfo);
+
+                            if(empty($ref_id)):
+                                $ref_id = $nF->id;
+                                $update_model = RoomPriceInfo::where('id',$ref_id)->first();
+                                $refData = [];
+                                $refData["non_refundable_ref_id"] = $ref_id;
+                                $update_model->fill($refData)->save();
+                            endif;
+
+
+                        }else{
+
+                            if ($ref_id == "")
+                            {
+                                $ref_id = $model->id;
+                            }
+
+                            $refData = [];
+                            $refData["non_refundable_ref_id"] = $ref_id;
+                            $refData["nonrefundable"]  = 'j';
+                            $refData["nonrefundable_price"] = $req_data['cost'];
+                            $model->fill($refData)->save();
+
+
+
+                        }
+
+                    }
+
+
+
+                    $date = get_next_date($date);
+                }
+            endif;
+
+        }
+
+        $flash = flash($currRoom->name,"Non-Refundable price is added!", "success");
+        return compact('flash');
+
+    }
+
+
+
+
+    public function getNonRefundable(Application $app, $id, $room_id)
+    {
+        $utility = new Utility($app);
+
+
+        $matchThese = ['room_id' =>$room_id, 'nonrefundable' => 'j'];
+        $model = RoomPriceInfo::select( 'non_refundable_ref_id','nonrefundable_price')->distinct()->where($matchThese)->orderBy('date')->get();
+
+        $hotel = Hotel::where('user_id', '=', $id)->first();
+        if(!$model):
+
+            return null;
+
+        else:
+
+            $result = $model->all();
+
+            $data = array();
+            foreach($result as $row => $col):
+
+                $start = "";
+                $end  = "";
+                $matchThese = ['non_refundable_ref_id' =>$col->non_refundable_ref_id, 'nonrefundable' => 'j'];
+
+                $singleMsSetup = RoomPriceInfo::select('id','date')->where($matchThese)->orderBy('date')->get();
+                $singleMsSetupD = $singleMsSetup->all();
+
+                $totalRows = count($singleMsSetupD);
+
+                $i = 0;
+
+
+                foreach($singleMsSetupD as $singleRow => $singleCol):
+
+                    $i++;
+
+                    if ($i == 1)
+                    {
+                        $start = $singleCol->date;
+                    }
+                    if ($i == $totalRows)
+                    {
+                        $end = $singleCol->date;
+                    }
+
+                endforeach;
+
+                if (date("Y-m-d") > $end)
+                {
+                    $disabled = true;
+                }
+                else
+                {
+                    $disabled = false;
+                }
+
+
+                $data[] = [
+                    "id"                => $col->non_refundable_ref_id,
+                    "room_id"           => $room_id,
+                    "hotel"             => $hotel->id,
+                    "ref_id"            => $col->non_refundable_ref_id,
+                    "start"             => $start,
+                    "end"               => $end,
+                    "price"             => $col->nonrefundable_price,
+                    "uid"               => $id,
+                ];
+
+
+            endforeach;
+
+
+
+        endif;
+
+
+        return $data;
+    }
+
     /**
      * @param Request $request
      * @return array
@@ -952,6 +1661,310 @@ class RoomsController extends Controller
         $model = RoomPhoto::where('id', $id)->first();
 
         $model->delete();
+    }
+
+    /**
+     * Get room normal price
+     * @param $room_id
+     * @return array
+     */
+
+    public function getRoomNormalPrice($room_id)
+    {
+        $room = new Room();
+
+
+        $matchThese = ['id' => $room_id];
+        $rooms = $room->select(['name','price'])->where($matchThese)->first();
+
+        return compact('rooms');
+    }
+
+
+    /**
+     * @param Application $app
+     * @param Request $request
+     * @param $room_id
+     * @return array
+     */
+
+    public function setDiscountDatesPrice(Application $app, Request $request, $room_id)
+    {
+        $req_data = $request->all();
+
+        $_pattern_days = $app->config->get('app.day_pattern');
+
+        $date_from = $req_data["from"];
+
+        $date_to = $req_data["to"];
+
+        $date = $date_from;
+
+        $id = Auth::User()->id;
+
+        $discount_type = "";
+
+        if(isset($req_data["discount_type"]))
+        {
+
+
+            $discount_type =$req_data["discount_type"];
+        }
+
+
+        if( $date_to >= $date_from)
+        {
+            $days = explode("-", $req_data["days"]); # ma - di - wo - do - vr - za - zo
+
+            $currRoom = Room::where('id', '=', $room_id)->first();
+            $hotel = Hotel::where('user_id', '=', $id)->first();
+
+
+
+            $available = $currRoom->number;
+
+
+            if($req_data["edit"] == "change" or $req_data["edit"] == "delete"):
+
+                $matchThese = ['room_id' =>$room_id, 'discount_ref_id' => $req_data["ref_id"]];
+                $model_status = RoomPriceInfo::where($matchThese)->update(['discount' => 'n']);
+            endif;
+
+
+            if($req_data["edit"] == "new" or $req_data["edit"] == "change"):
+
+                $data = array();
+
+                $ref_id = "";
+
+                while ($date <= $date_to)
+                {
+                    $available = 0;
+                    $w = $_pattern_days[date("w", strtotime($date))]; # day number
+
+                    if (in_array($w, $days))
+                    {
+
+                        $data[$date] = "j";
+
+                        $matchThese = ['room_id' =>$room_id, 'date' => $date];
+                        $model = RoomPriceInfo::where($matchThese)->first();
+
+                        if(!$model){
+
+                            $roomPriceInfo = new RoomPriceInfo();
+
+                            $roomPriceInfo->date = $date;
+                            $roomPriceInfo->discount  = 'j';
+                            $roomPriceInfo->discount_price = implode("|", $req_data["discount_price"]);
+                            $roomPriceInfo->discount_ref_id = $ref_id;
+                            $roomPriceInfo->discount_patroon = $req_data["days"];
+                            $roomPriceInfo->discount_start = $req_data["start"];
+                            $roomPriceInfo->discount_end = $req_data["till"];
+                            $roomPriceInfo->discount_compare = $req_data["discount_compare"];
+                            $roomPriceInfo->discount_type = $discount_type;
+                            $roomPriceInfo->room_id = $room_id;
+                            $roomPriceInfo->user_id = $id;
+                            $roomPriceInfo->hotel_id = $hotel->id;
+
+                            $discount = Room::locatedAt($room_id)->addRoom_priceInfo($roomPriceInfo);
+
+                            if(empty($ref_id)):
+                                $ref_id = $discount->id;
+                                $update_model = RoomPriceInfo::where('id',$ref_id)->first();
+                                $refData = [];
+                                $refData["discount_ref_id"] = $ref_id;
+                                $update_model->fill($refData)->save();
+                            endif;
+
+                        }else{
+
+
+                            if ( ($model->id == $model->discount_ref_id) and ($model->discount_patroon <> $req_data["days"]) and ($model->discount == "j") )
+                            {
+
+
+                                $model->delete();
+
+                                $roomPriceInfo = new RoomPriceInfo();
+                                $columns = Schema::getColumnListing("room_price_info");
+
+                                foreach($columns as $col_id => $colName):
+
+
+                                    if($colName == "id" or $colName == "created_at" or $colName == "updated_at")
+                                        continue;
+
+                                    if($colName == "discount"):
+                                        $roomPriceInfo->$colName = "j";
+                                        continue;
+                                    elseif($colName == "discount_price"):
+                                        $roomPriceInfo->$colName = implode("|", $req_data["discount_price"]);
+                                        continue;
+                                    elseif($colName == "discount_patroon"):
+                                        $roomPriceInfo->$colName = $req_data["days"];
+                                        continue;
+                                    elseif($colName == "discount_start"):
+                                        $roomPriceInfo->$colName = $req_data["start"];
+                                        continue;
+                                    elseif($colName == "discount_end"):
+                                        $roomPriceInfo->$colName = $req_data["till"];
+                                        continue;
+                                    elseif($colName == "discount_compare"):
+                                        $roomPriceInfo->$colName = $req_data["discount_compare"];
+                                        continue;
+                                    elseif($colName == "discount_type"):
+                                        $roomPriceInfo->$colName = $discount_type;
+                                        continue;
+                                    elseif($colName == "discount_ref_id"):
+                                        $roomPriceInfo->$colName = $ref_id;
+                                        continue;
+                                     endif;
+
+                                    $roomPriceInfo->$colName = $model->$colName;
+
+                                endforeach;
+
+                                $discount = Room::locatedAt($room_id)->addRoom_priceInfo($roomPriceInfo);
+
+                                if(empty($ref_id)):
+                                    $ref_id = $discount->id;
+                                    $update_model = RoomPriceInfo::where('id',$ref_id)->first();
+                                    $refData = [];
+                                    $refData["discount_ref_id"] = $ref_id;
+                                    $update_model->fill($refData)->save();
+                                endif;
+
+
+                            }else{
+
+                                if ($ref_id == "")
+                                {
+                                    $ref_id = $model->id;
+                                }
+
+                                $refData = [];
+                                $refData["discount_ref_id"] = $ref_id;
+                                $refData["discount"]  = 'j';
+                                $refData["discount_price"] = implode("|", $req_data["discount_price"]);
+                                $refData["discount_patroon"] = $req_data["days"];
+                                $refData["discount_start"] = $req_data["start"];
+                                $refData["discount_end"] = $req_data["till"];
+                                $refData["discount_compare"] = $req_data["discount_compare"];
+                                $refData["discount_type"] = $discount_type;
+                                $model->fill($refData)->save();
+
+
+
+                            }
+
+                        }
+
+
+                    }
+                    $date = get_next_date($date);
+                }
+            endif;
+
+        }
+
+        $flash = flash($currRoom->name,"Discount dates has been added!", "success");
+        return compact('flash');
+    }
+
+
+    /**
+     * @param Application $app
+     * @param $id
+     * @param $room_id
+     * @return array|null
+     */
+
+
+
+    public function getDiscountDates(Application $app, $id, $room_id)
+    {
+        $utility = new Utility($app);
+        $app_day_patern = $utility::get_day_list();
+
+        $matchThese = ['room_id' =>$room_id, 'discount' => 'j'];
+        $model = RoomPriceInfo::select( 'discount_ref_id','discount_price', 'discount_patroon', 'discount_start', 'discount_end', 'discount_type', 'discount_compare' )->distinct()->where($matchThese)->orderBy('date')->get();
+
+        $hotel = Hotel::where('user_id', '=', $id)->first();
+        if(!$model):
+
+            return null;
+
+        else:
+
+            $result = $model->all();
+
+            $data = array();
+            foreach($result as $row => $col):
+
+                $start = "";
+                $end  = "";
+                $matchThese = ['discount_ref_id' =>$col->discount_ref_id, 'discount' => 'j'];
+
+                $singleMsSetup = RoomPriceInfo::select('id','date')->where($matchThese)->orderBy('date')->get();
+                $singleMsSetupD = $singleMsSetup->all();
+
+                $totalRows = count($singleMsSetupD);
+
+                $i = 0;
+
+
+                foreach($singleMsSetupD as $singleRow => $singleCol):
+
+                    $i++;
+
+                    if ($i == 1)
+                    {
+                        $start = $singleCol->date;
+                    }
+                    if ($i == $totalRows)
+                    {
+                        $end = $singleCol->date;
+                    }
+
+                endforeach;
+
+                if (date("Y-m-d") > $end)
+                {
+                    $disabled = true;
+                }
+                else
+                {
+                    $disabled = false;
+                }
+
+
+                $data[] = [
+                    "id"                => $col->discount_ref_id,
+                    "room_id"           => $room_id,
+                    "hotel"             => $hotel->id,
+                    "ref_id"            => $col->discount_ref_id,
+                    "start"             => $start,
+                    "end"               => $end,
+                    "from"              => $col->discount_start,
+                    "till"              => $col->discount_end,
+                    "discount_price"    => explode("|", $col->discount_price),
+                    "discount_type"     => $col->discount_type,
+                    "Days"              => $app_day_patern[$col->discount_patroon],
+                    "format_days"       => $col->discount_patroon,
+                    "discount_compare"  => $col->discount_compare,
+                    "uid"               => $id,
+                ];
+
+
+            endforeach;
+
+
+
+        endif;
+
+
+        return $data;
     }
 
     /**

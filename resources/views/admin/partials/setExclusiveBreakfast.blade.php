@@ -1,8 +1,8 @@
 <div class="row">
-<form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="setlastMinute()" ng-init="getLastMinutePrices({{ Auth::User()->id }})" >
+<form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="setexBreakFast()" ng-init="getexBreakFast({{ Auth::User()->id }})">
 {{ csrf_field() }}
 
-    @include('admin.partials.__changeAvailabilityPriceForm')
+    @include('admin.partials.__setPricesWithoutDays')
     <div class="form-group">
         <label class="col-lg-4 control-label">Price</label>
         <div class="col-lg-4">
@@ -44,10 +44,7 @@
                     Price
 
                 </th>
-                <th>
-                    Day(s)
 
-                </th>
                 <th>
                     Action
 
@@ -56,19 +53,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="data in lmData track by $index">
+            <tr ng-repeat="data in exData track by $index">
 
 
                 <td>@{{data.start}}</td>
                 <td>@{{data.end}} </td>
 
                 <td>@{{data.price}}</td>
-                <td>@{{data.Days}}</td>
+
                 <td> <div class="btn-group mr5">
 
-                        <button title="Edit" type="button" class="btn btn-default fa fa-edit" ng-click="edit(data.uid,  data.ref_id, data.start, data.end , data.format_days, data.price)"></button>
+                        <button title="Edit" type="button" class="btn btn-default fa fa-edit" ng-click="editEx(data.uid,  data.ref_id, data.start, data.end, data.price)"></button>
 
-                        <button title="delete" type="button" class="btn btn-default fa fa-trash" ng-click = "delete('Last Minute', 'Price set-up deleted!', data.uid, data.ref_id, data.start, data.end, data.format_days)"></button>
+                        <button title="delete" type="button" class="btn btn-default fa fa-trash" ng-click = "deleteEx('Excluding Break-Fast', 'Price set-up deleted!', data.uid, data.ref_id, data.start, data.end)"></button>
 
                     </div>
                 </td>

@@ -11,6 +11,9 @@
 |
 */
 
+//Dirty routing
+
+
 
 // Authentication Routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
@@ -22,7 +25,11 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 
-
+/**
+ * Two roles defined for ruting
+ * 1- Auth (General for all registered users)
+ * 2- Role (Specific for system administrator)
+ */
 
 /*Route::get('login', 'AuthController@loginView');*/
 
@@ -62,6 +69,20 @@ Route::group(array('prefix' => 'administrator', "middleware" => "auth"), functio
 Route::get('hotels', 'UsersController@index')->middleware(['auth', 'role']);
 
 //Route::get('hotelData', 'UsersController@hotelData')->middleware(['auth']);
+
+
+
+
+
+/** Routes for hotels for hotel owners */
+Route::post('addHotel/{id}', 'UsersController@updateHotelData')->middleware(['auth']);
+
+
+Route::post('addHotelText/{id}', 'UsersController@updateHotelText')->middleware(['auth']);
+Route::post('addHotelSettings/{id}', 'UsersController@updateHotelSettings')->middleware(['auth']);
+
+Route::post('addHotelOption/{id}', 'UsersController@updateHotelOptions')->middleware(['auth']);
+
 Route::get('hotelData',  function () {
 
     return view('admin.partials.hotelData');
@@ -86,10 +107,24 @@ Route::get('getHotelOptions', 'UsersController@getHotelOptions')->middleware(['a
         })->middleware(['auth', 'role']);
 
 
+
+
+
 Route::get('listallhotels', 'UsersController@hotelList')->middleware(['auth', 'role']);
 
+
+
+/****Hotel owner routs ended here**/
+
+
+
+
+// Route for getting states for the selected country
 Route::get('getStates/{country}', 'CountriesController@getStates')->middleware(['auth']);
 
+
+
+/*** Routes for hotel owner rooms**/
 
 
 Route::get('loadRooms', 'RoomsController@getRooms')->middleware(['auth']);
@@ -109,20 +144,6 @@ Route::get('addnewroom',  function () {
 })->middleware(['auth']);
 
 
-
-
-
-Route::post('setMinStay/{room_id}', 'RoomsController@setMinStay')->middleware(['auth']);
-Route::get('getMinimumStay/{id}/{room_id}', 'RoomsController@getMinimumStay')->middleware(['auth']);
-
-
-Route::post('addHotel/{id}', 'UsersController@updateHotelData')->middleware(['auth']);
-
-
-Route::post('addHotelText/{id}', 'UsersController@updateHotelText')->middleware(['auth']);
-Route::post('addHotelSettings/{id}', 'UsersController@updateHotelSettings')->middleware(['auth']);
-
-Route::post('addHotelOption/{id}', 'UsersController@updateHotelOptions')->middleware(['auth']);
 Route::post('addRoom/{id}', 'RoomsController@store')->middleware(['auth']);
 
 
@@ -135,5 +156,26 @@ Route::get('getLstMinutePrice/{id}/{room_id}', 'RoomsController@getLstMinutePric
 Route::post('roomPhotos', 'RoomsController@roomPhotosPost')->middleware(['auth']);
 
 Route::post('updateRoomData/{id}', 'RoomsController@updateRoomData')->middleware(['auth']);
+Route::post('setMinStay/{room_id}', 'RoomsController@setMinStay')->middleware(['auth']);
+Route::get('getMinimumStay/{id}/{room_id}', 'RoomsController@getMinimumStay')->middleware(['auth']);
+Route::post('getRoomNormalPrice/{room_id}', 'RoomsController@getRoomNormalPrice')->middleware(['auth']);
+Route::post('setDiscountDatesPrice/{room_id}', 'RoomsController@setDiscountDatesPrice')->middleware(['auth']);
+Route::get('getDiscountDates/{id}/{room_id}', 'RoomsController@getDiscountDates')->middleware(['auth']);
+
+Route::post('setexBreakFast/{room_id}', 'RoomsController@setexBreakFast')->middleware(['auth']);
+Route::get('getexBreakFast/{id}/{room_id}', 'RoomsController@getexBreakFast')->middleware(['auth']);
+
+
+Route::post('setSingleUse/{room_id}', 'RoomsController@setSingleUse')->middleware(['auth']);
+Route::get('getSingleUse/{id}/{room_id}', 'RoomsController@getSingleUse')->middleware(['auth']);
+
+Route::post('setNonRefundable/{room_id}', 'RoomsController@setNonRefundable')->middleware(['auth']);
+Route::get('getNonRefundable/{id}/{room_id}', 'RoomsController@getNonRefundable')->middleware(['auth']);
+
+
+/** Hotel owner rooms routing data ended here */
+
+
+
 Route::post('userData/{id}', 'UsersController@updateUserData')->middleware(['auth']);
 

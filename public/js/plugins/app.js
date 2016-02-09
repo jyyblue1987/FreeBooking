@@ -1001,6 +1001,8 @@ $scope.loadRoomPhotos = function() {
 
         $scope.lmData = [];
         $scope.show = false;
+
+
         dg = Data;
 
         var res = Request.post("get",   "getLstMinutePrice/"+uid+"/"+dg.id,  "");
@@ -1126,7 +1128,7 @@ $scope.loadRoomPhotos = function() {
     $scope.getMinimumStay = function(uid)
     {
 
-        $scope.minimumStay= true;
+
         $scope.msData = [];
         $scope.show = false;
         dg = Data;
@@ -1149,7 +1151,7 @@ $scope.loadRoomPhotos = function() {
                     });
 
                     $scope.show = true;
-                    $scope.minimumStay= false;
+
 
                 }
 
@@ -1222,22 +1224,600 @@ $scope.loadRoomPhotos = function() {
 
     /******* Set Discount Dates Module ****/
 
-    $scope.getDiscountDates = function(uid)
-    {
-        $scope.next = true;
+    $scope.getDiscountDates = function(uid, nextFlag) {
+        $scope.show = false;
+        $scope.disCountData = [];
+        $scope.showTable = false;
+        dg = Data;
+
+
+        if (nextFlag)
+        {
+            $scope.next = true;
+        }
+
+
+
+        var res = Request.post("get",   "getDiscountDates/"+uid+"/"+dg.id,  "");
+
+
+        var datas = [];
+
+
+        res.then(
+
+            function successCallback(response){
+
+                if(response.data != ""){
+
+                    angular.forEach(response.data, function(value, key){
+
+                        $scope.disCountData.push(value);
+
+                    });
+
+                    $scope.showTable = true;
+
+
+
+
+                }
+
+            },
+            function errorCallback(response) {
+
+
+                $scope.getMinimumStay(uid);
+
+            }
+        );
+
     }
 
 
-    $scope.discountDatesNext = function()
+    $scope.discountDatesNext = function(uid)
     {
+
         $scope.next = false;
         $scope.save = true;
+
+        dg = Data;
+        $scope.priceVanaf = [];
+        $scope.discountPrice = [];
+        spinnerService.show('html5spinner');
+        var res = Request.post("post",   "getRoomNormalPrice/"+dg.id, "");
+
+        res.then(
+
+            function successCallback(response){
+
+                if(response.data != ""){
+
+                    for(var i = 1; i < $scope.price.start; i++)
+                    {
+
+                        $scope.priceVanaf.push(response.data.rooms.price);
+                    }
+
+                    for(var i = parseInt($scope.price.start); i <= $scope.price.till; i++)
+                    {
+
+                        $scope.discountPrice.push(i);
+
+
+                    }
+
+
+
+                    spinnerService.hide('html5spinner');
+
+
+                }
+
+            },
+            function errorCallback(response) {
+
+
+                discountDatesNext();
+
+            }
+        );
+
+
+
+
+
     }
 
 
-    $scope.setDiscountDates = function()
+    $scope.setDiscountDates = function(uid)
     {
-        console.log($scope.price);
+
+
+        spinnerService.show('html5spinner');
+        dg = Data;
+
+        var res = Request.post("post",   "setDiscountDatesPrice/"+dg.id, $scope.price);
+
+
+        res.then(
+
+            function successCallback(response){
+
+                if(response.data != ""){
+
+
+                    swal({
+                        title:response.data.flash.title,
+                        text: response.data.flash.message,
+                        type: response.data.flash.type,
+                        timer: 2000,
+                        showConfirmButton:false
+                    });
+
+                    $scope.getDiscountDates(uid, false);
+                    spinnerService.hide('html5spinner');
+                    $scope.next = true;
+                    $scope.save = false;
+
+                }
+
+            },
+            function errorCallback(response) {
+
+
+                discountDatesNext();
+
+            }
+        );
+    }
+
+
+
+    $scope.discountDateEdit = function (uid, ref_id, start, end, days, discount_type, discount_compare, from, till)
+    {
+
+
+        $scope.price.days = days;
+        $scope.price.from = start;
+        $scope.price.to = end;
+        $scope.price.discount_compare = discount_compare;
+        $scope.price.discount_type = discount_type;
+        $scope.price.start = from;
+        $scope.price.till = till;
+        $scope.price.ref_id = ref_id;
+        $scope.price.edit = "change";
+
+    }
+
+
+
+
+    $scope.discountDateDelete = function (title, msg, uid, refId, start, end, days)
+    {
+
+        for (var key in $scope.disCountData ) {
+
+            var arr = $scope.disCountData[key];
+
+            for (var prop in arr) {
+                if (prop == "ref_id" && arr[prop] == refId) {
+
+                    // $scope.lmData.pop(key);
+                    $scope.disCountData.splice(key, 1);
+                }
+            }
+        }
+
+        if($scope.disCountData.length == 0){
+            $scope.showTable = false;
+        }
+
+        var delData = {};
+        delData.from = start;
+        delData.to = end;
+
+        delData.ref_id = refId;
+        delData.edit = "delete";
+        delData.days = days;
+
+
+        dg = Data;
+
+        var res = Request.post("post",   "setDiscountDatesPrice/"+dg.id, delData);
+
+        swal({
+            title:title,
+            text: msg,
+            type: "success",
+            timer: 2000,
+            showConfirmButton:false
+        });
+
+    }
+
+    /******* Set Excluding Break Fast ********/
+
+    $scope.setexBreakFast = function ()
+    {
+        dg = Data;
+
+        var res = Request.post("post",   "setexBreakFast/"+dg.id,  $scope.price);
+        res.then(
+
+            function successCallback(response){
+
+
+                //
+                swal({
+                    title:response.data.flash.title,
+                    text: response.data.flash.message,
+                    type: response.data.flash.type,
+                    timer: 2000,
+                    showConfirmButton:false
+                });
+               $scope.getexBreakFast($scope.user.user_id);
+
+            },
+            function errorCallback(response) {
+
+
+                //Have to work on errors
+
+            }
+        );
+    }
+
+    $scope.getexBreakFast = function(uid)
+    {
+        $scope.exData = [];
+        $scope.show = false;
+        dg = Data;
+
+        var res = Request.post("get",   "getexBreakFast/"+uid+"/"+dg.id,  "");
+
+        var datas = [];
+
+
+        res.then(
+
+            function successCallback(response){
+
+                if(response.data != ""){
+
+                    angular.forEach(response.data, function(value, key){
+
+                        $scope.exData.push(value);
+
+                    });
+
+                    $scope.show = true;
+
+
+                }
+
+            },
+            function errorCallback(response) {
+
+
+                $scope.getexBreakFast(uid);
+
+            }
+        );
+    }
+
+
+    $scope.editEx = function(uid, refId, start, end, price)
+    {
+
+
+        $scope.price.from = start;
+        $scope.price.to = end;
+        $scope.price.cost = price;
+        $scope.price.ref_id = refId;
+        $scope.price.edit = "change";
+
+    }
+
+    $scope.deleteEx = function (title, msg, uid, refId, start, end)
+    {
+
+        for (var key in $scope.exData ) {
+
+            var arr = $scope.exData[key];
+
+            for (var prop in arr) {
+                if (prop == "ref_id" && arr[prop] == refId) {
+
+                    // $scope.lmData.pop(key);
+                    $scope.exData.splice(key, 1);
+                }
+            }
+        }
+
+        if($scope.exData.length == 0){
+            $scope.show = false;
+        }
+
+        var delData = {};
+        delData.from = start;
+        delData.to = end;
+
+        delData.ref_id = refId;
+        delData.edit = "delete";
+
+
+
+        dg = Data;
+
+        var res = Request.post("post",   "setexBreakFast/"+dg.id, delData);
+
+        swal({
+            title:title,
+            text: msg,
+            type: "success",
+            timer: 2000,
+            showConfirmButton:false
+        });
+
+    }
+
+
+    /******* Single Use ***********/
+
+    $scope.setSingleUse = function ()
+    {
+        dg = Data;
+
+        var res = Request.post("post",   "setSingleUse/"+dg.id,  $scope.price);
+        res.then(
+
+            function successCallback(response){
+
+
+                //
+                swal({
+                    title:response.data.flash.title,
+                    text: response.data.flash.message,
+                    type: response.data.flash.type,
+                    timer: 2000,
+                    showConfirmButton:false
+                });
+                $scope.getSingleUse($scope.user.user_id);
+
+            },
+            function errorCallback(response) {
+
+
+                //Have to work on errors
+
+            }
+        );
+    }
+
+
+    $scope.getSingleUse = function(uid)
+    {
+        $scope.suData = [];
+        $scope.show = false;
+        dg = Data;
+
+        var res = Request.post("get",   "getSingleUse/"+uid+"/"+dg.id,  "");
+
+        var datas = [];
+
+
+        res.then(
+
+            function successCallback(response){
+
+                if(response.data != ""){
+
+                    angular.forEach(response.data, function(value, key){
+
+                        $scope.suData.push(value);
+
+                    });
+
+                    $scope.show = true;
+
+
+                }
+
+            },
+            function errorCallback(response) {
+
+
+                $scope.getSingleUse(uid);
+
+            }
+        );
+    }
+
+
+
+    $scope.editSu = function(uid, refId, start, end, price)
+    {
+
+
+        $scope.price.from = start;
+        $scope.price.to = end;
+        $scope.price.cost = price;
+        $scope.price.ref_id = refId;
+        $scope.price.edit = "change";
+
+    }
+
+
+    $scope.deleteSu = function (title, msg, uid, refId, start, end)
+    {
+
+        for (var key in $scope.suData ) {
+
+            var arr = $scope.suData[key];
+
+            for (var prop in arr) {
+                if (prop == "ref_id" && arr[prop] == refId) {
+
+                    // $scope.lmData.pop(key);
+                    $scope.suData.splice(key, 1);
+                }
+            }
+        }
+
+        if($scope.suData.length == 0){
+            $scope.show = false;
+        }
+
+        var delData = {};
+        delData.from = start;
+        delData.to = end;
+
+        delData.ref_id = refId;
+        delData.edit = "delete";
+
+
+
+        dg = Data;
+
+        var res = Request.post("post",   "setSingleUse/"+dg.id, delData);
+
+        swal({
+            title:title,
+            text: msg,
+            type: "success",
+            timer: 2000,
+            showConfirmButton:false
+        });
+
+    }
+
+    /******* Non-Refundable ******/
+
+    $scope.setNonRefundable = function ()
+    {
+        dg = Data;
+
+        var res = Request.post("post",   "setNonRefundable/"+dg.id,  $scope.price);
+        res.then(
+
+            function successCallback(response){
+
+
+                //
+                swal({
+                    title:response.data.flash.title,
+                    text: response.data.flash.message,
+                    type: response.data.flash.type,
+                    timer: 2000,
+                    showConfirmButton:false
+                });
+                $scope.getNonRefundable($scope.user.user_id);
+
+            },
+            function errorCallback(response) {
+
+
+                //Have to work on errors
+
+            }
+        );
+    }
+
+
+    $scope.getNonRefundable = function(uid)
+    {
+        $scope.nfData = [];
+        $scope.show = false;
+        dg = Data;
+
+        var res = Request.post("get",   "getNonRefundable/"+uid+"/"+dg.id,  "");
+
+        var datas = [];
+
+
+        res.then(
+
+            function successCallback(response){
+
+                if(response.data != ""){
+
+                    angular.forEach(response.data, function(value, key){
+
+                        $scope.nfData.push(value);
+
+                    });
+
+                    $scope.show = true;
+
+
+                }
+
+            },
+            function errorCallback(response) {
+
+
+                $scope.getNonRefundable(uid);
+
+            }
+        );
+    }
+
+
+    $scope.editNf = function(uid, refId, start, end, price)
+    {
+
+
+        $scope.price.from = start;
+        $scope.price.to = end;
+        $scope.price.cost = price;
+        $scope.price.ref_id = refId;
+        $scope.price.edit = "change";
+
+    }
+
+
+    $scope.deleteNf = function (title, msg, uid, refId, start, end)
+    {
+
+        for (var key in $scope.nfData ) {
+
+            var arr = $scope.nfData[key];
+
+            for (var prop in arr) {
+                if (prop == "ref_id" && arr[prop] == refId) {
+
+                    // $scope.lmData.pop(key);
+                    $scope.nfData.splice(key, 1);
+                }
+            }
+        }
+
+        if($scope.nfData.length == 0){
+            $scope.show = false;
+        }
+
+        var delData = {};
+        delData.from = start;
+        delData.to = end;
+
+        delData.ref_id = refId;
+        delData.edit = "delete";
+
+
+
+        dg = Data;
+
+        var res = Request.post("post",   "setNonRefundable/"+dg.id, delData);
+
+        swal({
+            title:title,
+            text: msg,
+            type: "success",
+            timer: 2000,
+            showConfirmButton:false
+        });
+
     }
 
     /******* Photo upload**********/
