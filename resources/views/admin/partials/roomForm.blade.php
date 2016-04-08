@@ -3,7 +3,7 @@
     <div class="form-group">
         <label class="col-lg-2 control-label">Name</label>
         <div class="col-lg-4">
-            <input type="text" placeholder="Room Name" ng-model="newroom.name"  name="name" class="form-control">
+            <input type="text" ng-model="newroom.name"/^\w+$/" name="name" class="form-control" placeholder="Room Name" required="please insert name">
         </div>
         <div class="col-lg-6">
             &nbsp;
@@ -19,14 +19,14 @@
     <div class="form-group">
         <label class="col-lg-2 control-label">Available Rooms</label>
         <div class="col-lg-4">
-            <input type="number" placeholder="Number of Rooms" ng-model="newroom.number"  name="number" class="form-control">
+            <input type="number" ng-model="newroom.number" min="1" name="number" class="form-control" placeholder="Number of Rooms" required>
         </div>
     </div>
 
     <div class="form-group">
         <label class="col-lg-2 control-label">Number of persons</label>
         <div class="col-lg-4">
-            <input type="number" placeholder="Number of Persons" ng-model="newroom.number_persons"  name="number_persons" class="form-control">
+            <input type="number" ng-model="newroom.number_persons" min="1" name="number_persons" placeholder="Number of Persons" class="form-control" required>
         </div>
     </div>
 
@@ -34,24 +34,17 @@
         <label class="col-lg-2 control-label">Price from</label>
         <div class="col-lg-4">
             <div class="input-group ">
-                <div class="input-group-btn">
-                    <button class="btn btn-success fa fa-euro" type="button"></button>
-                </div>
-                <input type="text" placeholder="Room Price" class="form-control" name="price" ng-model="newroom.price">
+                <span class="input-group-addon fa fa-euro"></span>
+                <input type="number" ng-model="newroom.price" min="1" class="form-control" name="price" placeholder="Room Price" required>
             </div>
         </div>
     </div>
     <input type="hidden" name="language" ng-model="des.language" ng-init="des.language = '{{ Config::get('app.locale') }}'">
     <input type="hidden" name="user_id" ng-model="newroom.user_id" ng-init="newroom.user_id = {{ Auth::User()->id }}">
     <div class="form-group">
-        <div class="col-lg-12">
-            <div class="clearfix">
-                <button  class="btn btn-primary right" type="submit"  >Save</button>
-            </div>
+        <div class="col-lg-4 col-lg-offset-2">
+            <button  class="btn btn-primary" type="submit">Save</button>
         </div>
     </div>
-
-
-
 
 </form>

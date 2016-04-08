@@ -6,18 +6,14 @@
     <div class="form-group">
         <label class="col-lg-4 control-label">Price</label>
         <div class="col-lg-4">
-            <div class="input-group ">
-                <div class="input-group-btn">
-                    <button class="btn btn-success fa fa-euro" type="button"></button>
-                </div>
-                <input type="text" placeholder="Set Price" class="form-control" name="cost" ng-model="price.cost">
+            <div class="input-group mb0">
+                <span class="input-group-addon fa fa-euro"></span>
+                <input type="number" min="1" placeholder="Set Price" class="form-control" name="cost" ng-model="price.cost" required>
             </div>
         </div>
     </div>
-    <div class="clearfix right">
-
-        <button  class="btn btn-primary right" type="submit">Save</button>
-
+    <div class="col-lg-8 col-lg-offset-4">
+        <button  class="btn btn-primary" type="submit">Save</button>
     </div>
     <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'new'">
 </form>

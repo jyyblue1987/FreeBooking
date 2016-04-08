@@ -2,20 +2,15 @@
 <form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="setMinStay()" ng-init="getMinimumStay({{ Auth::User()->id }})" >
 {{ csrf_field() }}
 
-    @include('admin.partials.__changeAvailabilityPriceForm');
+    @include('admin.partials.__changeAvailabilityPriceForm')
     <div class="form-group">
         <label class="col-lg-4 control-label">Nights</label>
         <div class="col-lg-4">
-            <div class="input-group ">
-
-                <input type="text" placeholder="Set Nights" class="form-control" name="nights" ng-model="price.nights">
-            </div>
+            <input type="number" min="1" placeholder="Set Nights" class="form-control" name="nights" ng-model="price.nights" required>
         </div>
     </div>
-    <div class="clearfix right">
-
-        <button  class="btn btn-primary right" type="submit">Save</button>
-
+    <div class="col-lg-8 col-lg-offset-4">
+        <button  class="btn btn-primary" type="submit">Save</button>
     </div>
     <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'new'">
 </form>

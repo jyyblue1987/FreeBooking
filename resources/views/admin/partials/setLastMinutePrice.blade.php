@@ -1,64 +1,48 @@
 <div class="row">
-<form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="setlastMinute()" ng-init="getLastMinutePrices({{ Auth::User()->id }})" >
-{{ csrf_field() }}
+    <form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="setlastMinute()" ng-init="getLastMinutePrices({{ Auth::User()->id }})" >
+    {{ csrf_field() }}
 
-    @include('admin.partials.__changeAvailabilityPriceForm')
-    <div class="form-group">
-        <label class="col-lg-4 control-label">Price</label>
-        <div class="col-lg-4">
-            <div class="input-group ">
-                <div class="input-group-btn">
-                    <button class="btn btn-success fa fa-euro" type="button"></button>
+        @include('admin.partials.__changeAvailabilityPriceForm')
+        <div class="form-group mb0">
+            <label class="col-lg-4 control-label">Price</label>
+            <div class="col-lg-4">
+                <div class="input-group ">
+                    <span class="input-group-addon fa fa-euro"></span>
+                    <input type="number" min="1" placeholder="Set Price" class="form-control" name="cost" ng-model="price.cost" required>
                 </div>
-                <input type="text" placeholder="Set Price" class="form-control" name="cost" ng-model="price.cost">
             </div>
         </div>
-    </div>
-    <div class="clearfix right">
-
-        <button  class="btn btn-primary right" type="submit">Save</button>
-
-    </div>
-    <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'new'">
-</form>
+        <div class="col-lg-8 col-lg-offset-4">
+            <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+        <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'new'">
+    </form>
 </div>
 <hr class="dashed mb30">
 <div class="row">
     <div class="col-lg-12" ng-show = "show">
-
-
-
         <table class="table table-bordered table-striped" >
             <thead>
             <tr>
-
                 <th>
                     From
-
                 </th>
                 <th>
                     Till
-
                 </th>
                 <th>
                     Price
-
                 </th>
                 <th>
                     Day(s)
-
                 </th>
                 <th>
                     Action
-
                 </th>
-
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="data in lmData track by $index">
-
-
                 <td>@{{data.start}}</td>
                 <td>@{{data.end}} </td>
 
