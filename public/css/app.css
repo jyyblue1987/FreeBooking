@@ -2329,10 +2329,18 @@ output {
     cursor: not-allowed; }
 
 textarea.form-control {
-  height: auto; }
-
+  height: auto;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+}
+input[type=number] {
+-moz-appearance: textfield;
+}
 input[type="search"] {
-  -webkit-appearance: none; }
+  -webkit-appearance: none;
+}
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   input[type="date"].form-control,
@@ -7336,7 +7344,7 @@ textarea.input-lg, .input-group-lg > textarea.form-control,
   background-image: none;
   border: 1px solid transparent;
   white-space: nowrap;
-  padding: 6px 15px;
+  padding: 6px 25px;
   font-size: 13px !important;
   line-height: 1.538461;
   border-radius: 2px;
