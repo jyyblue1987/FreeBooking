@@ -42,8 +42,7 @@
 
 
 
-    <div class="content-container" ng-class="{container: isLayoutHorizontal}"
-         id="content" ng-view>
+    <div class="content-container" ng-class="{container: isLayoutHorizontal}" id="content" ng-view>
         <!-- content using routing -->
 
     </div>

@@ -10,30 +10,22 @@
 <!-- Site nav (vertical) -->
 
 <nav class="site-nav clearfix" role="navigation" collapse-nav-accordion highlight-active>
-
     <ul class="list-unstyled nav-list">
         <li>
-
-                <a href="#/home"><i class="fa fa-desktop icon"></i>
-                <span class="text">Dashboard</span></a>
-
-
-
+            <a href="#/home"><i class="fa fa-desktop icon"></i>
+            <span class="text">Dashboard</span></a>
         </li>
-
     </ul>
     @if( Auth::user()->type == "admin" )
     <div class="nav-title panel-heading"><i>Hotels</i></div>
     <ul class="list-unstyled nav-list">
-            <li>
+        <li>
             <li><a href="#/hotels">All Hotels</a></li>
             <li><a href="#/newhotel">Register Hotel</a></li>
             <li><a href="#/ui/icons">Invoices</a></li>
-
-            </li>
-
+        </li>
     </ul>
-        @endif
+    @endif
 
 
     <div class="nav-title panel-heading"><i>Your Hotel</i></div>
@@ -42,8 +34,6 @@
         <li>
         <li><a href="#/hotelData"> {{ Auth::user()->hotel_name }}</a></li>
         </li>
-
-
         <li>
             <a href="javascript:;">
                 <i class="fa fa-desktop icon"></i>
@@ -56,13 +46,7 @@
                     <li><a href="#/addnewroom">Add new room<span class="badge badge-xs badge-success right">new</span></a></li>
                     <li ng-repeat="room in regRooms" ng-model="regRooms" ><a href="#/getRoom/@{{ room.name }}/@{{ room.id }}">@{{ room.name }}</a></li>
                 </ul>
-
-
-
         </li>
-        </ul>
-
-
+    </ul>
     <div class="nav-title panel-heading"><i>Arrangements</i></div>
 </nav>
-

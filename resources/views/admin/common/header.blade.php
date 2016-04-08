@@ -1,6 +1,6 @@
 <div class="nav-head">
     <!-- Site logo -->
-    <a href="#/dashboard-v1" class="site-logo"><span>App</span>&nbsp;Board</a>
+    <span class="site-logo"><span>App</span>&nbsp;Board</span>
 	<span class="nav-trigger fa"
           ng-class="{'fa-navicon': isMobile, 'fa-outdent': !isMobile}"
           toggle-nav-min toggle-off-canvas ng-click="toggleHorizontalNav()">
@@ -15,9 +15,9 @@
         <!-- this nav is visible only with horizonal layout -->
         <nav class="site-nav-horizontal" role="navigation">
 
-            <a href="#/dashboard-v1" class="back-to-main text-bold" ng-click="changeLayout()">
+            <span class="back-to-main text-bold" ng-click="changeLayout()">
                 Back To Main
-            </a>
+            </span>
 
             <ul class="list-unstyled clearfix menus">
                 <li class="dropdown" dropdown>
