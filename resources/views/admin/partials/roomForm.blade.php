@@ -3,7 +3,7 @@
     <div class="form-group">
         <label class="col-lg-2 control-label">Name</label>
         <div class="col-lg-4">
-            <input type="text" ng-model="newroom.name"/^\w+$/" name="name" class="form-control" placeholder="Room Name" required="please insert name">
+            <input type="text" ng-model="newroom.name" ng-pattern="/^\w+$/" name="name" class="form-control" placeholder="Room Name" required="please insert name">
         </div>
         <div class="col-lg-6">
             &nbsp;
@@ -35,7 +35,7 @@
         <div class="col-lg-4">
             <div class="input-group ">
                 <span class="input-group-addon fa fa-euro"></span>
-                <input type="number" ng-model="newroom.price" min="1" class="form-control" name="price" placeholder="Room Price" required>
+                <input type="text" ng-model="newroom.price" min="1" class="form-control" name="price" placeholder="Room Price" required>
             </div>
         </div>
     </div>
