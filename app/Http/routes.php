@@ -13,7 +13,7 @@
 
 //Dirty routing
 
-
+die("here it is");
 
 // Authentication Routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
