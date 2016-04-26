@@ -1,7 +1,7 @@
 <meta content="UTF-8">
 <meta name="token" id="token" value="{{ csrf_token() }}" >
 
-<title>Project Flyer</title>
+<title>Freebookings Admin</title>
 
 
 <link rel="stylesheet" href="{{ URL::asset('/') }}css/fonts/awesome-fonts.css">
