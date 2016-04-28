@@ -5,6 +5,7 @@
         "ngAnimate",
         "ngSanitize",
         "ui.bootstrap",
+        "app.ui.form.ctrls",
         "ui.select",
         "textAngular",
         "easypiechart",
@@ -101,6 +102,9 @@ var rooms = angular.module('app.rooms',[]).config(['$routeProvider', function($r
 /*** App Controllers Module ***/
 var ctrls = angular.module("app.ctrls", []);
 
+/*** UI Form Controllers Module ***/
+var uiFormCtrls = angular.module("app.ui.form.ctrls", []);
+
 /*** App Directives Module ***/
 var appDirective = angular.module("app.directives", []).directive("toggleNavMin", ["$rootScope", function ($rs) {
     return function (scope, el) {
@@ -112,6 +116,7 @@ var appDirective = angular.module("app.directives", []).directive("toggleNavMin"
         })
     }
 }]);
+
 
 /*** App Services Module ***/
 angular.module("app.services", []);
