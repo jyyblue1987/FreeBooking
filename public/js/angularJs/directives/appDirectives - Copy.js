@@ -101,38 +101,33 @@ appDirective.directive("customPage", [function () {
 }]);
 
 
-var integer_regexp = /^\-?\d+$/;
-var numeric_regexp = /^\-?\d+(\,?\d{1,8})?$/;
-
-appDirective.directive('numericValidity', function() {
+/*** number value for input text ***/
+appDirective.directive('onlyDigits', function () {
     return {
-        require: 'ngModel',
-        link: function(scope, elm, attrs, ctrl) {
-            ctrl.$validators.numeric = function(modelValue, viewValue) {
-                if (ctrl.$isEmpty(modelValue)) {
-                    return true;
-                }
-                if (numeric_regexp.test(viewValue)) {
-                    return true;
-                }
-                return false;
-            };
+      require: 'ngModel',
+      restrict: 'A',
+      link: function (scope, element, attr, ctrl) {
+        function inputValue(val) {
+          if (val) {
+            var digits = val.replace(/[^0-9]/g, '');
 
-            ctrl.$validators.numericmin = function(modelValue, viewValue) {
-                if (numeric_regexp.test(viewValue)) {
-                    if ( viewValue < 1 ) {
-                        return false;
-                    }
-                    return true;
-                }
-            };
-
-        }
+            if (digits !== val) {
+              ctrl.$setViewValue(digits);
+              ctrl.$render();
+            }
+            return parseInt(digits,10);
+          }
+          return undefined;
+        }            
+        ctrl.$parsers.push(inputValue);
+      }
     };
 });
 
-/*** integer validity ***/
-appDirective.directive('integerValidity', function() {
+// var INTEGER_REGEXP = /^\-?\d+$/;
+var INTEGER_REGEXP = /^\-?\d+(\,?\d{1,8})?$/;
+
+appDirective.directive('integer', function() {
     return {
         require: 'ngModel',
         link: function(scope, elm, attrs, ctrl) {
@@ -140,43 +135,27 @@ appDirective.directive('integerValidity', function() {
                 if (ctrl.$isEmpty(modelValue)) {
                     return true;
                 }
-                if (integer_regexp.test(viewValue)) {
+                if (INTEGER_REGEXP.test(viewValue)) {
                     return true;
                 }
                 return false;
             };
 
-        }
-    };
-});
-
-
-/*** string ***/
-appDirective.directive('stringValidity', function() {
-    return {
-        require: 'ngModel',
-        link: function(scope, elm, attrs, ctrl) {
-            ctrl.$validators.string = function(modelValue, viewValue) {
-                if (ctrl.$isEmpty(modelValue)) {
+            ctrl.$validators.integermin = function(modelValue, viewValue) {
+                if (INTEGER_REGEXP.test(viewValue)) {
+                    if ( viewValue < 1 ) {
+                        return false;
+                    }
                     return true;
                 }
-                if (integer_regexp.test(viewValue)) {
-                    return false;
-                }
-                return true;
             };
-
+            
         }
     };
 });
 
 
-
-
-
-
-
-
+/*** No Digits only ***/
 appDirective.directive('noDigitsOnly', function () {
     return {
       require: 'ngModel',

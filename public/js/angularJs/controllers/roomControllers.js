@@ -3,52 +3,33 @@
 
 /*** Rooms Controller ***/
 rooms.controller('roomsController',["$scope", "Request", "regRooms","spinnerService", function($scope, Request, regRooms,spinnerService){
-
-
     $scope.loadRooms = function ()
     {
-
         /*$scope.regRooms = regRooms;
         while($scope.regRooms.length > 0) {
             $scope.regRooms.pop();
         }*/
-
-
        spinnerService.show('html5spinner');
 
         var res = Request.post("get",   "loadRooms",  "");
-
         res.then(
-
             function successCallback(response){
-
                $scope.regRooms = regRooms;
-
-
                 for (var key in response.data.rooms) {
                     var arr = response.data.rooms[key];
                     $scope.regRooms.push(arr);
-
                 }
-
                 spinnerService.hide('html5spinner');
-
             },
             function errorCallback(response) {
-
-
                 $scope.loadRooms();
-
             }
         );
-
-
     }
 
 
     $scope.addNewRoom = function ()
     {
-
         spinnerService.show('html5spinner');
         var data =[];
 
@@ -57,10 +38,7 @@ rooms.controller('roomsController',["$scope", "Request", "regRooms","spinnerServ
         var res = Request.post("post",   "addRoom/"+$scope.newroom.user_id,  data);
 
         res.then(
-
             function successCallback(response){
-
-
                 $scope.regRooms = regRooms;
                 $scope.regRooms.push(response.data.rooms);
 
@@ -71,26 +49,20 @@ rooms.controller('roomsController',["$scope", "Request", "regRooms","spinnerServ
                     timer: 2000,
                     showConfirmButton:false
                 });
-
                 spinnerService.hide('html5spinner');
-
             },
             function errorCallback(response) {}
         );
-
     }
 }]);
 
 /*** Rooms Edit Controller ***/
 rooms.controller('roomsEditController',["$scope", "Request", "Data", "regRooms", "hotelRoomPhotos","spinnerService",  function($scope, Request, Data, regRooms, hotelRoomPhotos, spinnerService){
 
-
     $scope.obj = {};
 
     $scope.loadData = function( id ) {
-
         $scope.getloadspinner = function () {
-
             $scope.showRoom=true;
             spinnerService.show("roomData");
             dg = Data;
@@ -111,10 +83,7 @@ rooms.controller('roomsEditController',["$scope", "Request", "Data", "regRooms",
                     spinnerService.hide("roomData");
                 },
                 function errorCallback(response) {
-
-
                     $scope.loadData(id);
-
                 }
             );
         }
@@ -122,33 +91,25 @@ rooms.controller('roomsEditController',["$scope", "Request", "Data", "regRooms",
 $scope.loadRoomPhotos = function() {
 
     $scope.getPhotoLoad = function() {
-
         dg = Data;
         spinnerService.show("roomPhoto");
         var res = Request.post("get", "getRoomPhotos/" + dg.id, "");
 
-
         res.then(
             function successCallback(response) {
-
 
                 $scope.roomPhotos = hotelRoomPhotos;
                 $scope.roomPhotos = [];
                 for (var key in response.data.roomPhotos) {
 
-
                     var arr = response.data.roomPhotos[key];
                     $scope.roomPhotos.push(arr);
 
                 }
-
                 spinnerService.hide("roomPhoto");
             },
             function errorCallback(response) {
-
-
                 $scope.loadRoomPhotos();
-
             }
         );
     }
@@ -156,7 +117,7 @@ $scope.loadRoomPhotos = function() {
 
 
 
-    $scope.loadRoomOptions = function () {
+    $scope.loadRoomOptions = function() {
 
         $scope.loadOptionspinner = function () {
 
@@ -165,7 +126,6 @@ $scope.loadRoomPhotos = function() {
             dg = Data;
 
             var res = Request.post("get", "getRoomOptions/" + dg.id, "");
-
 
             res.then(
                 function successCallback(response) {
@@ -188,10 +148,7 @@ $scope.loadRoomPhotos = function() {
                     spinnerService.hide("roomOptions");
                 },
                 function errorCallback(response) {
-
-
                     $scope.loadRoomOptions();
-
                 }
             );
         }
@@ -203,37 +160,24 @@ $scope.loadRoomPhotos = function() {
         dg.roomData.then(
 
             function successCallback(response){
-
                 $scope.count = dg.room;
-
                 }
         );
        // $scope.room.count = dg.room;
         //$scope.room.name = dg.room_name;
-
     }
 
     $scope.addNewRoom = function()
     {
-
-
-
-
         dg = Data;
-
-
         var data = [];
-
         data.push($scope.newroom);
         data.push($scope.des);
-
         var res = Request.post("post",   "updateRoomData/"+dg.id, data);
 
         res.then(
 
             function successCallback(response){
-
-
                 $scope.regRooms = regRooms
                 for (var key in $scope.regRooms ) {
                     var arr = $scope.regRooms[key];
@@ -255,39 +199,25 @@ $scope.loadRoomPhotos = function() {
 
             },
             function errorCallback(response) {
-
-
                 //Have to work on errors
-
             }
         );
-
     }
-
-
-
 
 
     $scope.addRoomOptions = function()
     {
-
         var data = {
-
             'option':JSON.stringify($scope.options.option),
             'custom_options_title' : JSON.stringify($scope.options.custom_options_title),
             'custom_option':JSON.stringify($scope.options.custom_option)
-
         }
 
         var res = Request.post("post",   "addRoomOptions/"+$scope.options.user_id+"/"+$scope.options.room_id,  data);
 
-
-
         res.then(
 
             function successCallback(response){
-
-
                 //
                 swal({
                     title:response.data.flash.title,
@@ -296,13 +226,9 @@ $scope.loadRoomPhotos = function() {
                     timer: 2000,
                     showConfirmButton:false
                 });
-
             },
             function errorCallback(response) {
-
-
                 //Have to work on errors
-
             }
         );
     }
@@ -311,15 +237,11 @@ $scope.loadRoomPhotos = function() {
     {
 
         dg = Data;
-
         var res = Request.post("post",   "setRoomPrice/"+$scope.user.user_id+"/"+dg.id,  $scope.price);
-
 
         res.then(
 
             function successCallback(response){
-
-
                 //
                 swal({
                     title:response.data.flash.title,
@@ -331,10 +253,7 @@ $scope.loadRoomPhotos = function() {
 
             },
             function errorCallback(response) {
-
-
                 //Have to work on errors
-
             }
         );
     }
@@ -349,8 +268,6 @@ $scope.loadRoomPhotos = function() {
         res.then(
 
             function successCallback(response){
-
-
                 //
                 swal({
                     title:response.data.flash.title,
@@ -363,15 +280,10 @@ $scope.loadRoomPhotos = function() {
 
             },
             function errorCallback(response) {
-
-
                 //Have to work on errors
-
             }
         );
     }
-
-
 
     $scope.getLastMinutePrices = function(uid)
     {
@@ -381,34 +293,21 @@ $scope.loadRoomPhotos = function() {
 
 
         dg = Data;
-
         var res = Request.post("get",   "getLstMinutePrice/"+uid+"/"+dg.id,  "");
-
         var datas = [];
-
 
         res.then(
 
             function successCallback(response){
-
                 if(response.data != ""){
-
                    angular.forEach(response.data, function(value, key){
-
                         $scope.lmData.push(value);
-
                     });
-
                     $scope.show = true;
-
                 }
-
             },
             function errorCallback(response) {
-
-
                 $scope.getLastMinutePrices(uid);
-
             }
         );
     }
@@ -452,7 +351,6 @@ $scope.loadRoomPhotos = function() {
         delData.ref_id = refId;
         delData.edit = "delete";
         delData.days = days;
-
 
         dg = Data;
 
