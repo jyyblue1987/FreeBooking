@@ -1,5 +1,5 @@
 <div class="row">
-    <form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="setlastMinute()" ng-init="getLastMinutePrices({{ Auth::User()->id }})" >
+    <form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="setlastMinute()" ng-init="getLastMinutePrices({{ Auth::User()->id }})">
     {{ csrf_field() }}
 
         @include('admin.partials.__changeAvailabilityPriceForm')
