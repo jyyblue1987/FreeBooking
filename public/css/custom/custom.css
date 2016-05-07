@@ -425,7 +425,7 @@ a.bg-youtube:hover {
 
 .btn-sm,
 .btn-group-sm>.btn {
-    padding: 4px 10px;
+    padding: 4px 15px;
     font-size: 12px;
     line-height: 1.5;
     border-radius: 2px
@@ -1911,7 +1911,8 @@ a.list-group-item {
 .ui-radio label>span,
 .ui-radio label>i {
     position: relative;
-    padding-left: 24px
+    padding-left: 24px;
+    display: block;
 }
 .ui-checkbox label>span:before,
 .ui-checkbox label>i:before,
@@ -2679,7 +2680,7 @@ a.list-group-item {
 
 [datepicker] table>tbody>tr td>button>span,
 .datepicker table>tbody>tr td>button>span {
-    background: 0 0
+    background: 0 0;
 }
 
 [datepicker] table>tbody>tr td>button:not(.active):hover,
@@ -2692,6 +2693,8 @@ a.list-group-item {
     top: 0;
     z-index: 1000
 }
+
+
 
 .table th {
     font-weight: 600
@@ -7155,4 +7158,31 @@ body {
 .form-block + .form-block {
     padding-top: 40px;
     border-top: 1px solid #eee;
+}
+form > .form-block:last-child {
+    margin-bottom: 0;
+}
+[flow-drop] {
+    border: 3px dashed #e9ebf0;
+    color: #cbcbcb;
+    font-size: 1.8em;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2em 0;
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+}
+[flow-drop].drop-active {
+  background-color: #fafafa;
+  border-color: #ddd;
+  color: #999;
+}
+.star-wrap {
+    padding-top: 5px;
+    display: inline-block;
+    font-size: 1.3em;
+    line-height: 1;
 }
