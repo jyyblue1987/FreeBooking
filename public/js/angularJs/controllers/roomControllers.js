@@ -3,6 +3,7 @@
 
 /*** Rooms Controller ***/
 rooms.controller('roomsController',["$scope", "Request", "regRooms","spinnerService", function($scope, Request, regRooms,spinnerService){
+
     $scope.loadRooms = function ()
     {
         /*$scope.regRooms = regRooms;
@@ -156,7 +157,6 @@ $scope.loadRoomPhotos = function() {
     $scope.loadRoomSpecs = function()
     {
         dg = Data;
-
         dg.roomData.then(
 
             function successCallback(response){
@@ -254,6 +254,7 @@ $scope.loadRoomPhotos = function() {
             },
             function errorCallback(response) {
                 //Have to work on errors
+                console.log('error message');
             }
         );
     }

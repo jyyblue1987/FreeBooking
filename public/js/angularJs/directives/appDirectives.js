@@ -131,12 +131,14 @@ appDirective.directive('numericValidity', function() {
     };
 });
 
+
 /*** integer validity ***/
 appDirective.directive('integerValidity', function() {
     return {
         require: 'ngModel',
         link: function(scope, elm, attrs, ctrl) {
             ctrl.$validators.integer = function(modelValue, viewValue) {
+                
                 if (ctrl.$isEmpty(modelValue)) {
                     return true;
                 }
@@ -144,12 +146,10 @@ appDirective.directive('integerValidity', function() {
                     return true;
                 }
                 return false;
-            };
-
+            }; // validator function
         }
     };
 });
-
 
 /*** string ***/
 appDirective.directive('stringValidity', function() {
@@ -167,43 +167,5 @@ appDirective.directive('stringValidity', function() {
             };
 
         }
-    };
-});
-
-
-
-
-
-
-
-
-appDirective.directive('noDigitsOnly', function () {
-    return {
-      require: 'ngModel',
-      restrict: 'A',
-      link: function (scope, element, attr, ctrl) {
-
-        function inputValue(val) {
-          if (val) {
-
-            var digits = val.replace(/[^0-9]/g, ''),
-                nval    = '';
-
-            if ( val == digits || val == nval ) {
-
-                // ctrl.$setValidity('strngValidateFlags', false);
-                return undefined;
-            }
-            else {
-              ctrl.$setViewValue(val);
-              ctrl.$render();
-                return val;
-            }
-          }
-          return undefined;
-        }            
-
-        ctrl.$parsers.push(inputValue);
-      }
     };
 });

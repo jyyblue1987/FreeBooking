@@ -1,4 +1,3 @@
-
 /*** UI Form Controllers
 ------------------------------------------------ ****/
 
@@ -22,7 +21,28 @@ uiFormCtrls.controller("UISelectDemoCtrl", ["$scope", function($s) {
 
 
 /*** Datepicker Controller ***/
-uiFormCtrls.controller("DatepickerDemoCtrl", ["$scope", function($scope) { $scope.open = function($event) { $event.preventDefault(), $event.stopPropagation(), $scope.opened = !0 } }]);
+uiFormCtrls.controller("DatepickerCtrl", ["$scope", function($scope) {
+    $scope.fromOpen = function($event) {
+        $event.preventDefault(),
+        $event.stopPropagation(),
+        $scope.fromOpened = !0 
+    }
+
+    $scope.toOpen = function($event) {
+        $event.preventDefault(),
+        $event.stopPropagation(),
+        $scope.toOpened = !0 
+    }
+
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        maxDate: new Date(2020, 5, 22),
+        minDate: new Date(),
+        startingDay: 1
+    };
+
+
+}]);
 
 
 /*** Typeahead Controller ***/
