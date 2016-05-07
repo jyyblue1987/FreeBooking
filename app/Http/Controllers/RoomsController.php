@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
 use App\Http\Requests;
 use Response;
-use App\Http\Controllers\Controller;
 use Auth;
 use Schema;
 use Validator;
@@ -21,11 +20,24 @@ use App\RoomOption;
 use App\RoomPriceInfo;
 use App\RoomPhoto;
 
+/** New methodology */
+
+use App\Commands\Rooms\CreateNewHotelRoomCommand;
+use App\Freebooking\Transformers\Room\RoomTransformer;
+use App\Http\Controllers\API\ApiController;
 
 
 
-class RoomsController extends Controller
+class RoomsController extends ApiController
 {
+
+    private $roomTransformer;
+
+    public function __construct(RoomTransformer $roomTransformer)
+    {
+        $this->roomTransformer = $roomTransformer;
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -47,45 +59,20 @@ class RoomsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Application $app, Request $request, $id)
+    public function store( Request $request, $id)
     {
-            //Grabing the request params for room and room description
-            $http_req = $request->all();
 
-            //Room specific params and room table transaction
-            $room = new Room($http_req[0]);
-
-            $hotel = Hotel::where('user_id', '=', $id)->first();
-
-            Hotel::locatedAt($hotel->id)->hotel_rooms()->save($room);
+        $newRoom = $this->dispatchFromArray(CreateNewHotelRoomCommand::class,  ['roomData' => $request, 'userId' => $id ]);
 
 
-            //Getting the application support languages
-            $langCodes = $app->config->get('app.locales');
-
-            //Insert each entry of application supported languages in rooms table.
-            foreach($langCodes as $code => $langName)
-            {
-
-                $room_desc = new RoomDescription($http_req[1]);
-
-                $room_desc->language = $code;
-                $room_desc->user_id = $id;
-                $room_desc->hotel_id = $hotel->id;
-                Room::locatedAt($room->id)->room_descriptions($room_desc);
-            }
-
-            $matchThese = ['id' =>$room->id];
-            $rooms = $room->where($matchThese)->first();
-            $flash = flash("Room","Room is successfully added to hotel!", "success");
-            return compact('rooms', 'flash');
-
-
+        return $this->respond([
+            'newRoom' => $this->roomTransformer->transform($newRoom),
+            'flash' => flash("Room","Room is successfully added to hotel!", "success")
+        ]);
 
     }
 
