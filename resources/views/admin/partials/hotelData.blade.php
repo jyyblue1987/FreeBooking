@@ -34,7 +34,11 @@
                             </div>
                         </div>
                     </tab>
-                    <tab heading="Photos"><p>Some content here...</p></tab>
+
+                    <tab heading="Photos">
+                        @include('admin.partials.hotelPhotos')
+                    </tab><!-- /photo tab -->
+
                     <tab heading="Texts">
 
                         <div class="clearfix">

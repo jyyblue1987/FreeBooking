@@ -10,7 +10,7 @@
               flow-file-success="imageSuccess( $file, $message, $flow )"
              >
             <div class="container-fluid">
-                <h1>DROP ROOM PHOTOS HERE</h1>
+                <h2>DROP ROOM PHOTOS HERE</h2>
                 <hr class="soften"/>
                 <p>
                     <a class="btn btn-small btn-success" ng-click="$flow.resume()">Upload</a>
@@ -59,12 +59,11 @@
                 </table>
                 <hr class="soften"/>
 
-                <div class="panel mb30 panel-primary" flow-drop flow-drag-enter="class='alert-success'" flow-drag-leave="class=''"
-                     ng-class="class">
+                <div class="panel mb30" flow-drop flow-drag-enter="class='drop-active'" flow-drag-leave="class=''" ng-class="class">
                     <div class="panel-body"> Drop images here </div>
                 </div>
             </div><!-- /container-fluid -->
-        </div>
+        </div><!-- /flow-file -->
     </div><!-- /col -->
 </div><!-- /row -->
 

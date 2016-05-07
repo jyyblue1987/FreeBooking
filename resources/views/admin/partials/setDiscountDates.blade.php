@@ -16,12 +16,11 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-4 control-label pt0">Vroegboek Korting</label>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-lg-offset-4">
                 <div class="ui-checkbox ui-checkbox-primary">
                     <label class="ui-checkbox-inline">
                         <input type="checkbox" name="discount_type" ng-true-value="'earlybooking'" value="earlybooking" ng-model="price.discount_type">
-                        <span></span>
+                        <span>Vroegboek Korting</span>
                     </label>
                 </div>
             </div>
@@ -58,13 +57,17 @@
             </div>
         </div>
 
-        <div class="col-lg-8 col-lg-offset-4">
-            <button  class="btn btn-primary" type="button" ng-show="next" ng-click="discountDatesNext({{ Auth::User()->id }})">Next</button>
+        <div class="form-group">
+            <div class="col-lg-8 col-lg-offset-4">
+                <button  class="btn btn-primary" type="button" ng-show="next" ng-click="discountDatesNext({{ Auth::User()->id }})">Next</button>
+            </div>
         </div>
-        <div class="col-lg-8 col-lg-offset-4">
-            <button  class="btn btn-primary" type="submit" ng-show="save" >Save</button>
+        <div class="form-group">
+            <div class="col-lg-8 col-lg-offset-4">
+                <button  class="btn btn-primary" type="submit" ng-show="save" >Save</button>
+            </div>
+            <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'new'">
         </div>
-        <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'new'">
     </form>
 </div>
 <hr class="dashed mb30">

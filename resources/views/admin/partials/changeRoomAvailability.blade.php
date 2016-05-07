@@ -1,4 +1,4 @@
-<form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="changeRoomData()" ng-init = "loadRoomSpecs()">
+<form  name="newroomsFormStep2" class="form-horizontal col-lg-10" ng-submit="newroomsFormStep2.$valid && changeRoomData()" ng-init = "loadRoomSpecs()">
 {{ csrf_field() }}
 
     @include('admin.partials.__changeAvailabilityPriceForm')
@@ -7,8 +7,13 @@
         <div class="col-lg-4">
             <div class="input-group mb0">
                 <span class="input-group-addon fa fa-home"></span>
-                <input type="number" min="1" placeholder="Set Available" class="form-control" name="cost" ng-model="price.available" required>
+                <input type="number" name="number" min="1" placeholder="Set Available" class="form-control" ng-model="price.available" integer-validity required>
             </div>
+        </div>
+        <div class="col-lg-8 col-lg-push-4">
+            <span class="text-danger" ng-show="newroomsFormStep2.number.$error.integer">Insert valid number</span>
+            <span class="text-danger" ng-show="newroomsFormStep2.number.$error.required">insert number of available rooms</span>
+            <span class="text-danger" ng-show="newroomsFormStep2.number.$error.min">min 1 is required</span>                        
         </div>
     </div>
     <div class="form-group">
@@ -27,8 +32,10 @@
         </div>
 
     </div>
-    <div class="col-lg-8 col-lg-offset-4">
-        <button  class="btn btn-primary" type="submit">Save</button>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-4">
+            <button  class="btn btn-primary" type="submit">Save</button>
+        </div>
+        <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'available'">
     </div>
-    <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'available'">
 </form>

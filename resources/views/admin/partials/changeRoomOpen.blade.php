@@ -18,10 +18,13 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-8 col-lg-offset-4">
-        <button  class="btn btn-primary" type="submit">Save</button>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-4">
+            <button  class="btn btn-primary" type="submit">Save</button>
+        </div>
+        <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'open'">
     </div>
-    <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'open'">
+
 </form>
 
 

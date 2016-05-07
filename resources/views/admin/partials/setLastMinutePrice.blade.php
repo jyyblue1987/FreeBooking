@@ -1,21 +1,29 @@
 <div class="row">
-    <form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="setlastMinute()" ng-init="getLastMinutePrices({{ Auth::User()->id }})">
+    <form  name="newroomsFormStep2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="newroomsFormStep2.$valid && setlastMinute()" ng-init="getLastMinutePrices({{ Auth::User()->id }})">
     {{ csrf_field() }}
 
         @include('admin.partials.__changeAvailabilityPriceForm')
-        <div class="form-group mb0">
+        <div class="form-group">
             <label class="col-lg-4 control-label">Price</label>
             <div class="col-lg-4">
-                <div class="input-group ">
+                <div class="input-group mb0">
                     <span class="input-group-addon fa fa-euro"></span>
-                    <input type="number" min="1" placeholder="Set Price" class="form-control" name="cost" ng-model="price.cost" required>
+                    <input type="text" name="cost" min="1" placeholder="Set Price" class="form-control" ng-model="price.cost" integer-validity required>
                 </div>
             </div>
+            <div class="col-lg-8 col-lg-push-4">
+                <span class="text-warning" ng-show="newroomsFormStep2.cost.$error.numeric">Insert valid number</span>
+                <span class="text-warning" ng-show="newroomsFormStep2.cost.required">insert price</span>
+                <span class="text-warning" ng-show="newroomsFormStep2.cost.$error.numericmin">Insert positive value</span>
+            </div>
         </div>
-        <div class="col-lg-8 col-lg-offset-4">
-            <button class="btn btn-primary" type="submit">Save</button>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-4">
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+            <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'new'">
         </div>
-        <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'new'">
+
     </form>
 </div>
 <hr class="dashed mb30">

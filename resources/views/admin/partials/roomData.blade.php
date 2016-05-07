@@ -29,7 +29,7 @@
                     </tab>
                     <tab heading="photos">
                         <div class="clearfix">
-                            <div ng-controller="roomsEditController"   ng-init="loadRoomPhotos()">
+                            <div ng-controller="roomsEditController" ng-init="loadRoomPhotos()">
                                 @include('admin.partials.roomPhotos')
                             </div>
                         </div>
