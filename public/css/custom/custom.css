@@ -3532,7 +3532,7 @@ a.list-group-item {
 
 .site-head .head-wrap>ul>li>a.user-profile+.dropdown-menu .photo>a {
     position: absolute;
-    background: #38b4ee;
+    background-color: #e98903;
     color: #fff;
     font-size: 10px;
     left: 0;
