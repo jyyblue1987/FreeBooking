@@ -1,3 +1,4 @@
+<div class="row">
 <form  name="newroomsFormStep2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="newroomsFormStep2.$valid && changeRoomData()" ng-init = "loadRoomSpecs()">
 {{ csrf_field() }}
 
@@ -37,7 +38,4 @@
         <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'increase'">
     </div>
 </form>
-
-
-
-
+</div>

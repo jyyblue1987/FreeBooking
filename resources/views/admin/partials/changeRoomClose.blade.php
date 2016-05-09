@@ -1,3 +1,4 @@
+<div class="row">
 <form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="changeRoomData()" ng-init = "loadRoomSpecs()">
 {{ csrf_field() }}
 
@@ -25,7 +26,4 @@
         <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'close'">
     </div>
 </form>
-
-
-
-
+</div>
