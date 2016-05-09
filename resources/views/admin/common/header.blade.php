@@ -83,43 +83,62 @@
             <a href><i class="fa fa-expand"></i></a>
         </li>
         <!-- #end fullscreen -->
-
-
-
-
-
+        <li class="dropdown" dropdown>
+            <a href class="flag dropdown-toggle" dropdown-toggle>                
+                Lang
+            </a>
+            <!-- Profile drop -->
+            <div class="panel panel-default dropdown-menu">
+                <div class="panel-body">
+                    <ul class="list-unstyled">
+                        <!--Language flags-->
+                        @foreach(Config::get('app.locales') as $key => $val)
+                            <li class='{{ $key == App::getLocale() ? 'current' : ''}} flags'>
+                                <a href='{{ url() }}/{{$key}}/administrator '><img  src='{{ url('img/flags/'. $key . '.png') }}' /></a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <!-- /language flags -->
         <!-- profile drop -->
         <li class="dropdown" dropdown>
-            <a href class="user-profile dropdown-toggle" dropdown-toggle>
-                <img src="images/admin.jpg" alt="admin-pic">
+            <a href class="user-profile dropdown-toggle" dropdown-toggle>                
+                <?php 
+                    $img = '/images/admin.jpg';
+                    $noimg = '/images/no-image.jpg';
+                ?>
+                @if ($img)
+                    <img src="{{ URL::asset($img) }}" alt="user name">
+                @else
+                    <img src="{{ URL::asset($noimg) }}" alt="user name">
+                @endif
             </a>
             <!-- Profile drop -->
             <div class="panel panel-default dropdown-menu">
                 <div class="panel-body">
                     <figure class="photo left">
-                        <img src="images/admin.jpg" alt="admin-pic">
+                        @if ($img)
+                            <img src="{{ URL::asset($img) }}" alt="user name">
+                        @else
+                            <img src="{{ URL::asset($noimg) }}" alt="user name">
+                        @endif
                         <a href="j:;">Photo</a>
                     </figure>
                     <div class="profile-info right">
                         <p class="user-name">Bryan R.</p>
                         <p>bryan.r@gmail.com</p>
-                        <a href="j:;" class="btn btn-info btn-xs">See Profile</a>
+                        <a href="j:;" class="btn btn-success btn-xs">See Profile</a>
                     </div>
                 </div>
                 <div class="panel-footer clearfix">
                     <a href="j:;" class="btn btn-default btn-sm left">Account</a>
-                    <a href="#/pages/lock-screen" class="btn btn-info btn-sm right">Sign Out</a>
+                    <a href="#/pages/lock-screen" class="btn btn-primary btn-sm right">Sign Out</a>
                 </div>
             </div>
         </li>
-        <!-- #end profile-drop -->
-
-        <!--Language flags-->
-        @foreach(Config::get('app.locales') as $key => $val)
-            <li class='{{ $key == App::getLocale() ? 'current' : ''}} flags'>
-                <a href='{{ url() }}/{{$key}}/administrator '><img  src='{{ url('img/flags/'. $key . '.png') }}' /></a>
-            </li>
-        @endforeach
+        <!-- #end profile-drop -->        
     </ul>
 </div>
 
