@@ -11,9 +11,8 @@
             </div>
         </div>
         <div class="col-lg-8 col-lg-push-4">
-            <span class="text-danger" ng-show="newroomsFormStep2.number.$error.integer">Insert valid number</span>
-            <span class="text-danger" ng-show="newroomsFormStep2.number.$error.required">insert number of available rooms</span>
-            <span class="text-danger" ng-show="newroomsFormStep2.number.$error.min">min 1 is required</span>                        
+            <span class="text-danger" ng-show="newroomsFormStep2.number.required">insert number of available rooms</span>
+            <span class="text-danger" ng-show="newroomsFormStep2.number.min">min 1 is required</span>
         </div>
     </div>
     <div class="form-group">

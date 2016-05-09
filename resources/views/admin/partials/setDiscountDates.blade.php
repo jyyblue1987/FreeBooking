@@ -1,10 +1,10 @@
 <div class="row">
-    <form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="setDiscountDates({{ Auth::User()->id }})" ng-init="getDiscountDates({{ Auth::User()->id }}, true)">
+    <form  name="newroomsForm2" class="form-horizontal col-lg-10" ng-submit="newroomsForm2.$valid && setDiscountDates({{ Auth::User()->id }})" ng-init="getDiscountDates({{ Auth::User()->id }}, true)">
 
         {{ csrf_field() }}
         @include('admin.partials.__changeAvailabilityPriceForm')
 
-        <div class="form-group" ng-show="next">
+        <div class="form-group mb0" ng-show="next">
             <label class="col-lg-4 control-label pt0">Type</label>
             <div class="col-lg-4">
                 <div class="ui-radio ui-radio-primary">
@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mb0">
             <div class="col-lg-4 col-lg-offset-4">
                 <div class="ui-checkbox ui-checkbox-primary">
                     <label class="ui-checkbox-inline">
@@ -25,19 +25,22 @@
                 </div>
             </div>
         </div>
-        <div class="form-group" ng-show="next">
-            <label class="col-lg-4 control-label">From</label>
-            <div class="col-lg-4">
-                <div class="input-group ">
-                   <input type="text" placeholder="From" class="form-control" name="start" ng-model="price.start">
+        <div class="form-group" ng-show="price.discount_type" ng-controller="DatepickerCtrl">
+            <div class="col-lg-4 col-lg-offset-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="price.start" name="start" datepicker-popup is-open="eDFromOpened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" show-button-bar="false" placeholder="Start">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-sm fa fa-calendar" ng-click="eDFOpen($event)"></button>
+                    </span>           
                 </div>
             </div>
-        </div>
-        <div class="form-group" ng-show="next">
-            <label class="col-lg-4 control-label">Till</label>
             <div class="col-lg-4">
                 <div class="input-group ">
-                    <input type="text" placeholder="Till" class="form-control" name="till" ng-model="price.till">
+                    <input type="text" class="form-control" ng-model="price.till" name="till" datepicker-popup is-open="eDTillOpened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" show-button-bar="false"  placeholder="Till">
+
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-sm fa fa-calendar" ng-click="eDTOpen($event)"></button>
+                    </span>           
                 </div>
             </div>
         </div>
@@ -64,7 +67,7 @@
         </div>
         <div class="form-group">
             <div class="col-lg-8 col-lg-offset-4">
-                <button  class="btn btn-primary" type="submit" ng-show="save" >Save</button>
+                <button  class="btn btn-primary" type="submit" ng-show="save">Save</button>
             </div>
             <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'new'">
         </div>

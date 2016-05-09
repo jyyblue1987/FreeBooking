@@ -10,11 +10,11 @@
         <h3>DROP HOTEL PHOTOS HERE</h3>
         <hr class="soften"/>
         <p>
-            <a class="btn btn-small btn-success" ng-click="$flow.resume()">Upload</a>
-            <a class="btn btn-small btn-danger" ng-click="$flow.pause()">Pause</a>
-            <a class="btn btn-small btn-info" ng-click="$flow.cancel()">Cancel</a>
-            <span class="label label-info">Size: @{{$flow.getSize()}}</span>
-            <span class="label label-info">Is Uploading: @{{$flow.isUploading()}}</span>
+            <a class="btn btn-small btn-primary" ng-click="$flow.resume()">Upload</a>
+            <a class="btn btn-small btn-warning" ng-click="$flow.pause()">Pause</a>
+            <a class="btn btn-small btn-danger" ng-click="$flow.cancel()">Cancel</a>
+            <span class="label label-default">Size: @{{$flow.getSize()}}</span>
+            <span class="label label-default">Is Uploading: @{{$flow.isUploading()}}</span>
         </p>
         <table class="table table-hover table-bordered table-striped" flow-transfers>
             <thead>

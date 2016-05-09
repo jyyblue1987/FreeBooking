@@ -43,7 +43,7 @@
 
 
                 <ul class="inner-drop list-unstyled"  ng-init="loadRooms()">
-                    <li><a href="#/addnewroom">Add new room<span class="badge badge-xs badge-success right">new</span></a></li>
+                    <li><a href="#/addnewroom">Add new room<span class="badge badge-xs badge-primary right">new</span></a></li>
                     <li ng-repeat="room in regRooms" ng-model="regRooms" ><a href="#/getRoom/@{{ room.name }}/@{{ room.id }}">@{{ room.name }}</a></li>
                 </ul>
         </li>

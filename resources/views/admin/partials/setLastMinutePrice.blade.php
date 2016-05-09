@@ -8,7 +8,7 @@
             <div class="col-lg-4">
                 <div class="input-group mb0">
                     <span class="input-group-addon fa fa-euro"></span>
-                    <input type="text" name="cost" min="1" placeholder="Set Price" class="form-control" ng-model="price.cost" integer-validity required>
+                    <input type="text" name="cost" min="1" placeholder="Set Price" class="form-control" ng-model="price.cost" numeric-validity required>
                 </div>
             </div>
             <div class="col-lg-8 col-lg-push-4">

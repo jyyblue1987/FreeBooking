@@ -27,11 +27,21 @@ uiFormCtrls.controller("DatepickerCtrl", ["$scope", function($scope) {
         $event.stopPropagation(),
         $scope.fromOpened = !0 
     }
-
     $scope.toOpen = function($event) {
         $event.preventDefault(),
         $event.stopPropagation(),
         $scope.toOpened = !0 
+    }
+
+    $scope.eDFOpen = function($event) {
+        $event.preventDefault(),
+        $event.stopPropagation(),
+        $scope.eDFromOpened = !0 
+    }
+    $scope.eDTOpen = function($event) {
+        $event.preventDefault(),
+        $event.stopPropagation(),
+        $scope.eDTillOpened = !0 
     }
 
     $scope.dateOptions = {
