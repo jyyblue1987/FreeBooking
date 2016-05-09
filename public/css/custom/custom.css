@@ -1,3 +1,13 @@
+::selection {
+    color: #fff;
+    background:#ff9500;
+}
+::-moz-selection {
+    color: #fff;
+    background:#ff9500;
+}
+
+
 .page-notification .btn {
     margin-bottom: 5px;
     margin-right: 5px
