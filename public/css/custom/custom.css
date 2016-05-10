@@ -7199,6 +7199,13 @@ form > .form-block:last-child {
     display: inline-block;
     font-size: 1.3em;
     line-height: 1;
+    color: #999;
+}
+.star-wrap .glyphicon {
+    cursor: pointer;
+}
+.star-wrap .glyphicon-star {
+    color: #2cb0ed;
 }
 .action-buttons .btn-sm {
     width: 45px;
@@ -7210,4 +7217,27 @@ form > .form-block:last-child {
 
 .login-container h4 {
     margin-bottom: 30px;
+}
+.text-angular-editor.ta-root.focussed .ta-scroll-window.form-control {
+    border-color: #38b4ee;
+}
+.select-box {
+    position: relative;
+}
+.select-box::after {
+    width: 42px;
+    height: 34.6px;
+    line-height: 34.6px;
+    font-family: 'FontAwesome';
+    content: '\f107';
+    font-size: 18px;
+    color: #2cb0ed;
+    text-align: center;
+    display: block;
+    border-left: 1px solid #f2f2f2;
+    background-color: #fff;
+    pointer-events: none;
+    position: absolute;
+    top: 1px;
+    right: 1px;
 }
