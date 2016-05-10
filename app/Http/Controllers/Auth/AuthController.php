@@ -41,7 +41,9 @@ class AuthController extends Controller
      */
 
 
-    protected $loginPath = '/login';
+    protected $loginPath = 'en/auth/login';
+
+    protected $redirectPath = 'en/administrator';
     protected $redirectAfterLogout = 'en/administrator';
 
     public function __construct()
@@ -67,6 +69,13 @@ class AuthController extends Controller
             'password' => 'required|confirmed|min:6',
         ]);
     }
+    /*public function getLogout()
+    {
+        Auth::logout();
+        return redirect()->back();
+    }*/
+
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -99,6 +108,7 @@ class AuthController extends Controller
             'fax' => $data['fax'],
 
         ]);
+
     }
 
 
