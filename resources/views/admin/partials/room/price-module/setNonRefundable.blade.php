@@ -1,18 +1,18 @@
 <div class="row">
-<form  name="newroomsForm2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="newroomsForm2.$valid && setexBreakFast()" ng-init="getexBreakFast({{ Auth::User()->id }})">
+<form  name="newroomsForm2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="newroomsForm2.$valid && setNonRefundable()" ng-init="getNonRefundable({{ Auth::User()->id }})">
+{{ csrf_field() }}
 
-    {{ csrf_field() }}
-    @include('admin.partials.__setPricesWithoutDays')
+    @include('admin.partials.room.price-module.__setPricesWithoutDays')
     <div class="form-group">
         <label class="col-lg-4 control-label">Price</label>
         <div class="col-lg-4">
             <div class="input-group mb0">
                 <span class="input-group-addon fa fa-euro"></span>
-                <input type="text" ng-model="price.cost" min="1" class="form-control" name="cost" placeholder="Set Price" numeric-validity required>
+                <input type="text" min="1" placeholder="Set Price" class="form-control" name="cost" ng-model="price.cost" numeric-validity required>
             </div>
             <span class="text-warning" ng-show="newroomsForm2.cost.$error.numeric">Insert valid number</span>
             <span class="text-warning" ng-show="newroomsForm2.cost.required">insert price</span>
-            <span class="text-warning" ng-show="newroomsForm2.cost.$error.numericmin">Insert positive value</span>            
+            <span class="text-warning" ng-show="newroomsForm2.cost.$error.numericmin">Insert positive value</span>
         </div>
     </div>
     <div class="form-group">
@@ -21,7 +21,6 @@
         </div>
     </div>
     <input type="hidden" name="edit" ng-model="price.edit" ng-init="price.edit = 'new'">
-
 </form>
 </div>
 <hr class="dashed mb30">
@@ -31,24 +30,26 @@
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover">
                 <thead>
-                    <tr>
-                        <th>From</th>
-                        <th>Till</th>
-                        <th>Price</th>
-                        <th>Action</th>
-                    </tr>
+                <tr>
+                    <th>From</th>
+                    <th>Till</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="data in exData track by $index">
+                    <tr ng-repeat="data in nfData track by $index">
+
+
                         <td>@{{data.start}}</td>
                         <td>@{{data.end}} </td>
                         <td>@{{data.price}}</td>
                         <td class="action-td">
-                            <div class="btn-group btn-group-sm action-buttons">
+                            <div class="btn-group  btn-group-sm action-buttons">
 
-                                <button title="Edit" type="button" class="btn btn-sm btn-default" ng-click="editEx(data.uid,  data.ref_id, data.start, data.end, data.price)"><i class="fa fa-edit"></i></button>
+                                <button title="Edit" type="button" class="btn btn-default btn-sm" ng-click="editNf(data.uid,  data.ref_id, data.start, data.end, data.price)"><i class="fa fa-edit"></i></button>
 
-                                <button title="delete" type="button" class="btn btn-sm btn-default" ng-click = "deleteEx('Excluding Break-Fast', 'Price set-up deleted!', data.uid, data.ref_id, data.start, data.end)"><i class="fa fa-trash"></i></button>
+                                <button title="delete" type="button" class="btn btn-default btn-sm" ng-click = "deleteNf('Single-Use', 'Price set-up deleted!', data.uid, data.ref_id, data.start, data.end)"><i class="fa fa-trash"></i></button>
 
                             </div>
                         </td>

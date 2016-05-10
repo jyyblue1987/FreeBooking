@@ -2,7 +2,7 @@
 <form  name="newroomsFormStep2" class="form-horizontal col-lg-10" ng-submit="newroomsFormStep2.$valid && changeRoomData()" ng-init = "loadRoomSpecs()">
 {{ csrf_field() }}
 
-    @include('admin.partials.__changeAvailabilityPriceForm')
+    @include('admin.partials.room.__changeAvailabilityPriceForm')
     <div class="form-group">
         <label class="col-lg-4 control-label">Rooms</label>
         <div class="col-lg-4">

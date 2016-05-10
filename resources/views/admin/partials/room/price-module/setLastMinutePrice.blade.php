@@ -2,7 +2,7 @@
     <form  name="newroomsFormStep2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="newroomsFormStep2.$valid && setlastMinute()" ng-init="getLastMinutePrices({{ Auth::User()->id }})">
     {{ csrf_field() }}
 
-        @include('admin.partials.__changeAvailabilityPriceForm')
+        @include('admin.partials.room.__changeAvailabilityPriceForm')
         <div class="form-group">
             <label class="col-lg-4 control-label">Price</label>
             <div class="col-lg-4">

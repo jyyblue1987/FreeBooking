@@ -1,8 +1,8 @@
 <div class="row">
-<form  name="wizard-step-2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="changeRoomData()" ng-init = "loadRoomSpecs()">
+<form  name="newroomsFormStep2" class="form-horizontal col-lg-10" style="" ng-submit="newroomsFormStep2.$valid && changeRoomData()" ng-init = "loadRoomSpecs()">
 {{ csrf_field() }}
 
-    @include('admin.partials.__changeAvailabilityPriceForm')
+    @include('admin.partials.room.__changeAvailabilityPriceForm')
 
     <div class="form-group">
         <label class="col-lg-4 control-label pt0">For</label>

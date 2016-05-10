@@ -2,7 +2,7 @@
     <form  name="newroomsForm2" class="form-horizontal col-lg-10" ng-submit="newroomsForm2.$valid && setDiscountDates({{ Auth::User()->id }})" ng-init="getDiscountDates({{ Auth::User()->id }}, true)">
 
         {{ csrf_field() }}
-        @include('admin.partials.__changeAvailabilityPriceForm')
+        @include('admin.partials.room.__changeAvailabilityPriceForm')
 
         <div class="form-group mb0" ng-show="next">
             <label class="col-lg-4 control-label pt0">Type</label>
@@ -30,7 +30,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" ng-model="price.start" name="start" datepicker-popup is-open="eDFromOpened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" show-button-bar="false" placeholder="Start">
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-sm fa fa-calendar" ng-click="eDFOpen($event)"></button>
+                        <button type="button" class="btn btn-sm btn-info fa fa-calendar" ng-click="eDFOpen($event)"></button>
                     </span>           
                 </div>
             </div>
@@ -39,7 +39,7 @@
                     <input type="text" class="form-control" ng-model="price.till" name="till" datepicker-popup is-open="eDTillOpened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" show-button-bar="false"  placeholder="Till">
 
                     <span class="input-group-btn">
-                        <button type="button" class="btn btn-sm fa fa-calendar" ng-click="eDTOpen($event)"></button>
+                        <button type="button" class="btn btn-sm btn-info fa fa-calendar" ng-click="eDTOpen($event)"></button>
                     </span>           
                 </div>
             </div>

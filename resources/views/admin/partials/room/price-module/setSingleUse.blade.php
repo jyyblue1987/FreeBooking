@@ -2,7 +2,7 @@
     <form  name="newroomsForm2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="newroomsForm2.$valid && setSingleUse()" ng-init="getSingleUse({{ Auth::User()->id }})">
     {{ csrf_field() }}
 
-        @include('admin.partials.__setPricesWithoutDays')
+        @include('admin.partials.room.price-module.__setPricesWithoutDays')
         <div class="form-group">
             <label class="col-lg-4 control-label">Price</label>
             <div class="col-lg-4">

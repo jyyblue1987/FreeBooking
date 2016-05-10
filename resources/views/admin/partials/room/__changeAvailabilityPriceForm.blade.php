@@ -2,12 +2,14 @@
 <div class="form-group">
     <label class="col-lg-4 control-label">Select Days</label>
     <div class="btn-group col-lg-8">
-        <select id="priceDay" ng-model="price.days" name="days" class="form-control">
-            <option value=""> Select Days </option>
-            @foreach($dayList::get_day_list() as $dayname => $dayval)
-                <option value="{{ $dayname }}"> {{ $dayval }} </option>
-            @endforeach
-        </select>
+        <div class="select-box">
+            <select id="priceDay" ng-model="price.days" name="days" class="form-control">
+                <option value=""> Select Days </option>
+                @foreach($dayList::get_day_list() as $dayname => $dayval)
+                    <option value="{{ $dayname }}"> {{ $dayval }} </option>
+                @endforeach
+            </select>
+        </div><!-- /select-box -->
     </div>
 </div>
 <div class="form-group mb0" ng-controller="DatepickerCtrl">
@@ -16,7 +18,7 @@
         <div class="input-group">
             <input type="text" class="form-control" ng-model="price.from" name="from" datepicker-popup is-open="fromOpened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" show-button-bar="false" placeholder="From">
             <span class="input-group-btn">
-                <button type="button" class="btn btn-sm fa fa-calendar" ng-click="fromOpen($event)"></button>
+                <button type="button" class="btn btn-sm btn-info fa fa-calendar" ng-click="fromOpen($event)"></button>
             </span>
         </div>
     </div>
@@ -24,7 +26,7 @@
         <div class="input-group mb0">
             <input type="text" class="form-control" ng-model="price.to" name="to" datepicker-popup is-open="toOpened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" show-button-bar="false" placeholder="Until">
             <span class="input-group-btn">
-                <button type="button" class="btn btn-sm fa fa-calendar" ng-click="toOpen($event)"></button>
+                <button type="button" class="btn btn-sm btn-info fa fa-calendar" ng-click="toOpen($event)"></button>
             </span>
         </div>
     </div>

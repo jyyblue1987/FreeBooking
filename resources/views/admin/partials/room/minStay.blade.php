@@ -2,7 +2,7 @@
 <form  name="newroomsForm2" class="form-horizontal col-lg-10 ng-pristine ng-valid" style="" ng-submit="newroomsForm2.$valid && setMinStay()" ng-init="getMinimumStay({{ Auth::User()->id }})" >
 {{ csrf_field() }}
 
-    @include('admin.partials.__changeAvailabilityPriceForm')
+    @include('admin.partials.room.__changeAvailabilityPriceForm')
     <div class="form-group">
         <label class="col-lg-4 control-label">Nights</label>
         <div class="col-lg-4">
