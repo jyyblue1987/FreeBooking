@@ -29,7 +29,7 @@
                 <div class="ui-checkbox ui-checkbox-info">
                     <label>
                         <input type="checkbox" name="creditcards_text_checked[0]" ng-true-value="'creditcards_text_checked_0'"  ng-model="settings.creditcards_text_checked[0]">
-                        <span><input type="text" placeholder="Credit card text" ng-model="settings.creditcards_text[0]"  name="creditcards_text[0]" class="form-control inline"></span>
+                        <span><input type="text" name="creditcards_text[0]" ng-model="settings.creditcards_text[0]" class="form-control" ng-pattern="/^3[47][0-9]{13}$/" autocompletetype="cc-number" placeholder="American Express Card Number 16 digits"></span>
                     </label>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                 <div class="ui-checkbox ui-checkbox-info">
                     <label>
                         <input type="checkbox" name="creditcards_text_checked[1]" ng-true-value="'creditcards_text_checked_1'" ng-model="settings.creditcards_text_checked[1]">
-                        <span><input type="text" placeholder="Credit card text" ng-model="settings.creditcards_text[1]"  name="creditcards_text[1]" class="form-control inline"></span>
+                        <span><input type="text" name="creditcards_text[1]" class="form-control" ng-model="settings.creditcards_text[1]" ng-pattern="/^3(?:0[0-5]|[68][0-9])[0-9]{11}$/" autocompletetype="cc-number" placeholder="Diners club card number"></span>
                     </label>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                 <div class="ui-checkbox ui-checkbox-info">
                     <label>
                         <input type="checkbox" name="creditcards_text_checked[2]" ng-true-value="'creditcards_text_checked_2'" ng-model="settings.creditcards_text_checked[2]">
-                        <span><input type="text" placeholder="Credit card text" ng-model="settings.creditcards_text[2]"  name="creditcards_text[2]" class="form-control inline"></span>
+                        <span><input type="text" name="creditcards_text[2]" ng-model="settings.creditcards_text[2]" class="form-control" ng-pattern="/^(?:2131|1800|35\d{3})\d{11}$/" autocompletetype="cc-number" placeholder="JCB Card Number"></span>
                     </label>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 <div class="ui-checkbox ui-checkbox-info">
                     <label>
                         <input type="checkbox" name="creditcards_text_checked[3]" ng-true-value="'creditcards_text_checked_3'" ng-model="settings.creditcards_text_checked[3]">
-                        <span><input type="text" placeholder="Credit card text" ng-model="settings.creditcards_text[3]"  name="creditcards_text[3]" class="form-control inline"></span>
+                        <span><input type="text" name="creditcards_text[3]" ng-model="settings.creditcards_text[3]" class="form-control" ng-pattern="/^5[1-5][0-9]{14}$/" autocompletetype="cc-number" placeholder="Master Card Number"></span>
                     </label>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                 <div class="ui-checkbox ui-checkbox-info">
                     <label>
                         <input type="checkbox" name="creditcards_text_checked[4]" ng-true-value="'creditcards_text_checked_4'" ng-model="settings.creditcards_text_checked[4]">
-                        <span><input type="text" placeholder="Credit card text" ng-model="settings.creditcards_text[4]"  name="creditcards_text[4]" class="form-control inline"></span>
+                        <span><input type="text" name="creditcards_text[4]" ng-model="settings.creditcards_text[4]" class="form-control" ng-pattern="/^4[0-9]{12}(?:[0-9]{3})?$/" autocompletetype="cc-number" placeholder="Visa Card Number"></span>
                     </label>
                 </div>
             </div>

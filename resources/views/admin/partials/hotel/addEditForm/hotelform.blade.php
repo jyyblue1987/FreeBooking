@@ -20,7 +20,7 @@
         <div class="form-group">
             <label class="col-lg-2 control-label">Zip</label>
             <div class="col-lg-8">
-                <input type="text" placeholder="Post code" ng-model="hotel.postcode"  name="postcode" class="form-control">
+                <input type="text" pattern="[0-9]{5}" placeholder="Post code" ng-model="hotel.postcode"  name="postcode" class="form-control">
             </div>
         </div>
         <div class="form-group">
@@ -37,35 +37,37 @@
                 </div><!-- /select-box -->
              </div>
         </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">State</label>
-            <div class="col-lg-8">
-                <div class="select-box">
-                    <select id="state" ng-model="hotel.state" ng-disabled="!hotel.country" name="state" class="form-control" >
-                        <option value=""> Select State </option>
+        <div ng-show="hotel.country">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">State</label>
+                <div class="col-lg-8">
+                    <div class="select-box">
+                        <select id="state" ng-model="hotel.state" ng-disabled="!hotel.country" name="state" class="form-control" >
+                            <option value=""> Select State </option>
 
-                        <option  ng-repeat="state in hotel.states" value="@{{state}}" ng-selected="state == hotel.state">@{{ state }}</option>
+                            <option  ng-repeat="state in hotel.states" value="@{{state}}" ng-selected="state == hotel.state">@{{ state }}</option>
 
-                    </select>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">City</label>
-            <div class="col-lg-8">
-                <input type="text" placeholder="City" ng-model="hotel.city" name="city" class="form-control">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">City</label>
+                <div class="col-lg-8">
+                    <input type="text" placeholder="City" ng-model="hotel.city" name="city" class="form-control">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Phone</label>
-            <div class="col-lg-8">
-                <input type="text" placeholder="+31 (0) 515 712 465" ng-model="hotel.phone"  name="phone" class="form-control">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Phone</label>
+                <div class="col-lg-8">
+                    <input type="tel" placeholder="+99(99)9999-9999" ng-model="hotel.phone" name="phone" ng-pattern="/^\d{4}-\d{3}-\d{4}|^\d{4} \d{3} \d{4}|[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}|^\d{11}|[\+]\d{12}$/" class="form-control">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label">Fax</label>
-            <div class="col-lg-8">
-                <input type="text" placeholder="+31 (0) 515 712 465" ng-model="hotel.fax"  name="fax" class="form-control">
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Fax</label>
+                <div class="col-lg-8">
+                    <input type="tel" name="fax" placeholder="+99(99)9999-9999" ng-model="hotel.fax" ng-pattern="/^\d{4}-\d{3}-\d{4}|^\d{4} \d{3} \d{4}|[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}|^\d{11}|[\+]\d{12}$/" class="form-control">
+                </div>
             </div>
         </div>
     </div><!-- /form-block -->
@@ -74,13 +76,17 @@
         <div class="form-group">
             <label class="col-lg-2 control-label">Check in</label>
             <div class="col-lg-8">
-                <input type="text" placeholder="Select Check in time (Dirty)" ng-model="hotel.check_in"  name="check_in" class="form-control">
+                <div class="timepicker-holder">
+                    <timepicker ng-model="hotel.check_in"></timepicker>
+                </div><!-- /timepicker-holder -->
             </div>
         </div>
         <div class="form-group">
             <label class="col-lg-2 control-label">Check out</label>
             <div class="col-lg-8">
-                <input type="text" placeholder="Select Check out time (Dirty)" ng-model="hotel.check_out"  name="check_out" class="form-control">
+                <div class="timepicker-holder">
+                    <timepicker ng-model="hotel.check_out"></timepicker>
+                </div><!-- /timepicker-holder -->
             </div>
         </div>
         <div class="form-group">
