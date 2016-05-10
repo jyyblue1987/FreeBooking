@@ -7241,3 +7241,9 @@ form > .form-block:last-child {
     top: 1px;
     right: 1px;
 }
+.timepicker-holder {
+    margin-top: -30px;
+}
+.timepicker-holder .btn {
+    box-shadow: none;
+}
