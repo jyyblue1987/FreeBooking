@@ -1986,7 +1986,7 @@ class RoomsController extends ApiController
         $room = new Room();
 
 
-        $matchThese = ['user_id' => Auth::User()->id];
+        $matchThese = ['user_id' => Auth::User()->id,"status" => 1];
         $rooms = $room->where($matchThese)->get();
 
         //$data = $rooms->all();
