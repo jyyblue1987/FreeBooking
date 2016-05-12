@@ -1,18 +1,15 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+include 'api_routes.php';
+//include 'static_routes.php';
+/**
+ * @Author: Shams Hashmi
+ * 1- Keep only routes that must be need to load application in this file
+ * 2- Keep all database interaction routes that load data in api_routes.php file
+ * 3- Keep all static page routes in static_route.php file
+ */
 
-//Dirty routing
-
+//@todo: @aliShams will organize the routes by following shams techniques for routing
 
 
 // Authentication Routes...
