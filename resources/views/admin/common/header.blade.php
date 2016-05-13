@@ -134,7 +134,7 @@
                 </div>
                 <div class="panel-footer clearfix">
                     <a href="j:;" class="btn btn-default btn-sm left">Account</a>
-                    <a href="#/pages/lock-screen" class="btn btn-primary btn-sm right">Sign Out</a>
+                    <a href="auth/logout" class="btn btn-primary btn-sm right">Sign Out</a>
                 </div>
             </div>
         </li>
