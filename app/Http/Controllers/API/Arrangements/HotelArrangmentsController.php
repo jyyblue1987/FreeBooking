@@ -8,49 +8,61 @@ use App\Http\Requests;
 
 use App\Http\Requests\Arrangement\CreateHotelArrangementRequest;
 use App\Http\Controllers\API\ApiController;
-use App\Commands\Arrangment\CreateHotelArrangementCommand;
+use App\Commands\Arrangement\CreateHotelArrangementCommand;
+use App\Commands\Arrangement\UpdateHotelArrangementCommand;
+use Auth;
+use App\Freebooking\Exceptions\Hotel\HotelNotFound;
+use App\Freebooking\Exceptions\Hotel\HotelNotBelongToUser;
+use App\Freebooking\Exceptions\Arragements\ArrangementNotFound;
+use App\Freebooking\Exceptions\DatabaseException;
+use App\Freebooking\Transformers\Arrangements\ArrangementTransformer;
+
 
 class HotelArrangmentsController extends ApiController
 {
+
+    private $arrangementTransformer;
+
+
+    public function __construct(ArrangementTransformer $arrangementTransformer)
+    {
+        $this->arrangementTransformer = $arrangementTransformer;
+
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $hotel_id)
+    public function index()
     {
-       dd("CAlled");
+       //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateHotelArrangementRequest $request
+     * @param $hotel_id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CreateHotelArrangementRequest $request, $hotel_id)
     {
 
         try
         {
+//dd( Auth::User()->id);
+            $arrangement = $this->dispatchFrom(CreateHotelArrangementCommand::class, $request, ['user_id' => 2]);
 
-            $arrangement = $this->dispatchFrom(CreateHotelArrangementCommand::class, $request, ['user_id' => Auth::User()->id]);
-
-
-           /* return $this->respond([
-                'data' => $this->leagueLocationTransformer->transform($leagueLocation)
-            ]);*/
-        } catch (LeagueNotFound $e) {
+            return $this->respond([
+                'Arrangement' => $this->arrangementTransformer->transform($arrangement),
+                'flash' => flash("Arrangement","New arrangement created succefully for the hotel", "success")
+            ]);
+        } catch (HotelNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        } catch (HotelNotBelongToUser $e) {
+            return $this->respondNotFound($e->getMessage());
+        }catch (DatabaseException $e) {
             return $this->respondNotFound($e->getMessage());
         }
     }
@@ -66,16 +78,6 @@ class HotelArrangmentsController extends ApiController
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -84,9 +86,26 @@ class HotelArrangmentsController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateHotelArrangementRequest $request, $hotel_id, $arrangement_id)
     {
-        //
+        try
+        {
+//dd( Auth::User()->id);
+            $arrangement = $this->dispatchFrom(UpdateHotelArrangementCommand::class, $request, ['user_id' => 2, 'arrangement_id' => $arrangement_id]);
+
+            return $this->respond([
+                'Arrangement' => $this->arrangementTransformer->transform($arrangement),
+                'flash' => flash("Arrangement","Arrangement updated succefully for the hotel", "success")
+            ]);
+        } catch (HotelNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        } catch (HotelNotBelongToUser $e) {
+            return $this->respondNotFound($e->getMessage());
+        } catch (ArrangementNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        }catch (DatabaseException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
     }
 
     /**
