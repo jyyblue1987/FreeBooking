@@ -13,4 +13,11 @@ class HotelArrangementRepository
         return $arrangement->save();
     }
 
+    public function getByArragementIdAndHotelId($arragementId, $hotelId)
+    {
+
+        return Arrangement::whereId($arragementId)->whereHotelId($hotelId)->first();
+
+    }
+
 }
