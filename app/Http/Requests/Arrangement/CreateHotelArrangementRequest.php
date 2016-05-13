@@ -13,7 +13,7 @@ class CreateHotelArrangementRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -42,8 +42,8 @@ class CreateHotelArrangementRequest extends Request
             'type' => 'required',
             'discount_type' => '',
            /* 'position' => '',*/
-            'linked_rooms_available' => 'required',
-            'extra_price_with_room_price' => 'required',
+            'linked_rooms_available' => '',
+            'extra_price_with_room_price' => '',
         ];
     }
 }

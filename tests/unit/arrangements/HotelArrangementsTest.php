@@ -32,12 +32,13 @@ class HotelArrangementsUnitTest extends TestCase
     {
 
 
+        Session::start();
 
         //Request Params
-        $request = [
-          "user_id" => 2,
+       /* $request = [
+
           "hotel_id" => 2,
-          "name" => "3 days Arrangement",
+          "name" => "Test days Arrangement",
            "rooms"=> [1,2,3],
             "special" => 0,
             "persons" => '',
@@ -55,7 +56,33 @@ class HotelArrangementsUnitTest extends TestCase
             "type" => ['voorjaar', 'bosrijk', 'culinaire'],
             "discount_type" => '3is2',
             "linked_rooms_available" => 1,
-            "extra_price_with_room_price"
+            "extra_price_with_room_price",
+            '_token' => csrf_token()
+        ];*/
+
+        $request = [
+
+            "hotel_id" => 2,
+            "name" => "I'm Updated",
+            "rooms"=> [1,2,3],
+            "special" => 0,
+            "persons" => '',
+            "price" =>[0,0,20],
+            "date_from" => '2016-05-12',
+            "date_to" => '2016-05-31',
+            "patroon" => ['ma', 'di', 'wo', 'zo'],
+            "standard_room" => 3,
+            "price_from" => 258,
+            "maximum_available"=>'',
+            "on_request"=> 0,
+            "language" => ['nl','en'],
+            "more_days" => 1,
+            "nights" => 3,
+            "type" => ['voorjaar', 'bosrijk', 'culinaire'],
+            "discount_type" => '3is2',
+            "linked_rooms_available" => 1,
+            "extra_price_with_room_price",
+            '_token' => csrf_token()
         ];
 
        /* $this->dispatchFromArray(CreateHotelArrangementCommand::class, $request);
@@ -66,9 +93,9 @@ class HotelArrangementsUnitTest extends TestCase
         //$this->post('api/league-passcode', $request, $this->headers);*/
 
 
-        $this->call('POST', 'api/arrangements/2/hotel-arrangement', $request);
+        $this->call('PUT', 'api/arrangements/2/hotel-arrangement/8', $request);
         $data =  json_decode($this->response->content(), TRUE);
-        dd($data);
+        dd($this->response->content());
         $this->call('GET', 'api/qnap/getVideos', $request);
         $data =  json_decode($this->response->content(), TRUE);
 
