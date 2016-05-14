@@ -74,6 +74,11 @@ class Hotel extends Model
         return $this->hasMany('App\Room');
     }
 
+    public function arrangement()
+    {
+        return $this->hasMany(Arrangement::class);
+    }
+
 
 
 
