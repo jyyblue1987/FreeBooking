@@ -17,7 +17,8 @@ class CreateHotelArrangementRequest extends Request
     }
 
     /**
-     * @return array
+     * @return
+com
      */
     public function rules()
     {
