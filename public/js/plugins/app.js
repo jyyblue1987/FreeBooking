@@ -29,13 +29,12 @@
     .config(["$routeProvider", function ($routeProvider) {
         function setRoutes(route) {
             var url = "/" + route,
-                config = {templateUrl: route },
-                ctrlJs = "../../public/js/angularJs/controllers/hotelControllers.js";
-                // ctrlJs = "../../public/js/angularJs/controllers/hotel" + route + "Controllers.js";
+                config = {templateUrl: route };
+           
             return $routeProvider.when(url, config), $routeProvider
         }
 
-        var routes = ["home", "hotels", "newhotel", "hotelData", "addnewroom", "pages/404"];
+        var routes = ["home", "hotels", "newhotel", "hotelData", "addnewroom", "pages/404", "arrangement"];
 
         routes.forEach(function (route) {
             setRoutes(route)

@@ -1,7 +1,7 @@
 <?php
 
 include 'api_routes.php';
-//include 'static_routes.php';
+include 'static_routes.php';
 /**
  * @Author: Shams Hashmi
  * 1- Keep only routes that must be need to load application in this file
@@ -48,6 +48,7 @@ Route::group(array('prefix' => 'administrator', "middleware" => "auth"), functio
     Route::get('navigation', function () {
         return view('admin.common.navigation');
     });
+
 
 
 });
