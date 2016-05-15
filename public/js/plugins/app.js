@@ -31,18 +31,11 @@
         function setRoutes(route) {
             var url = "/" + route,
                 config = {templateUrl: route };
-<<<<<<< HEAD
            
             return $routeProvider.when(url, config), $routeProvider
         }
 
         var routes = ["home", "hotels", "newhotel", "hotelData", "addnewroom", "pages/404", "arrangement"];
-=======
-            return $routeProvider.when(url, config), $routeProvider
-        }
-
-        var routes = ["home", "hotels", "newhotel", "hotelData", "addnewroom", "arrangements", "pages/404"];
->>>>>>> dev
 
         routes.forEach(function (route) {
             setRoutes(route)
