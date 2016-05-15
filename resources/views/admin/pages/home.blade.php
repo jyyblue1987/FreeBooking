@@ -94,6 +94,45 @@
                         </div>
                     </div>
                 </div>
+                <div class="panel panel-lined mb30 forecast-widget">
+                    <div class="panel-body">
+                        <div class="clearfix mb30">
+                            <div class="left">
+                                <div class="text-bold forecast-today text-center">
+                                    <skycon icon="weathertoday.icon" size="weathertoday.size" color="@{{weathertoday.color}}"></skycon>
+                                    &nbsp;<span>40&deg;</span>
+                                </div>
+                                <div class="current-day text-uppercase bg-info text-center small">TUESDAY, 24<sup class="text-lowercase">th </sup>Feb</div>
+                            </div>
+
+                            <div class="right mt10">
+                                <p class="text-uppercase"><i class="fa fa-map-marker"></i>&nbsp;Toronto, Canada</p>
+                                <p class="text-uppercase small right text-bold">Feels Cloudy</p>
+                            </div>
+                        </div>
+                        <!-- forecast-details -->
+                        <ul class="list-unstyled forecast-details clearfix">
+                            <li class="col-md-6 col-sm-6 clearfix mb15" ng-repeat="detail in forecastDetails">
+                                <span class="text-bold left">@{{detail.type}}</span>
+                                <span class="right">@{{detail.value}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- #end panel-body -->
+
+                    <!-- whole week forecast -->
+                    <div class="forecast-week panel-footer bg-info">
+                        <ul class="list-unstyled clearfix text-center">
+                            <li class="col-sm-4 col-md-2 col-xs-4" ng-repeat="day in weatherweeks">
+                                <div class="icon"><skycon icon="day.icon" size="day.size" color="@{{day.color}}"></skycon></div>
+                                <p>@{{day.day}}</p>
+                                <p>@{{day.temp}}&deg;C</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- #end panel -->
+
             </div>
             <!-- #end col -->
 
@@ -139,54 +178,7 @@
         </div>
         <!-- #end row -->
 
-
-
-        <div class="row">
-
-
-            <div class="col-lg-6">
-                <div class="panel panel-lined mb30 forecast-widget">
-                    <div class="panel-body">
-                        <div class="clearfix mb30">
-                            <div class="left">
-                                <div class="text-bold forecast-today text-center">
-                                    <skycon icon="weathertoday.icon" size="weathertoday.size" color="@{{weathertoday.color}}"></skycon>
-                                    &nbsp;<span>40&deg;</span>
-                                </div>
-                                <div class="current-day text-uppercase bg-info text-center small">TUESDAY, 24<sup class="text-lowercase">th </sup>Feb</div>
-                            </div>
-
-                            <div class="right mt10">
-                                <p class="text-uppercase"><i class="fa fa-map-marker"></i>&nbsp;Toronto, Canada</p>
-                                <p class="text-uppercase small right text-bold">Feels Cloudy</p>
-                            </div>
-                        </div>
-                        <!-- forecast-details -->
-                        <ul class="list-unstyled forecast-details clearfix">
-                            <li class="col-md-6 col-sm-6 clearfix mb15" ng-repeat="detail in forecastDetails">
-                                <span class="text-bold left">@{{detail.type}}</span>
-                                <span class="right">@{{detail.value}}</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- #end panel-body -->
-
-                    <!-- whole week forecast -->
-                    <div class="forecast-week panel-footer bg-info">
-                        <ul class="list-unstyled clearfix text-center">
-                            <li class="col-sm-4 col-md-2 col-xs-4" ng-repeat="day in weatherweeks">
-                                <div class="icon"><skycon icon="day.icon" size="day.size" color="@{{day.color}}"></skycon></div>
-                                <p>@{{day.day}}</p>
-                                <p>@{{day.temp}}&deg;C</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- #end panel -->
-            </div>
-            <!-- #end weather widget -->
-        </div>
-        <!-- #end row -->
     </div>
     <!-- #end page-wrap -->
 </div>
+<!-- .page-dashboard -->
