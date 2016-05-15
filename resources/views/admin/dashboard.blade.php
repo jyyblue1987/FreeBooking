@@ -36,11 +36,7 @@
            id="site-nav"
            ng-controller="NavCtrl"
            ng-include=" 'administrator/navigation' " custom-scrollbar>
-
     </aside>
-
-
-
 
     <div class="content-container" ng-class="{container: isLayoutHorizontal}" id="content" ng-view>
         <!-- content using routing -->
