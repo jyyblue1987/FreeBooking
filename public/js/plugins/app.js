@@ -44,9 +44,6 @@
         .when("/", {
                 redirectTo: "home"
             })
-        .when("/arrangements", {
-            templateUrl: "views/pages/arrangements.html"
-        })
         .when("/404", {
             templateUrl: "views/404.html"
         })
