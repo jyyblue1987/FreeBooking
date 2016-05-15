@@ -10,7 +10,7 @@
 <!-- Site nav (vertical) -->
 
 <nav class="site-nav clearfix" role="navigation" collapse-nav-accordion highlight-active>
-    <ul class="list-unstyled nav-list">
+    <ul class="nav-list">
         <li>
             <a href="#/home"><i class="fa fa-desktop icon"></i>
             <span class="text">Dashboard</span></a>
@@ -18,7 +18,7 @@
     </ul>
     @if( Auth::user()->type == "admin" )
     <div class="nav-title panel-heading"><i>Hotels</i></div>
-    <ul class="list-unstyled nav-list">
+    <ul class="nav-list">
         <li>
             <li><a href="#/hotels">All Hotels</a></li>
             <li><a href="#/newhotel">Register Hotel</a></li>
@@ -27,12 +27,11 @@
     </ul>
     @endif
 
-
     <div class="nav-title panel-heading"><i>Your Hotel</i></div>
 
-    <ul class="list-unstyled nav-list" data-ng-controller="roomsController">
+    <ul class="nav-list" data-ng-controller="roomsController">
         <li>
-        <li><a href="#/hotelData"> {{ Auth::user()->hotel_name }}</a></li>
+        <li><a href="#/hotelData"><i class="fa fa-university"></i> {{ Auth::user()->hotel_name }}</a></li>
         </li>
         <li>
             <a href="javascript:;">
@@ -40,13 +39,95 @@
                 <span class="text">Rooms</span>
                 <i class="arrow fa fa-angle-right right"></i>
             </a>
-
-
-                <ul class="inner-drop list-unstyled"  ng-init="loadRooms()">
-                    <li><a href="#/addnewroom">Add new room<span class="badge badge-xs badge-primary right">new</span></a></li>
-                    <li ng-repeat="room in regRooms" ng-model="regRooms" ><a href="#/getRoom/@{{ room.name }}/@{{ room.id }}">@{{ room.name }}</a></li>
-                </ul>
+            <ul class="inner-drop" ng-init="loadRooms()">
+                <li><a href="#/addnewroom">Add new room<span class="badge badge-xs badge-primary right">new</span></a></li>
+                <li ng-repeat="room in regRooms" ng-model="regRooms" ><a href="#/getRoom/@{{ room.name }}/@{{ room.id }}">@{{ room.name }}</a></li>
+            </ul>
         </li>
     </ul>
-    <div class="nav-title panel-heading"><i>Arrangements</i></div>
+    <ul class="nav-list" data-ng-controller="arrangementsController">
+        <li>
+            <a href="javascript:;">
+                <i class="fa fa-desktop icon"></i>
+                <span>Arrangements</span>
+                <i class="arrow fa fa-angle-right right"></i>
+            </a>
+            <ul class="inner-drop">
+                <li><a href="#/arrangements">Add a new arrangement</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="nav-list">
+        <li>
+            <a href="javascript:;">
+                <i class="fa fa-desktop icon"></i>
+                <span>Guests</span>
+                <i class="arrow fa fa-angle-right right"></i>
+            </a>
+            <ul class="inner-drop">
+                <li><a href="#">Guests & reservations</a></li>
+                <li><a href="#">Business Guests</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="nav-list">
+        <li>
+            <a href="javascript:;">
+                <i class="fa fa-desktop icon"></i>
+                <span>information</span>
+                <i class="arrow fa fa-angle-right right"></i>
+            </a>
+            <ul class="inner-drop">
+                <li><a href="#">Rent</a></li>
+                <li><a href="#">Cost overview</a></li>
+                <li><a href="#">invoice overview</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="nav-list">
+        <li>
+            <a href="javascript:;">
+                <i class="fa fa-desktop icon"></i>
+                <span>Mailings</span>
+                <i class="arrow fa fa-angle-right right"></i>
+            </a>
+            <ul class="inner-drop">
+                <li><a href="#">Administrator</a></li>
+                <li><a href="#">E-mail addresses</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="nav-list">
+        <li>
+            <a href="javascript:;">
+                <i class="fa fa-desktop icon"></i>
+                <span>Blacklist</span>
+                <i class="arrow fa fa-angle-right right"></i>
+            </a>
+            <ul class="inner-drop">
+                <li><a href="#">add to blacklist</a></li>
+                <li><a href="#">view black list</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="nav-list">
+        <li>
+            <a href="javascript:;">
+                <i class="fa fa-desktop icon"></i>
+                <span>Informatioon about the city</span>
+                <i class="arrow fa fa-angle-right right"></i>
+            </a>
+            <ul class="inner-drop">
+                <li><a href="#">add to blacklist</a></li>
+                <li><a href="#">Acitivities</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="nav-list">
+        <li>
+            <a href="../en/auth/logout">Log out</a>
+        </li>
+    </ul>
+    
+
 </nav>

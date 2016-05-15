@@ -77,7 +77,7 @@
             <label class="col-lg-2 control-label">Check in</label>
             <div class="col-lg-8">
                 <div class="timepicker-holder">
-                    <timepicker ng-model="hotel.check_in"></timepicker>
+                    <input type="time" ng-model="hotel.check_in" timepicker>
                 </div><!-- /timepicker-holder -->
             </div>
         </div>
@@ -85,7 +85,7 @@
             <label class="col-lg-2 control-label">Check out</label>
             <div class="col-lg-8">
                 <div class="timepicker-holder">
-                    <timepicker ng-model="hotel.check_out"></timepicker>
+                    <input type="time" ng-model="hotel.check_out" timepicker>                    
                 </div><!-- /timepicker-holder -->
             </div>
         </div>
