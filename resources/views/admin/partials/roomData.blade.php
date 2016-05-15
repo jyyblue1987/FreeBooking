@@ -1,7 +1,5 @@
 
-
 <div class="page page-form-wizard clearfix ng-scope">
-
 
     <ol class="breadcrumb breadcrumb-small">
         <li>Your Hotel</li>

@@ -10,6 +10,7 @@
 <script src="{{ URL::asset('/') }}js/angularJs/controllers/hotelControllers.js"></script>
 <script src="{{ URL::asset('/') }}js/angularJs/controllers/roomControllers.js"></script>
 <script src="{{ URL::asset('/') }}js/angularJs/controllers/formControllers.js"></script>
+<script src="{{ URL::asset('/') }}js/angularJs/controllers/arrangeControllers.js"></script>
 
 <script src="{{ URL::asset('/') }}js/angularJs/directives/appDirectives.js"></script>
 
