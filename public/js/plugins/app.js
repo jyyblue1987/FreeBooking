@@ -18,6 +18,7 @@
         "app.hotels",
         "app.ServerRequest",
         "app.rooms",
+        "app.arrangements",
         "flow","angularSpinners"])
 
     .config(["uiSelectConfig", function (uiSelectConfig) {
@@ -29,13 +30,11 @@
     .config(["$routeProvider", function ($routeProvider) {
         function setRoutes(route) {
             var url = "/" + route,
-                config = {templateUrl: route },
-                ctrlJs = "../../public/js/angularJs/controllers/hotelControllers.js";
-                // ctrlJs = "../../public/js/angularJs/controllers/hotel" + route + "Controllers.js";
+                config = {templateUrl: route };
             return $routeProvider.when(url, config), $routeProvider
         }
 
-        var routes = ["home", "hotels", "newhotel", "hotelData", "addnewroom", "pages/404"];
+        var routes = ["home", "hotels", "newhotel", "hotelData", "addnewroom", "arrangements", "pages/404"];
 
         routes.forEach(function (route) {
             setRoutes(route)
@@ -44,6 +43,9 @@
         .when("/", {
                 redirectTo: "home"
             })
+        .when("/arrangements", {
+            templateUrl: "views/pages/arrangements.html"
+        })
         .when("/404", {
             templateUrl: "views/404.html"
         })
@@ -52,40 +54,12 @@
         })
     }]);
 
-
-    /*.config(['$routeProvider', function($routeProvider) {
-        $routeProvider
-        .when('/', {
-            templateUrl: 'home'
-        })
-        .when('/hotels', {
-            templateUrl: '/hotels',
-            controller: '/js/angularJs/controllers/hotelControllers.js'
-        })
-        .when('/newhotel', {
-            templateUrl: '/newhotel',
-            controller: '/js/angularJs/controllers/hotelControllers.js'
-        })
-        .when('/hotelData', {
-            templateUrl: '/hotelData',
-            controller: '/js/angularJs/controllers/hotelControllers.js'
-        })
-        .when('/addnewroom', {
-            templateUrl: '/addnewroom',
-            controller: '/js/angularJs/controllers/roomControllers.js'
-        })
-        .otherwise({
-            redirectTo: 'views/404.html'
-        });
-    }]);*/
-
-
 }();
 
 
 
 /**********Started here******************/
-var hotels = angular.module('app.hotels',[]);
+var hotels = angular.module("app.hotels", []);
 
 /***Rooms module started here***/
 var rooms = angular.module('app.rooms',[]).config(['$routeProvider', function($routeProvider) {
@@ -97,6 +71,8 @@ var rooms = angular.module('app.rooms',[]).config(['$routeProvider', function($r
         });
     }
 ]);
+
+var arrangements = angular.module("app.arrangements", []);
 
 
 /*** App Controllers Module ***/

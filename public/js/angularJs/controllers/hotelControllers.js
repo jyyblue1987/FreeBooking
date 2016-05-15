@@ -7,9 +7,7 @@ hotels.controller('hotelController',function($scope, Request){
     $scope.push =  function()
     {
 
-
         var res = Request.post("post",   "auth/register",   $scope.person);
-
 
        res.then(
 
@@ -26,10 +24,7 @@ hotels.controller('hotelController',function($scope, Request){
         },
         function errorCallback(response) {
 
-
-
             var errors = [];
-
 
             if(response.status == 422)  {
 
@@ -43,11 +38,8 @@ hotels.controller('hotelController',function($scope, Request){
 
             }else{
 
-
                 errors.push("your session is expired")
             }
-
-
 
             $scope.errors=errors;
         }
@@ -155,10 +147,6 @@ hotels.controller('addHotelController',function($scope, Request){
 
                 }
 
-
-
-
-
             });
     };
 
@@ -166,13 +154,9 @@ hotels.controller('addHotelController',function($scope, Request){
 
     $scope.getState = function() {
 
-
-
         if($scope.hotel.country){
 
-
             var res = Request.post("get",   "getStates/"+$scope.hotel.country,  "");
-
 
             res.then(
 
@@ -181,7 +165,6 @@ hotels.controller('addHotelController',function($scope, Request){
                    $scope.hotel.states = response.data;
 
                 });
-
         }
     };
 
@@ -244,10 +227,6 @@ hotels.controller('addHotelController',function($scope, Request){
                     $scope.settings = response.data.hotel_settings;
                 }
 
-
-
-
-
             });
     }
 
@@ -282,10 +261,6 @@ hotels.controller('addHotelController',function($scope, Request){
                     $scope.options = response.data.options;
                 }
 
-
-
-
-
             });
     }
 
@@ -295,22 +270,17 @@ hotels.controller('addHotelController',function($scope, Request){
         $scope.overStar = value;
         $scope.percent = 100 * (value / $scope.max);
 
-
     };
 
 
     $scope.addHotel = function(){
 
 
-
         var res = Request.post("post",   "addHotel/"+$scope.user_id,   $scope.hotel);
-
 
         res.then(
 
             function successCallback(response){
-
-
 
                 swal({
                     title:response.data.title,
@@ -323,15 +293,11 @@ hotels.controller('addHotelController',function($scope, Request){
             },
             function errorCallback(response) {
 
-
-
                 var errors = [];
-
 
                 if(response.status == 422)  {
 
                     angular.forEach(response.data, function(value, key){
-
 
                         errors.push(value[0]);
 

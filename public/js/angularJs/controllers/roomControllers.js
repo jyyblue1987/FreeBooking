@@ -1177,3 +1177,11 @@ $scope.loadRoomPhotos = function() {
 }]);
 
 
+
+
+arrangements.controller('arrangementsController',["$scope", function($scope){
+
+    $scope.loadArrangements = "Arrangements";
+
+}]);
+
