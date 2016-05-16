@@ -4,11 +4,13 @@ namespace App\Commands\Arrangement;
 
 use App\Commands\Command;
 use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Foundation\Application;
 use App\Freebooking\Repositories\Hotel\HotelRepository;
 use App\Freebooking\Repositories\Arrangement\HotelArrangementRepository;
+use App\Freebooking\Repositories\Arrangement\HotelArrangementDescriptionRepository;
 use App\Freebooking\Exceptions\Hotel\HotelNotFound;
 use App\Freebooking\Exceptions\Hotel\HotelNotBelongToUser;
-use App\Freebooking\Exceptions\Arragements\ArrangementNotFound;
+use App\Freebooking\Exceptions\Arrangements\ArrangementNotFound;
 use App\Arrangement;
 
 class UpdateHotelArrangementCommand extends Command implements SelfHandling
@@ -33,6 +35,10 @@ class UpdateHotelArrangementCommand extends Command implements SelfHandling
      * @var array
      */
     private $rooms = array();
+    /**
+     * @var
+     */
+    private $description;
     /**
      * @var
      */
@@ -133,17 +139,19 @@ class UpdateHotelArrangementCommand extends Command implements SelfHandling
      * @param $linked_rooms_available
      * @param string $extra_price_with_room_price
      */
-    public function __construct($user_id, $arrangement_id, $hotel_id, $name, $rooms, $special, $persons = '',
+    public function __construct($user_id, $arrangement_id, $hotel_id, $name, $rooms, $description, $special, $persons = '',
                                 $price = '', $date_from, $date_to, $patroon,
                                 $standard_room = '', $price_from = '', $maximum_available = '',
                                 $on_request, $language, $more_days = '', $nights = '', $type, $discount_type,
                                 $linked_rooms_available, $extra_price_with_room_price = '' )
     {
+
         $this->user_id = $user_id;
         $this->arrangement_id = $arrangement_id;
         $this->hotel_id = $hotel_id;
         $this->name = $name;
         $this->rooms = $rooms;
+        $this->description = $description;
         $this->special = $special;
         $this->persons = $persons;
         $this->price = $price;
@@ -170,7 +178,7 @@ class UpdateHotelArrangementCommand extends Command implements SelfHandling
      * @throws HotelNotBelongToUser
      * @throws HotelNotFound
      */
-    public function handle(HotelRepository $hotelRepository, HotelArrangementRepository $hotelArrangementRepository)
+    public function handle(Application $app, HotelRepository $hotelRepository, HotelArrangementRepository $hotelArrangementRepository, HotelArrangementDescriptionRepository $hotelArrangementDescriptionRepository)
     {
 
 
@@ -216,7 +224,14 @@ class UpdateHotelArrangementCommand extends Command implements SelfHandling
         $arrangement->linked_rooms_available = $this->linked_rooms_available;
         $arrangement->extra_price_with_room_price = $this->extra_price_with_room_price;
 
+        $arrDescription = $hotelArrangementDescriptionRepository->getByArrangementIdAndHotelIdAndLanguage($this->arrangement_id, $this->hotel_id, $app->getLocale());
+
+        $arrDescription->description = $this->description;
+        $hotelArrangementDescriptionRepository->create($arrDescription);
+
+
         $hotelArrangementRepository->create($arrangement);
+
 
         return $arrangement;
 
