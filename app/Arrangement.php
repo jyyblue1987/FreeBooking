@@ -51,5 +51,18 @@ class Arrangement extends Model
     }
 
 
+    /**
+     * The arrangment that has many descriptions
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+
+
+    public function arrangementDescription()
+    {
+        return $this->hasMany(ArrangementDescription::class);
+    }
+
+
 
 }
