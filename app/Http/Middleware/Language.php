@@ -26,7 +26,12 @@ class Language implements Middleware {
 
 //dd($this->app->config->get('app.locale') );
         // Make sure current locale exists.
-         $locale = $request->segment(1);
+      $locale = $request->segment(1);
+
+            if($locale == 'api')
+            {
+                $locale = $request->segment(2);
+            }
 
         if ( ! array_key_exists($locale, $this->app->config->get('app.locale'))) {
 
@@ -39,7 +44,6 @@ class Language implements Middleware {
 
 
         $this->app->setLocale($locale);
-
         return $next($request);
     }
 
