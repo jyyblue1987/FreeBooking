@@ -46,7 +46,7 @@ class HotelArrangmentsController extends ApiController
      * @param $hotel_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(CreateHotelArrangementRequest $request, $hotel_id)
+    public function store(CreateHotelArrangementRequest $request,$locale,  $hotel_id)
     {
 
         try
@@ -86,10 +86,11 @@ class HotelArrangmentsController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateHotelArrangementRequest $request, $hotel_id, $arrangement_id)
+    public function update(CreateHotelArrangementRequest $request, $locale, $hotel_id, $arrangement_id)
     {
         try
         {
+
 //dd( Auth::User()->id);
             $arrangement = $this->dispatchFrom(UpdateHotelArrangementCommand::class, $request, ['user_id' => 2, 'arrangement_id' => $arrangement_id]);
 
