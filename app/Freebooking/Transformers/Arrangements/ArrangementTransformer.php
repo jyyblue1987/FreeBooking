@@ -3,12 +3,25 @@
 namespace App\Freebooking\Transformers\Arrangements;
 
 use App\Freebooking\Transformers\Transformer;
+use App\Freebooking\Transformers\Arrangements\ArrangementDescriptionTransformer;
 
 class ArrangementTransformer extends Transformer
 {
-    public function transform($arrangement)
+    private $arrangementDescriptionTransformer;
+
+    public function __construct(ArrangementDescriptionTransformer $arrangementDescriptionTransformer)
     {
 
+        $this->arrangementDescriptionTransformer = $arrangementDescriptionTransformer;
+
+    }
+    public function transform($arrangement)
+    {
+        $descriptions = [];
+        if($arrangement->arrangementDescription)
+        {
+            $descriptions = $this->arrangementDescriptionTransformer->transformCollection($arrangement->arrangementDescription);
+        }
 
         return [
                 "id"                            => $arrangement->id,
@@ -31,7 +44,9 @@ class ArrangementTransformer extends Transformer
                 "type"                          => $arrangement->type,
                 "discount_type"                 => $arrangement->discount_type,
                 "linked_rooms_available"        => $arrangement->linked_rooms_available,
-                "extra_price_with_room_price"   => $arrangement->extra_price_with_room_price
+                "extra_price_with_room_price"   => $arrangement->extra_price_with_room_price,
+                "descriptions"                  => $descriptions
+
 
          ];
 
