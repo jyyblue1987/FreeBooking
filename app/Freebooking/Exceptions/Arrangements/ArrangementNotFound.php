@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Freebooking\Exceptions\Arragements;
+namespace App\Freebooking\Exceptions\Arrangements;
 
 use App\Freebooking\Exceptions\NotFoundException;
 
