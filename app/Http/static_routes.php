@@ -6,7 +6,16 @@
  * Time: 2:26 PM
  */
 
-Route::get('arrangement', function()
+Route::get('arrangements', function()
 {
-    return View::make('admin.partials.arrangements.arrangement');
+    return View::make('admin.partials.arrangements.arrangements');
+});
+
+Route::get('blacklist', function()
+{
+    return View::make('admin.partials.bilk.bilk');
+});
+Route::get('addblacklist', function()
+{
+    return View::make('admin.partials.bilk.addbilk');
 });
