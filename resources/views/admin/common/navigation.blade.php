@@ -92,7 +92,7 @@
                 <i class="arrow fa fa-angle-right right"></i>
             </a>
             <ul class="inner-drop">
-                <li><a href="#">Administrator</a></li>
+                <li><a href="#">Administer</a></li>
                 <li><a href="#">E-mail addresses</a></li>
             </ul>
         </li>
@@ -105,8 +105,8 @@
                 <i class="arrow fa fa-angle-right right"></i>
             </a>
             <ul class="inner-drop">
-                <li><a href="#">add to blacklist</a></li>
-                <li><a href="#">view black list</a></li>
+                <li><a href="#/addblacklist">add to blacklist</a></li>
+                <li><a href="#/blacklist">view black list</a></li>
             </ul>
         </li>
     </ul>
