@@ -35,7 +35,7 @@
             return $routeProvider.when(url, config), $routeProvider
         }
 
-        var routes = ["home", "hotels", "newhotel", "hotelData", "addnewroom", "pages/404", "arrangement"];
+        var routes = ["home", "hotels", "newhotel", "hotelData", "addnewroom", "pages/404", "arrangements", "blacklist", "addblacklist"];
 
         routes.forEach(function (route) {
             setRoutes(route)
