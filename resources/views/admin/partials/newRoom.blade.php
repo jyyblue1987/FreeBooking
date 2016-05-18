@@ -9,7 +9,7 @@
         <div class="row">
 
             <div class="col-lg-12">
-                @include('admin.partials.roomForm')
+                @include('admin.partials.room.roomForm')
             </div>
 
         </div>
