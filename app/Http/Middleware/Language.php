@@ -21,6 +21,8 @@ class Language implements Middleware {
      * @param  \Closure  $next
      * @return mixed
      */
+
+
     public function handle($request, Closure $next)
     {
 
@@ -30,8 +32,16 @@ class Language implements Middleware {
 
             if($locale == 'api')
             {
+
                 $locale = $request->segment(2);
+
             }
+            elseif($request->segment(2) == '' && array_key_exists($locale, $this->app->config->get('app.locale')))
+            {
+                return $this->redirector->to("{$locale}/administrator");
+            }
+
+
 
         if ( ! array_key_exists($locale, $this->app->config->get('app.locale'))) {
 
@@ -42,8 +52,8 @@ class Language implements Middleware {
             return $this->redirector->to(implode('/', $segments));
         }
 
-
         $this->app->setLocale($locale);
+
         return $next($request);
     }
 
