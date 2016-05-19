@@ -6236,7 +6236,7 @@ code, kbd, pre, samp {
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace; }
 
 code {
-  padding: 2px 4px;
+  padding: 4px 8px;
   font-size: 90%;
   color: #c7254e;
   background-color: #f7f7f7;
