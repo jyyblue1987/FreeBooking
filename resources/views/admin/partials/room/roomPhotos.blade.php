@@ -10,7 +10,7 @@
               flow-file-success="imageSuccess( $file, $message, $flow )"
              >
             <div class="container-fluid">
-                <h2>DROP ROOM PHOTOS HERE</h2>
+                <h4>DROP ROOM PHOTOS HERE</h4>
                 <hr class="soften"/>
                 <p>
                     <a class="btn btn-small btn-primary" ng-click="$flow.resume()">Upload</a>

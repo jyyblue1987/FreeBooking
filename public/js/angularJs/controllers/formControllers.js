@@ -60,7 +60,7 @@ uiFormCtrls.controller("TypeaheadDemoCtrl", ["$scope", function($scope) { $scope
 
 
 /*** FormWizard Controller ***/
-uiFormCtrls.controller("FormWizardDemoCtrl", ["$scope", function($scope) {
+uiFormCtrls.controller("FormWizardCtrl", ["$scope", function($scope) {
     $scope.steps = [!0, !1, !1], $scope.stepNext = function(index) {
         for (var i = 0; i < $scope.steps.length; i++) $scope.steps[i] = !1;
         $scope.steps[index] = !0
