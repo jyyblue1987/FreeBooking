@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
@@ -126,6 +128,42 @@ class AuthController extends Controller
             $request->session()->push("user.rooms", $data);
         }
 
-    return;
+        return;
+    }
+
+     /*public function postRegister(Request $request)
+    {
+        //return redirect('/');
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        //Inserting newly registered data into users table.
+        $register =$this->create($request->all());
+
+        //inserting a blank entry in hotels table after each new hotel registeration.
+        $hotel = new Hotel();
+        User::locatedAt($register->id)->addHotel($hotel);
+        return flash("Hotel","New hotel Registered!", "success");
+    }*/
+
+    public function postRegister( Request $request )
+    {
+
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+        
+        $this->create($request->all());
+
+        return flash("Hotel","New hotel Registered!", "success");
     }
 }

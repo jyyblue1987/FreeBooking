@@ -85,6 +85,18 @@ class User extends Model implements AuthenticatableContract,
     }
 
 
+    public static function create(array $attributes = [])
+    {
+        $model = new static($attributes);
+
+        $model->save();
+
+        $hotel = new Hotel();
+        User::locatedAt($model->id)->addHotel($hotel);
+        //return flash("Hotel","New hotel Registered!", "success");
+
+        return $model;
+    }
 
     public static function locatedAt($id){
 
