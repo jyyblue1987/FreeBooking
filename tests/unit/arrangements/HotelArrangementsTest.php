@@ -35,10 +35,11 @@ class HotelArrangementsUnitTest extends TestCase
         Session::start();
 
         //Request Params
-       /* $request = [
+     $request = [
 
           "hotel_id" => 2,
           "name" => "Test days Arrangement",
+         "description"=> "New Arrangment",
            "rooms"=> [1,2,3],
             "special" => 0,
             "persons" => '',
@@ -58,9 +59,9 @@ class HotelArrangementsUnitTest extends TestCase
             "linked_rooms_available" => 1,
             "extra_price_with_room_price",
             '_token' => csrf_token()
-        ];*/
+        ];
 
-        $request = [
+       /* $request = [
 
             "hotel_id" => 2,
             "name" => "I'm Updated",
@@ -68,6 +69,7 @@ class HotelArrangementsUnitTest extends TestCase
             "special" => 0,
             "persons" => '',
             "price" =>[0,0,20],
+            "description"=>'de stuff',
             "date_from" => '2016-05-12',
             "date_to" => '2016-05-31',
             "patroon" => ['ma', 'di', 'wo', 'zo'],
@@ -83,7 +85,7 @@ class HotelArrangementsUnitTest extends TestCase
             "linked_rooms_available" => 1,
             "extra_price_with_room_price",
             '_token' => csrf_token()
-        ];
+        ];*/
 
        /* $this->dispatchFromArray(CreateHotelArrangementCommand::class, $request);
         dd("done");
@@ -93,7 +95,7 @@ class HotelArrangementsUnitTest extends TestCase
         //$this->post('api/league-passcode', $request, $this->headers);*/
 
 
-        $this->call('PUT', 'api/arrangements/2/hotel-arrangement/8', $request);
+        $this->call('POST', 'api/de/arrangements/2/hotel-arrangement', $request);
         $data =  json_decode($this->response->content(), TRUE);
         dd($this->response->content());
         $this->call('GET', 'api/qnap/getVideos', $request);

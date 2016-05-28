@@ -26,7 +26,7 @@ com
             'hotel_id' => 'required|exists:hotels,id',
             'name' => 'required',
             'rooms' => 'required',
-            'description' => 'required',
+            'description' => '',
             'special' => '',
             'persons' => '',
             'price' => '',
