@@ -13,7 +13,7 @@ class DeleteHotelArrangementRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class DeleteHotelArrangementRequest extends Request
     public function rules()
     {
         return [
-            //
+            'hotel_id' => 'required|exists:hotels,id',
+            'arrangement_id' => 'required|exists:arrangements,id'
         ];
     }
 }
