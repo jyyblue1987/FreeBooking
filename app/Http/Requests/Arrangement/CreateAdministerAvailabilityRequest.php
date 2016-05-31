@@ -13,7 +13,7 @@ class CreateAdministerAvailabilityRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class CreateAdministerAvailabilityRequest extends Request
     public function rules()
     {
         return [
-            //
+            'hotel_id' => 'required|exists:hotels,id',
+            'date' => 'required|date',
+            'arrangement_id' => 'required|exists:arrangements,id',
+            'available' => 'required',
+            'price' => '',
+            'status' => '',
         ];
     }
 }
