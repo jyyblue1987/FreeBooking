@@ -38,7 +38,7 @@ class HotelArrangementsUnitTest extends TestCase
      $request = [
 
           "hotel_id" => 2,
-          "name" => "Test days Arrangement",
+          "name" => "New arrangement for Shahbaz",
          "description"=> "New Arrangment",
            "rooms"=> [1,2,3],
             "special" => 0,
@@ -58,7 +58,7 @@ class HotelArrangementsUnitTest extends TestCase
             "discount_type" => '3is2',
             "linked_rooms_available" => 1,
             "extra_price_with_room_price",
-            '_token' => csrf_token()
+
         ];
 
        /* $request = [
