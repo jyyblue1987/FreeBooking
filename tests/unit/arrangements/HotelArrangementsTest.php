@@ -95,6 +95,30 @@ class HotelArrangementsUnitTest extends TestCase
         //$this->post('api/league-passcode', $request, $this->headers);*/
 
 
+
+
+
+        $this->call('GET', 'api/de/arrangements/2/hotel-arrangement/2');
+
+        dd($this->response->content());
+
+
+        $del = [
+            'arrangement_id' => 1,
+            'hotel_id'      => 2,
+            'user_id'       => 2,
+            '_token'        => csrf_token()
+        ];
+        //$this->call('DELETE', 'api/de/arrangements/2/hotel-arrangement/1', $del);
+
+        //dd($this->response->content());
+
+        /*$this->call('GET', 'api/de/arrangements/2/hotel-arrangement');
+
+        $data = json_decode($this->response->content(), TRUE);
+
+        dd($this->response->content());*/
+
         $this->call('POST', 'api/de/arrangements/2/hotel-arrangement', $request);
         $data =  json_decode($this->response->content(), TRUE);
         dd($this->response->content());
