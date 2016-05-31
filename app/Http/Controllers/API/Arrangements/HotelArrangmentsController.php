@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\API\Arrangements;
 
+use App\Commands\Arrangement\DeleteHotelArrangementCommand;
+use App\Commands\Arrangement\DeleteHotelArrangmentCommand;
+use App\Commands\Arrangement\ListHotelArrangementCommand;
+use App\Commands\Arrangement\ShowHotelArrangementCommand;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -26,6 +30,7 @@ class HotelArrangmentsController extends ApiController
 
     public function __construct(ArrangementTransformer $arrangementTransformer)
     {
+
         $this->arrangementTransformer = $arrangementTransformer;
 
     }
@@ -35,9 +40,23 @@ class HotelArrangmentsController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Requests\Arrangement\HotelArrangementsListRequest $request)
     {
-       //
+        try
+        {
+
+            $arrangement = $this->dispatchFrom(ListHotelArrangementCommand::class, $request);
+
+            return $arrangement;
+        } catch (HotelNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        } catch (HotelNotBelongToUser $e) {
+            return $this->respondNotFound($e->getMessage());
+        } catch (ArrangementNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        }catch (DatabaseException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
     }
 
 
@@ -48,6 +67,8 @@ class HotelArrangmentsController extends ApiController
      */
     public function store(CreateHotelArrangementRequest $request,$locale,  $hotel_id)
     {
+
+        //dd( Auth::User()->id);
 
         try
         {
@@ -73,9 +94,27 @@ class HotelArrangmentsController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Requests\Arrangement\ShowHotelArrangementRequest $request, $locale, $hotel_id, $arrangement_id)
     {
-        //
+        try
+        {
+
+            $arrangement = $this->dispatchFrom(ShowHotelArrangementCommand::class, $request, ['user_id' => 2, 'hotel_id'=> $hotel_id, 'arrangement_id' => $arrangement_id]);
+
+            return $this->respond([
+                'Arrangement' => $this->arrangementTransformer->transform($arrangement),
+                'flash' => flash("Arrangement","Arrangement updated succefully for the hotel", "success")
+            ]);
+
+        } catch (HotelNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        } catch (HotelNotBelongToUser $e) {
+            return $this->respondNotFound($e->getMessage());
+        } catch (ArrangementNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        }catch (DatabaseException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
     }
 
 
@@ -115,8 +154,25 @@ class HotelArrangmentsController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Requests\Arrangement\DeleteHotelArrangementRequest $request, $locale, $hotel_id, $arrangement_id)
     {
-        //
+        try
+        {
+
+            $arrangement = $this->dispatchFrom(DeleteHotelArrangementCommand::class, $request, ['user_id' => 2, 'arrangement_id' => $arrangement_id]);
+
+            /*return $this->respond([
+                'Arrangement' => $this->arrangementTransformer->transform($arrangement),
+                'flash' => flash("Arrangement","Arrangement updated succefully for the hotel", "success")
+            ]);*/
+        } catch (HotelNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        } catch (HotelNotBelongToUser $e) {
+            return $this->respondNotFound($e->getMessage());
+        } catch (ArrangementNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        }catch (DatabaseException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
     }
 }
