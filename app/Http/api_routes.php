@@ -18,6 +18,8 @@ Route::group(['prefix' => 'api',  'namespace' => 'API'], function(){
 
 Route::resource('api/{locale}/administer-availability/hotel/{hotelId}/arrangement', 'API\Arrangements\AdministerAvailabilityController');
 
+Route::resource('api/{locale}/guests', 'API\Reservation\GuestsController');
+
 /** Routes for hotels for hotel owners */
 
 Route::post('addHotel/{id}', 'UsersController@updateHotelData')->middleware(['auth']);
