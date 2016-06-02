@@ -15,9 +15,6 @@ Route::group(['prefix' => 'api',  'namespace' => 'API'], function(){
     });
 
 });
-
-Route::resource('api/{locale}/administer-availability/hotel/{hotelId}/arrangement', 'API\Arrangements\AdministerAvailabilityController');
-
 /** Routes for hotels for hotel owners */
 
 Route::post('addHotel/{id}', 'UsersController@updateHotelData')->middleware(['auth']);
@@ -99,5 +96,3 @@ Route::post('setNonRefundable/{room_id}', 'RoomsController@setNonRefundable')->m
 Route::get('getNonRefundable/{id}/{room_id}', 'RoomsController@getNonRefundable')->middleware(['auth']);
 
 Route::post('userData/{id}', 'UsersController@updateUserData')->middleware(['auth']);
-
-
