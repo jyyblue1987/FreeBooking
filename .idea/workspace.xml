@@ -2,12 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="277c4c11-de68-49b7-9834-8a06e7ce7813" name="Default" comment="Added new route for Guest controller">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Commands/Reservation/DestroyGuestCommand.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Commands/Reservation/ShowGuestCommand.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Http/Requests/Reservation/DestroyGuestRequest.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Http/Requests/Reservation/ShowGuestRequest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/laravel.iml" afterPath="$PROJECT_DIR$/.idea/laravel.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Commands/Reservation/DestroyGuestCommand.php" afterPath="$PROJECT_DIR$/app/Commands/Reservation/DestroyGuestCommand.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Commands/Reservation/ShowGuestCommand.php" afterPath="$PROJECT_DIR$/app/Commands/Reservation/ShowGuestCommand.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Freebooking/Repositories/Reservation/GuestsRepository.php" afterPath="$PROJECT_DIR$/app/Freebooking/Repositories/Reservation/GuestsRepository.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Freebooking/Transformers/Arrangements/ArrangementTransformer.php" afterPath="$PROJECT_DIR$/app/Freebooking/Transformers/Arrangements/ArrangementTransformer.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Reservation/GuestsController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Reservation/GuestsController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Requests/Reservation/ShowGuestRequest.php" afterPath="$PROJECT_DIR$/app/Http/Requests/Reservation/ShowGuestRequest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/app.php" afterPath="$PROJECT_DIR$/config/app.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpunit.xml" afterPath="$PROJECT_DIR$/phpunit.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/partials/arrangements/arrangements.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/partials/arrangements/arrangements.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/unit/Reservation/GuestsTest.php" afterPath="$PROJECT_DIR$/tests/unit/Reservation/GuestsTest.php" />
     </list>
     <ignored path="laravel.iws" />
@@ -40,10 +50,10 @@
       <file leaf-file-name="api_routes.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/api_routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="24" column="50" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
+            <state relative-caret-position="238">
+              <caret line="19" column="50" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
               <folding>
-                <marker date="1465055611941" expanded="false" signature="9:94" ph=" Created by PhpStorm. ..." />
+                <marker date="1465065903492" expanded="false" signature="9:94" ph=" Created by PhpStorm. ..." />
               </folding>
             </state>
           </provider>
@@ -202,11 +212,11 @@
         <option value="$PROJECT_DIR$/app/Http/api_routes.php" />
         <option value="$PROJECT_DIR$/app/Http/Requests/Reservation/ShowGuestRequest.php" />
         <option value="$PROJECT_DIR$/app/Freebooking/Repositories/Reservation/GuestsRepository.php" />
-        <option value="$PROJECT_DIR$/app/Commands/Reservation/DestroyGuestCommand.php" />
         <option value="$PROJECT_DIR$/app/Commands/Reservation/ShowGuestCommand.php" />
         <option value="$PROJECT_DIR$/app/Http/Requests/Reservation/DestroyGuestRequest.php" />
         <option value="$PROJECT_DIR$/tests/unit/Reservation/GuestsTest.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/API/Reservation/GuestsController.php" />
+        <option value="$PROJECT_DIR$/app/Commands/Reservation/DestroyGuestCommand.php" />
       </list>
     </option>
   </component>
@@ -526,7 +536,7 @@
       <workItem from="1464875165296" duration="7706000" />
       <workItem from="1464894749768" duration="2451000" />
       <workItem from="1464899093998" duration="3502000" />
-      <workItem from="1465055222673" duration="3776000" />
+      <workItem from="1465055222673" duration="4370000" />
     </task>
     <task id="LOCAL-00001" summary="Guest controller for Guest and Reservation module">
       <created>1464900543937</created>
@@ -637,7 +647,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48423000" />
+    <option name="totallyTimeSpent" value="49017000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -1016,10 +1026,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/api_routes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="24" column="50" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
+        <state relative-caret-position="238">
+          <caret line="19" column="50" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
           <folding>
-            <marker date="1465055611941" expanded="false" signature="9:94" ph=" Created by PhpStorm. ..." />
+            <marker date="1465065903492" expanded="false" signature="9:94" ph=" Created by PhpStorm. ..." />
           </folding>
         </state>
       </provider>
