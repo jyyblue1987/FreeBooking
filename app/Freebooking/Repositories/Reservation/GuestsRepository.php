@@ -34,4 +34,18 @@ class GuestsRepository
 
         return $hotel;
     }
+
+    public function getGuest( Guests $guest, $id )
+    {
+        $data = $guest->where('id', $id)->first();
+
+        return $data;
+    }
+
+    public function deleteGuest( Guests $guest, $id )
+    {
+        $data = $guest->destroy($id);
+
+        return $data;
+    }
 }
