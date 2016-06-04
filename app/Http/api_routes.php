@@ -20,6 +20,7 @@ Route::resource('api/{locale}/administer-availability/hotel/{hotelId}/arrangemen
 
 Route::resource('api/{locale}/guests', 'API\Reservation\GuestsController');
 
+
 /** Routes for hotels for hotel owners */
 
 Route::post('addHotel/{id}', 'UsersController@updateHotelData')->middleware(['auth']);
