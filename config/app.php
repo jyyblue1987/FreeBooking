@@ -151,6 +151,8 @@ return [
          */
         DougSisk\CountryState\CountryStateServiceProvider::class,
         Matriphe\Imageupload\ImageuploadServiceProvider::class,
+        'Collective\Html\HtmlServiceProvider',
+        
 
     ],
 
@@ -202,6 +204,8 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Imageupload' => Matriphe\Imageupload\ImageuploadFacade::class,
 
+        'Form' => 'Collective\Html\FormFacade',
+        'Html' => 'Collective\Html\HtmlFacade',
     ],
 
 

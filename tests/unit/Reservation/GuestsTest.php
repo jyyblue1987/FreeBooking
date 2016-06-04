@@ -18,8 +18,8 @@ class GuestsTest extends TestCase
         //$this->assertTrue(true);
 
         $avail = [
-            'id'    => '1',
-            'hotel_id' => '2',
+            'id'    => '5',
+            /*'hotel_id' => '2',
             'gender' => 'male',
             'name' => 'This is new My Name',
             'address' => 'New state blue area',
@@ -30,11 +30,11 @@ class GuestsTest extends TestCase
             'phone' => '+9213213123213',
             'fax' => '+92131231313213',
             'email' => 'mail@example.com',
-            'language' => 'en',
+            'language' => 'en',*/
             '_token' => csrf_token()
         ];
 
-        $this->call('PUT', 'api/de/guests/1', $avail);
+        $this->call('DELETE', 'api/de/guests/5', $avail);
         dd($this->response->content());
     }
 }

@@ -15,6 +15,15 @@ class ArrangementTransformer extends Transformer
         $this->arrangementDescriptionTransformer = $arrangementDescriptionTransformer;
 
     }
+
+    /**
+     * Transform to mange arrangments through repositories
+     *
+     * @param $arrangement  only accept one paramenter which instance of Model
+     *
+     * @return array    returns an array of values
+     */
+
     public function transform($arrangement)
     {
         $descriptions = [];
