@@ -20,6 +20,7 @@ Route::resource('api/{locale}/administer-availability/hotel/{hotelId}/arrangemen
 
 Route::resource('api/{locale}/guests', 'API\Reservation\GuestsController');
 
+Route::resource('api/{locale}/reservation', 'API\Reservation\ReservationController');
 
 /** Routes for hotels for hotel owners */
 
