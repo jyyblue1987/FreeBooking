@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\Reservation;
 
 use App\Commands\Reservation\CreateGuestCommand;
+use App\Commands\Reservation\DestroyGuestCommand;
+use App\Commands\Reservation\ShowGuestCommand;
 use App\Commands\Reservation\UpdateGuestCommand;
 use App\Freebooking\Exceptions\Hotel\HotelNotFound;
 use App\Freebooking\Exceptions\Reservation\GuestNotFound;
@@ -96,9 +98,24 @@ class GuestsController extends ApiController
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show( Requests\Reservation\ShowGuestRequest $request, $locale, $id)
     {
-        //
+
+        try
+        {
+            $guest = $this->dispatchFrom(ShowGuestCommand::class, $request, ['id' => $id ]);
+
+            return $this->respond([
+                'Guest' => $this->guestTransformer->transform($guest),
+                'flash' => flash("Guest","Guest data successfully received", "success")
+            ]);
+
+
+        } catch (GuestNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        }catch (DatabaseException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
     }
 
     /**
@@ -148,8 +165,22 @@ class GuestsController extends ApiController
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Requests\Reservation\DestroyGuestRequest $request, $locale, $id )
     {
-        //
+        try
+        {
+            $guest = $this->dispatchFrom(DestroyGuestCommand::class, $request, ['id' => $id ]);
+
+            return $this->respond([
+                'Guest' => $guest,
+                'flash' => flash("Guest","Specified guest successfully deleted", "success")
+            ]);
+
+
+        } catch (GuestNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        }catch (DatabaseException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
     }
 }
