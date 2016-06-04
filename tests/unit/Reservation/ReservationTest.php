@@ -13,6 +13,25 @@ class ReservationTest extends TestCase
      */
     public function testExample()
     {
-        $this->assertTrue(true);
+        Session::start();
+
+        //$this->assertTrue(true);
+
+        $avail = [
+            //'id'                => '5',
+            'guest_id'          => '1',
+            'hotel_id'          => '2',
+            'room_id'           => '2',
+            'checkin'           => '2016-07-16',
+            'checkout'          => '2016-07-18',
+            'arrangement_id'    => '2',
+            'num_of_rooms'      => '2',
+            'num_of_persons'    => '8',
+            'arrival_time'      => '20:00',
+            '_token' => csrf_token()
+        ];
+
+        $this->call('GET', 'api/de/reservation');
+        dd($this->response->content());
     }
 }
