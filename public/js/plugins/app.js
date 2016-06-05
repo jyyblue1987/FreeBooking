@@ -19,7 +19,9 @@
         "app.ServerRequest",
         "app.rooms",
         "app.arrangements",
-        "flow","angularSpinners"])
+        "flow",
+        "angularSpinners",
+        "mwl.calendar"])
 
     .config(["uiSelectConfig", function (uiSelectConfig) {
         uiSelectConfig.theme = "bootstrap"
