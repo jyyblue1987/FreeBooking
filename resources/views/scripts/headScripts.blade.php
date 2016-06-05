@@ -6,6 +6,10 @@
 <script src="{{ URL::asset('/') }}js/spinner/angular-spinners.js"></script>
 <script src="{{ URL::asset('/') }}js/plugins/app.js"></script>
 
+<script src="{{ URL::asset('/') }}js/plugins/moment.min.js"></script>
+<script src="{{ URL::asset('/') }}js/plugins/interact.min.js"></script>
+<script src="{{ URL::asset('/') }}js/plugins/angular-bootstrap-calendar-tpls.js"></script>
+
 <script src="{{ URL::asset('/') }}js/angularJs/controllers/appControllers.js"></script>
 <script src="{{ URL::asset('/') }}js/angularJs/controllers/hotelControllers.js"></script>
 <script src="{{ URL::asset('/') }}js/angularJs/controllers/roomControllers.js"></script>
