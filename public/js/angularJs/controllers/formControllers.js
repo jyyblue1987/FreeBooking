@@ -66,3 +66,9 @@ uiFormCtrls.controller("FormWizardCtrl", ["$scope", function($scope) {
         $scope.steps[index] = !0
     }, $scope.stepReset = function() { $scope.steps = [!0, !1, !1] }
 }]);
+
+
+
+
+
+

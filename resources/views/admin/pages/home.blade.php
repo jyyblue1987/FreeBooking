@@ -79,7 +79,6 @@
         </div>
         <!-- #end row -->
 
-
         <div class="row">
             <div class="col-lg-7">
                 <div class="app-stats panel panel-lined mb30">
@@ -177,8 +176,21 @@
             <!-- #end col -->
         </div>
         <!-- #end row -->
+        
+<div ng-controller="OptionalEventEndDatesCtrl as vm">
+    @include('admin.pages.calendarControls')
+  <mwl-calendar
+    events="vm.events"
+    view="vm.calendarView"
+    view-date="vm.viewDate">
+  </mwl-calendar>
+</div>     
+
 
     </div>
     <!-- #end page-wrap -->
 </div>
 <!-- .page-dashboard -->
+
+
+

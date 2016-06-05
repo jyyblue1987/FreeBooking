@@ -1169,7 +1169,6 @@ $scope.loadRoomPhotos = function() {
 
 
     $scope.checkPhotoIndex = function ($index){
-        console.log($index);
         return false;
     }
 

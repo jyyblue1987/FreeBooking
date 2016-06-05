@@ -119,3 +119,27 @@ ctrls.controller("PageProfileCtrl", ["$scope", function ($scope) {
     }, $scope.lineopts = {axisY: {offset: 25, labelOffset: {y: 5}}, axisX: {showGrid: !1, labelOffset: {x: 10}}}
 }]);
 
+
+ctrls.controller('OptionalEventEndDatesCtrl', function(moment) {
+
+var vm = this;
+
+vm.events = [{
+    title: 'No event end date',
+    startsAt: moment().hours(3).minutes(0).toDate(),
+    type: 'info',
+    draggable: true
+    },
+    {
+    title: 'No event end date',
+    startsAt: moment().hours(5).minutes(0).toDate(),
+    type: 'warning',
+    draggable: true
+}];
+
+vm.calendarView = 'month';
+vm.viewDate = new Date();
+
+});
+
+
