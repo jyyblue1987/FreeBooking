@@ -13,7 +13,7 @@ class UpdateReservationPaymentRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class UpdateReservationPaymentRequest extends Request
     public function rules()
     {
         return [
-            //
+            //'id'                => 'required',
+            'reservation_id'          => 'required|exists:reservation,id',
+            'option'                  => 'required',
+            'cc_name'                 => 'required',
+            'cc_num'                  => 'required',
+            'cc_type'                 => 'required',
+            'cvv'                     => 'required'
         ];
+
     }
 }
