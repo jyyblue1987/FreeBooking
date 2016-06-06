@@ -3,6 +3,8 @@
 namespace App\Commands\Reservation;
 
 use App\Commands\Command;
+use App\Freebooking\Repositories\Reservation\ReservationPaymentRepository;
+use App\ReservationPayment;
 use Illuminate\Contracts\Bus\SelfHandling;
 
 class ListReservationPaymentCommand extends Command implements SelfHandling
@@ -22,8 +24,10 @@ class ListReservationPaymentCommand extends Command implements SelfHandling
      *
      * @return void
      */
-    public function handle()
+    public function handle(ReservationPaymentRepository $reservationPaymentRepository )
     {
-        //
+        $reservation = new ReservationPayment();
+
+        return $reservation->all()->toArray();
     }
 }
