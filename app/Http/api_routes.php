@@ -22,6 +22,7 @@ Route::resource('api/{locale}/guests', 'API\Reservation\GuestsController');
 
 Route::resource('api/{locale}/reservation', 'API\Reservation\ReservationController');
 
+Route::resource('api/{locale}/reservation_payment', 'API\Reservation\ReservationPaymentController');
 /** Routes for hotels for hotel owners */
 
 Route::post('addHotel/{id}', 'UsersController@updateHotelData')->middleware(['auth']);
