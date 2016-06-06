@@ -3,6 +3,8 @@
 namespace App\Commands\Reservation;
 
 use App\Commands\Command;
+use App\Freebooking\Repositories\Reservation\ReservationPaymentRepository;
+use App\ReservationPayment;
 use Illuminate\Contracts\Bus\SelfHandling;
 
 class DeleteReservationPaymentCommand extends Command implements SelfHandling
@@ -12,9 +14,9 @@ class DeleteReservationPaymentCommand extends Command implements SelfHandling
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($id)
     {
-        //
+        $this->id               = $id;
     }
 
     /**
@@ -22,8 +24,12 @@ class DeleteReservationPaymentCommand extends Command implements SelfHandling
      *
      * @return void
      */
-    public function handle()
+    public function handle( ReservationPaymentRepository $reservationPaymentRepository )
     {
-        //
+        $reservation = new ReservationPayment();
+
+        $reservationPaymentRepository->delete ( $reservation, $this->id );
+
+        return $reservation;
     }
 }
