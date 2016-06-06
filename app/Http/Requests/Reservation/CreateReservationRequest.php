@@ -31,8 +31,7 @@ class CreateReservationRequest extends Request
             'checkout'          => 'required',
             'arrangement_id'    => 'required',
             'num_of_rooms'      => 'required',
-            'num_of_persons'    => 'required',
-            'arrival_time'      => 'required'
+            'num_of_persons'    => 'required'
         ];
     }
 }
