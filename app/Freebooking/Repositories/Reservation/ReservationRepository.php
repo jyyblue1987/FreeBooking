@@ -20,4 +20,21 @@ class ReservationRepository
     {
         return $reservation->save();
     }
+
+    public function update( Reservation $reservation, $id )
+    {
+        return $reservation->where( 'id', $id )->update( $reservation->getAttributes() );
+    }
+
+    public function delete( Reservation $reservation, $id )
+    {
+        $data = $reservation->destroy($id);
+
+        return $data;
+    }
+
+    public function getReservation( Reservation $reservation, $id )
+    {
+        return $reservation->where( 'id', $id )->first();
+    }
 }

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\API\Reservation;
 
 use App\Commands\Reservation\CreateReservationCommand;
+use App\Commands\Reservation\DeleteReservationCommand;
 use App\Commands\Reservation\ListReservationCommand;
+use App\Commands\Reservation\ShowReservationCommand;
+use App\Commands\Reservation\UpdateReservationCommand;
 use App\Freebooking\Exceptions\DatabaseException;
 use App\Freebooking\Exceptions\Reservation\GuestNotFound;
 use App\Freebooking\Exceptions\Reservation\ReservationNotFound;
@@ -95,9 +98,23 @@ class ReservationController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Requests\Reservation\ShowReservationRequest $request, $locale, $id)
     {
-        //
+        try
+        {
+            $reservation = $this->dispatchFrom(ShowReservationCommand::class, $request, ['id' => $id ]);
+
+            return $this->respond([
+                'Reservation' => $this->reservationTransformer->transform($reservation),
+                'flash' => flash("Reservation","Reservation successfully received", "success")
+            ]);
+
+
+        } catch (GuestNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        }catch (DatabaseException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
     }
 
     /**
@@ -118,9 +135,26 @@ class ReservationController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\Reservation\UpdateReservationRequest $request, $id)
     {
-        //
+
+        try
+        {
+
+            $reservation = $this->dispatchFrom(UpdateReservationCommand::class, $request, ['user_id' => 2]);
+
+            return $this->respond([
+                'Reservation' => $this->reservationTransformer->transform($reservation),
+                'flash' => flash("Guest","New reservation created successfully for the guest", "success")
+            ]);
+
+        } catch (ReservationNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        } catch (GuestNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        } catch (DatabaseException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
     }
 
     /**
@@ -129,8 +163,22 @@ class ReservationController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Requests\Reservation\DeleteReservationRequest $request, $locale, $id)
     {
-        //
+        try
+        {
+            $reservation = $this->dispatchFrom(DeleteReservationCommand::class, $request, ['id' => $id ]);
+
+            return $this->respond([
+                'Reservation' => $reservation,
+                'flash' => flash("Reservation","Specified Reservation successfully deleted", "success")
+            ]);
+
+
+        } catch (GuestNotFound $e) {
+            return $this->respondNotFound($e->getMessage());
+        }catch (DatabaseException $e) {
+            return $this->respondNotFound($e->getMessage());
+        }
     }
 }
