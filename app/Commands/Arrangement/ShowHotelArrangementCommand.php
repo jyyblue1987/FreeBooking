@@ -62,13 +62,15 @@ class ShowHotelArrangementCommand extends Command implements SelfHandling
             throw new HotelNotBelongToUser();
         }
 
-        //dd($this->arrangement_id);
+        $arrangement = $hotelArrangementRepository->getByArragementIdAndHotelId($this->arrangement_id, $this->hotel_id);
+
+        /*//dd($this->arrangement_id);
         $arrangement = new Arrangement();
 
         $data = (object)$arrangement->find($this->arrangement_id)->toArray();
         //dd((object)$data);
-        $data->arrangementDescription = '';
+        $data->arrangementDescription = '';*/
 
-        return $data;
+        return $arrangement;
     }
 }
