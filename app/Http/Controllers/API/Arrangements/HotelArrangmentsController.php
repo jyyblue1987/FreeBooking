@@ -17,7 +17,7 @@ use App\Commands\Arrangement\UpdateHotelArrangementCommand;
 use Auth;
 use App\Freebooking\Exceptions\Hotel\HotelNotFound;
 use App\Freebooking\Exceptions\Hotel\HotelNotBelongToUser;
-use App\Freebooking\Exceptions\Arragements\ArrangementNotFound;
+use App\Freebooking\Exceptions\Arrangements\ArrangementNotFound;
 use App\Freebooking\Exceptions\DatabaseException;
 use App\Freebooking\Transformers\Arrangements\ArrangementTransformer;
 
@@ -94,7 +94,7 @@ class HotelArrangmentsController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Requests\Arrangement\ShowHotelArrangementRequest $request, $locale, $hotel_id, $arrangement_id)
+    public function show(Requests\Arrangement\ShowHotelArrangementRequest $request, $hotel_id, $arrangement_id)
     {
         try
         {
