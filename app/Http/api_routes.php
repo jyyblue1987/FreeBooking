@@ -10,7 +10,8 @@ Route::group(['prefix' => 'api',  'namespace' => 'API'], function(){
 
     Route::group(['namespace' => 'Arrangements'], function() {
        // Route::get('arrangements/test-route', 'HotelArrangmentsController@index');
-        Route::resource('{locale}/arrangements/{hotelId}/hotel-arrangement', 'HotelArrangmentsController');
+        Route::resource('arrangements/{hotelId}/hotel-arrangement', 'HotelArrangmentsController');
+
 
     });
 
