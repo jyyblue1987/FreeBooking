@@ -9,6 +9,7 @@ use App\Freebooking\Repositories\Arrangement\HotelArrangementRepository;
 use App\Freebooking\Repositories\Arrangement\HotelArrangementDescriptionRepository;
 use App\Freebooking\Exceptions\Hotel\HotelNotFound;
 use App\Freebooking\Exceptions\Hotel\HotelNotBelongToUser;
+use App\Freebooking\Exceptions\Arrangements\ArrangementNotFound;
 use App\Arrangement;
 use App\ArrangementDescription;
 use Illuminate\Foundation\Application;
@@ -52,7 +53,8 @@ class ShowHotelArrangementCommand extends Command implements SelfHandling
      */
     public function handle(HotelRepository $hotelRepository, HotelArrangementRepository $hotelArrangementRepository)
     {
-        $hotel = $hotelRepository->getHotelByUserId($this->user_id);
+        $hotel = $hotelRepository->getById($this->hotel_id);
+
         if ( ! $hotel) {
             throw new HotelNotFound();
         }
@@ -64,6 +66,10 @@ class ShowHotelArrangementCommand extends Command implements SelfHandling
 
         $arrangement = $hotelArrangementRepository->getByArragementIdAndHotelId($this->arrangement_id, $this->hotel_id);
 
+        if( ! $arrangement )
+        {
+            throw new ArrangementNotFound();
+        }
         /*//dd($this->arrangement_id);
         $arrangement = new Arrangement();
 
