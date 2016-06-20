@@ -56,9 +56,16 @@ class CreateReservationCommand extends Command implements SelfHandling
 
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * CreateReservationCommand constructor.
+     * @param $guest_id
+     * @param $hotel_id
+     * @param $room_id
+     * @param $checkin
+     * @param $checkout
+     * @param $arrangement_id
+     * @param $num_of_rooms
+     * @param $num_of_persons
+     * @param $arrival_time
      */
     public function __construct( $guest_id, $hotel_id, $room_id, $checkin, $checkout, $arrangement_id, $num_of_rooms, $num_of_persons, $arrival_time
 )
@@ -76,9 +83,8 @@ class CreateReservationCommand extends Command implements SelfHandling
     }
 
     /**
-     * Execute the command.
-     *
-     * @return void
+     * @param ReservationRepository $reservationRepository
+     * @return Reservation
      */
     public function handle( ReservationRepository $reservationRepository )
     {
