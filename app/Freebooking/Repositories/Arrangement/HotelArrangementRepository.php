@@ -5,14 +5,27 @@ namespace App\Freebooking\Repositories\Arrangement;
 use Illuminate\Support\Facades\DB;
 use App\Arrangement;
 
+/**
+ * Class HotelArrangementRepository
+ * @package App\Freebooking\Repositories\Arrangement
+ */
 class HotelArrangementRepository
 {
 
-    public function create(Arrangement $arrangement)
+	/**
+	 * @param Arrangement $arrangement
+	 * @return bool
+	 */
+	public function create(Arrangement $arrangement)
     {
         return $arrangement->save();
     }
 
+	/**
+	 * @param $arragementId
+	 * @param $hotelId
+	 * @return mixed
+	 */
     public function getByArragementIdAndHotelId($arragementId, $hotelId)
     {
 
