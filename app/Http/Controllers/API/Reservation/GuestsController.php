@@ -19,18 +19,25 @@ use Illuminate\Http\Response;
 
 class GuestsController extends ApiController
 {
+	/**
+	 * @var GuestsTransformer
+	 */
     private $guestTransformer;
 
+	/**
+	 * GuestsController constructor.
+	 * @param GuestsTransformer $guestsTransformer
+	 */
     public function __construct(GuestsTransformer $guestsTransformer)
     {
         $this->guestTransformer = $guestsTransformer;
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @param Requests\Reservation\ListGuestsRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
+
     public function index( Requests\Reservation\ListGuestsRequest $request)
     {
         try
@@ -92,12 +99,12 @@ class GuestsController extends ApiController
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+	/**
+	 * @param Requests\Reservation\ShowGuestRequest $request
+	 * @param $locale
+	 * @param $id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
     public function show( Requests\Reservation\ShowGuestRequest $request, $locale, $id)
     {
 
@@ -159,12 +166,12 @@ class GuestsController extends ApiController
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+	/**
+	 * @param Requests\Reservation\DestroyGuestRequest $request
+	 * @param $locale
+	 * @param $id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
     public function destroy(Requests\Reservation\DestroyGuestRequest $request, $locale, $id )
     {
         try
