@@ -14,6 +14,10 @@ use App\Arrangement;
 use App\ArrangementDescription;
 use Illuminate\Foundation\Application;
 
+/**
+ * Class ShowHotelArrangementCommand
+ * @package App\Commands\Arrangement
+ */
 class ShowHotelArrangementCommand extends Command implements SelfHandling
 {
 
@@ -32,11 +36,13 @@ class ShowHotelArrangementCommand extends Command implements SelfHandling
      */
     private $arrangement_id;
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
+	/**
+	 * ShowHotelArrangementCommand constructor.
+	 * @param $user_id
+	 * @param $hotel_id
+	 * @param $arrangement_id
+	 */
+
     public function __construct( $user_id, $hotel_id, $arrangement_id )
     {
         $this->user_id = $user_id;
@@ -47,10 +53,14 @@ class ShowHotelArrangementCommand extends Command implements SelfHandling
     }
 
     /**
-     * Execute the command.
-     *
-     * @return void
+     * @param HotelRepository $hotelRepository
+     * @param HotelArrangementRepository $hotelArrangementRepository
+     * @return mixed
+     * @throws ArrangementNotFound
+     * @throws HotelNotBelongToUser
+     * @throws HotelNotFound
      */
+
     public function handle(HotelRepository $hotelRepository, HotelArrangementRepository $hotelArrangementRepository)
     {
         $hotel = $hotelRepository->getById($this->hotel_id);
