@@ -16,6 +16,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+
+/**
+ * Class ReservationController
+ * @package App\Http\Controllers\API\Reservation
+ */
 class ReservationController extends ApiController
 {
     /**
@@ -34,7 +39,7 @@ class ReservationController extends ApiController
 
     /**
      * @param Requests\Reservation\ListReservationRequest $request
-     * @return mixed
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index( Requests\Reservation\ListReservationRequest $request )
     {
@@ -66,10 +71,8 @@ class ReservationController extends ApiController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Requests\Reservation\CreateReservationRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store( Requests\Reservation\CreateReservationRequest $request )
     {
@@ -93,10 +96,10 @@ class ReservationController extends ApiController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Requests\Reservation\ShowReservationRequest $request
+     * @param $locale
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Requests\Reservation\ShowReservationRequest $request, $locale, $id)
     {
@@ -129,11 +132,9 @@ class ReservationController extends ApiController
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Requests\Reservation\UpdateReservationRequest $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Requests\Reservation\UpdateReservationRequest $request, $id)
     {
@@ -158,10 +159,10 @@ class ReservationController extends ApiController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Requests\Reservation\DeleteReservationRequest $request
+     * @param $locale
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Requests\Reservation\DeleteReservationRequest $request, $locale, $id)
     {
