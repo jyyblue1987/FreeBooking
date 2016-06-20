@@ -4,6 +4,10 @@ namespace App\Http\Requests\Reservation;
 
 use App\Http\Requests\Request;
 
+/**
+ * Class CreateReservationRequest
+ * @package App\Http\Requests\Reservation
+ */
 class CreateReservationRequest extends Request
 {
     /**
