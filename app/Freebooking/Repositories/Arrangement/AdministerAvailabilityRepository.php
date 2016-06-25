@@ -2,19 +2,18 @@
 
 namespace App\Freebooking\Repositories\Arrangement;
 
-use App\Availability;
-use Illuminate\Support\Facades\DB;
+use App\AdministerArrangement;
 use App\Arrangement;
 
 class AdministerAvailabilityRepository
 {
 
-    public function create(Availability $availability)
+    public function create(AdministerArrangement $availability)
     {
         return $availability->save();
     }
 
-    public function update( Availability $availability, $id )
+    public function update( AdministerArrangement $availability, $id )
     {
         return $availability->where('id', $id)->update($availability->getAttributes());
     }
@@ -22,7 +21,7 @@ class AdministerAvailabilityRepository
     public function getByArragementIdAndHotelId($arragementId, $hotelId)
     {
 
-        return Availability::whereId($arragementId)->whereHotelId($hotelId)->first();
+        return AdministerArrangement::whereId($arragementId)->whereHotelId($hotelId)->first();
 
     }
 
@@ -35,7 +34,7 @@ class AdministerAvailabilityRepository
 
     public function getAvailability($id)
     {
-        return Availability::where('id', $id)->first();
+        return AdministerArrangement::where('id', $id)->first();
     }
 
 }

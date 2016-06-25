@@ -76,8 +76,6 @@ class User extends Model implements AuthenticatableContract,
     protected function validator(array $data)
     {
 
-
-
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
@@ -138,13 +136,6 @@ class User extends Model implements AuthenticatableContract,
 
         return $this->hotel_options()->save($data);
     }
-
-
-
-
-
-
-
 
 
     public function hotels()

@@ -19,8 +19,6 @@ class ReservationPayment extends Migration
 
             $table->integer('reservation_id')->unsigned();
             $table->foreign('reservation_id')->references('id')->on('reservation');
-
-
             $table->string('option',20);
             $table->string('cc_name', 40);
             $table->bigInteger('cc_num');
@@ -28,7 +26,7 @@ class ReservationPayment extends Migration
             $table->string('cvv', 3);
 
             $table->timestamps();
-            //
+
         });
     }
 

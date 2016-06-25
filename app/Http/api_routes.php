@@ -11,13 +11,13 @@ Route::group(['prefix' => 'api',  'namespace' => 'API'], function(){
     Route::group(['namespace' => 'Arrangements'], function() {
        // Route::get('arrangements/test-route', 'HotelArrangmentsController@index');
         Route::resource('arrangements/{hotelId}/hotel-arrangement', 'HotelArrangmentsController');
-
+        Route::resource('arrangements/administer-availability/{hotelId}/arrangement', 'AdministerAvailabilityController');
 
     });
 
 });
 
-Route::resource('api/{locale}/administer-availability/hotel/{hotelId}/arrangement', 'API\Arrangements\AdministerAvailabilityController');
+
 
 Route::resource('api/{locale}/guests', 'API\Reservation\GuestsController');
 

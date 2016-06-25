@@ -7,8 +7,6 @@ use App\Http\Requests\Request;
 class CreateAdministerAvailabilityRequest extends Request
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
@@ -17,8 +15,6 @@ class CreateAdministerAvailabilityRequest extends Request
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules()
@@ -26,8 +22,7 @@ class CreateAdministerAvailabilityRequest extends Request
         return [
             'hotel_id' => 'required|exists:hotels,id',
             'date' => 'required|date',
-            'arrangement_id' => 'required|exists:arrangements,id',
-            'available' => 'required',
+            'available' => '',
             'price' => '',
             'status' => '',
         ];

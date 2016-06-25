@@ -8,13 +8,9 @@ use App\Freebooking\Exceptions\DatabaseException;
 use App\Freebooking\Repositories\Arrangement\AdministerAvailabilityRepository;
 use Illuminate\Contracts\Bus\SelfHandling;
 use App\Freebooking\Repositories\Hotel\HotelRepository;
-use App\Freebooking\Repositories\Arrangement\HotelArrangementRepository;
-use App\Freebooking\Repositories\Arrangement\HotelArrangementDescriptionRepository;
 use App\Freebooking\Exceptions\Hotel\HotelNotFound;
 use App\Freebooking\Exceptions\Hotel\HotelNotBelongToUser;
-use App\Arrangement;
-use App\ArrangementDescription;
-use Illuminate\Foundation\Application;
+
 
 class UpdateAdministerAvailabilityCommand extends Command implements SelfHandling
 {
@@ -77,7 +73,7 @@ class UpdateAdministerAvailabilityCommand extends Command implements SelfHandlin
      *
      * @return void
      */
-    public function handle(Application $app, HotelRepository $hotelRepository, AdministerAvailabilityRepository $administerAvailabilityRepository)
+    public function handle(AdministerAvailabilityRepository $administerAvailabilityRepository)
     {
         $hotel = $administerAvailabilityRepository->getHotelByUserId($this->user_id, $this->hotel_id);
         if ( ! $hotel) {

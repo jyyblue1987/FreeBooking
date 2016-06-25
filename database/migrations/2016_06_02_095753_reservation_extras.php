@@ -16,18 +16,12 @@ class ReservationExtras extends Migration
 
             $table->increments('id');
 
-
             $table->integer('reservation_id')->unsigned();
             $table->foreign('reservation_id')->references('id')->on('reservation');
-
-
-
-
             $table->integer('qty');
             
             $table->timestamps();
 
-            //
         });
     }
 

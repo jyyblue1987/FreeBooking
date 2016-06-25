@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\API\Arrangements;
 
-use App\Commands\Arrangement\UpdateAdministerAvailabilityCommand;
-use Illuminate\Http\Request;
+
+use Auth;
 use App\Http\Controllers\API\ApiController;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Commands\Arrangement\UpdateAdministerAvailabilityCommand;
 use App\Commands\Arrangement\CreateAdministerAvailabilityCommand;
-use Auth;
+use App\Freebooking\Transformers\Arrangements\AvailabilityTransformer;
+use App\Http\Requests\Arrangement\CreateAdministerAvailabilityRequest;
+use App\Freebooking\Exceptions\DatabaseException;
 use App\Freebooking\Exceptions\Hotel\HotelNotFound;
 use App\Freebooking\Exceptions\Hotel\HotelNotBelongToUser;
-use App\Freebooking\Transformers\Arrangements\AvailabilityTransformer;
+use App\Freebooking\Exceptions\Arrangements\ArrangementNotFound;
+
 
 class AdministerAvailabilityController extends ApiController
 {
@@ -44,26 +47,26 @@ class AdministerAvailabilityController extends ApiController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateAdministerAvailabilityRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Requests\Arrangement\CreateAdministerAvailabilityRequest $request)
+    public function store(CreateAdministerAvailabilityRequest $request)
     {
 
         try
         {
 
-            $availability = $this->dispatchFrom(CreateAdministerAvailabilityCommand::class, $request, ['user_id' => 2]);
+        $availability = $this->dispatchFrom(CreateAdministerAvailabilityCommand::class, $request, ['user_id' => 2]);
 
             return $this->respond([
                 'Availability' => $this->administerTransformer->transform($availability),
-                'flash' => flash("Availability","New administer availability created", "success")
+                'flash' => flash("Availability","Arrangement availability updated", "success")
             ]);
         } catch (HotelNotFound $e) {
             return $this->respondNotFound($e->getMessage());
         } catch (HotelNotBelongToUser $e) {
+            return $this->respondNotFound($e->getMessage());
+        }catch (ArrangementNotFound $e){
             return $this->respondNotFound($e->getMessage());
         }catch (DatabaseException $e) {
             return $this->respondNotFound($e->getMessage());

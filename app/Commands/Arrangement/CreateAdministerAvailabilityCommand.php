@@ -2,18 +2,16 @@
 
 namespace App\Commands\Arrangement;
 
-use App\Availability;
+use App\AdministerArrangement;
 use App\Commands\Command;
 use App\Freebooking\Repositories\Arrangement\AdministerAvailabilityRepository;
 use Illuminate\Contracts\Bus\SelfHandling;
-use App\Freebooking\Repositories\Hotel\HotelRepository;
-use App\Freebooking\Repositories\Arrangement\HotelArrangementRepository;
-use App\Freebooking\Repositories\Arrangement\HotelArrangementDescriptionRepository;
 use App\Freebooking\Exceptions\Hotel\HotelNotFound;
 use App\Freebooking\Exceptions\Hotel\HotelNotBelongToUser;
-use App\Arrangement;
-use App\ArrangementDescription;
-use Illuminate\Foundation\Application;
+use App\Freebooking\Repositories\Hotel\HotelRepository;
+use App\Freebooking\Repositories\Arrangement\HotelArrangementRepository;
+use App\Freebooking\Exceptions\Arrangements\ArrangementNotFound;
+
 
 class CreateAdministerAvailabilityCommand extends Command implements SelfHandling
 {
@@ -51,7 +49,7 @@ class CreateAdministerAvailabilityCommand extends Command implements SelfHandlin
      */
     public function __construct( $user_id, $arrangement_id, $hotel_id, $date, $status, $available )
     {
-        $this->user_id = 2;
+        $this->user_id = $user_id;
 
         $this->arrangement_id = $arrangement_id;
 
@@ -69,9 +67,11 @@ class CreateAdministerAvailabilityCommand extends Command implements SelfHandlin
      *
      * @return void
      */
-    public function handle(Application $app, HotelRepository $hotelRepository, AdministerAvailabilityRepository $administerAvailabilityRepository)
+    public function handle(HotelArrangementRepository $hotelArrangementRepository, HotelRepository $hotelRepository, AdministerAvailabilityRepository $administerAvailabilityRepository)
     {
-        $hotel = $administerAvailabilityRepository->getHotelByUserId($this->user_id, $this->hotel_id);
+
+        $hotel = $hotelRepository->getHotelByUserId($this->user_id);
+
         if ( ! $hotel) {
             throw new HotelNotFound();
         }
@@ -80,8 +80,14 @@ class CreateAdministerAvailabilityCommand extends Command implements SelfHandlin
         {
             throw new HotelNotBelongToUser();
         }
+        $arrangement = $hotelArrangementRepository->getById($this->arrangement_id);
 
-        $availability = new Availability();
+        if(!$arrangement)
+        {
+            throw new ArrangementNotFound();
+        }
+
+        $availability = new AdministerArrangement();
 
         $availability->arrangement_id = $this->arrangement_id;
         $availability->hotel_id = $this->hotel_id;

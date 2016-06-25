@@ -1,10 +1,9 @@
 <?php
 
-
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ArrangmentAdministerAvailability extends Migration
+class CreateArrangementAdministerAvailability extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +12,8 @@ class ArrangmentAdministerAvailability extends Migration
      */
     public function up()
     {
-        Schema::create('availability', function (Blueprint $table) {
+        Schema::create('administer_arrangements', function (Blueprint $table) {
             $table->increments('id');
-
             $table->integer('hotel_id')->unsigned();
             $table->foreign('hotel_id')->references('id')->on('hotels');
             $table->integer('arrangement_id')->unsigned();
@@ -36,6 +34,6 @@ class ArrangmentAdministerAvailability extends Migration
      */
     public function down()
     {
-        Schema::drop('availability');
+        Schema::drop('administer_arrangements');
     }
 }
